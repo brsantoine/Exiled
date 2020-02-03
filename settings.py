@@ -3,6 +3,7 @@ SCREEN_HEIGHT = 768
 TAILLE_CASE = 64
 TITLE = "Temp"
 FPS = 30
+VELOCITY = 50
 
 #Colors
 

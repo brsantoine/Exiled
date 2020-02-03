@@ -18,7 +18,7 @@ screen = pg.display.set_mode(size)
 fpsClock = pg.time.Clock()
 mapBg = pg.image.load("tester.jpg")
 
-joueur = Player(50, 50, 64, 64)
+joueur = Player(1000, 1000, 64, 64)
 camera = Camera(mapBg)
 
 collisionList = []

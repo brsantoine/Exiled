@@ -14,13 +14,13 @@ class Player:
         dy = 0
 
         if keys[pg.K_LEFT]:
-            dx -= 5
+            dx -= VELOCITY
         if keys[pg.K_RIGHT]:
-            dx += 5
+            dx += VELOCITY
         if keys[pg.K_UP]:
-            dy -= 5
+            dy -= VELOCITY
         if keys[pg.K_DOWN]:
-            dy += 5
+            dy += VELOCITY
 
         self.rect.left += dx
 
@@ -34,12 +34,12 @@ class Player:
 
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.left > 10000:
-            self.rect.left = 10000
+        if self.rect.left > 10109 :
+            self.rect.left = 10109
         if self.rect.top < 0:
             self.rect.top = 0
-        if self.rect.top > 10000:
-            self.rect.top = 10000
+        if self.rect.top > 4542:
+            self.rect.top = 4542
 
     def draw(self, screen,x,y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
