@@ -8,7 +8,7 @@ class Player:
         self.rect = pg.Rect(x, y, w, h)
 
     def update(self, keys, collisionList):
-        """Appelée à chaque tour de boucle, cette méthode permet de mettre les coordonnées à jour"""
+        """Appelee a chaque tour de boucle, cette methode permet de mettre les coordonnees a jour"""
 
         dx = 0
         dy = 0
@@ -41,7 +41,7 @@ class Player:
         if self.rect.top > 10000:
             self.rect.top = 10000
 
-    def draw(self, screen):
-        """Appelée à chaque tour de boucle, cette fonction affiche le joueur"""
+    def draw(self, screen,x,y):
+        """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
 
-        pg.draw.rect(screen, (0, 255, 0), self.rect)
+        pg.draw.rect(screen, (0, 255, 0), pg.Rect(x, y , self.rect.width, self.rect.height))
