@@ -21,5 +21,6 @@ class Camera(object):
         self.y = cameraY   
 
       
+      
         win.blit(self.mapBg,(-self.x,-self.y))  
         player.draw(win,((SCREEN_WIDTH // 2) - player.rect.width // 2),(SCREEN_HEIGHT // 2) - (player.rect.height // 2))
