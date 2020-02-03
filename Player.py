@@ -1,4 +1,5 @@
 import pygame as pg
+from settings import *
 
 class Player:
     """Une classe qui correspond au joueur du jeu"""
