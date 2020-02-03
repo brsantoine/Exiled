@@ -11,5 +11,6 @@ class camera(object):
         cameraY = playerY - (self.mapHeight // 2) 
         if  cameraX > TAILLE_CASE and cameraX < self.mapWidth - TAILLE_CASE:
            self.x = cameraX 
+           
         if  cameraY > TAILLE_CASE and cameraY < self.mapHeight - TAILLE_CASE:
            self.x = cameraY        
