@@ -16,7 +16,7 @@ black = 0, 0, 0
 screen = pg.display.set_mode(size)
 
 fpsClock = pg.time.Clock()
-mapBg = pg.image.load("tester.jpg")
+mapBg = pg.image.load("train.jpg")
 
 joueur = Player(1000, 1000, 64, 64)
 camera = Camera(mapBg)

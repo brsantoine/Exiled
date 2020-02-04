@@ -32,14 +32,14 @@ class Player:
         if self.rect.collidelist(collisionList) != -1:
             self.rect.top -= dy
 
-        if self.rect.left < 0:
-            self.rect.left = 0
-        if self.rect.left > 10109 :
-            self.rect.left = 10109
-        if self.rect.top < 0:
-            self.rect.top = 0
-        if self.rect.top > 4542:
-            self.rect.top = 4542
+        if self.rect.left <= TAILLE_CASE:
+            self.rect.left = TAILLE_CASE
+        if self.rect.left > 10109 - TAILLE_CASE - self.rect.width:
+            self.rect.left = 10109 - TAILLE_CASE - self.rect.width
+        if self.rect.top <= TAILLE_CASE:
+            self.rect.top = TAILLE_CASE
+        if self.rect.top > 4542 - TAILLE_CASE - self.rect.height:
+            self.rect.top = 4542 - TAILLE_CASE - self.rect.height
 
     def draw(self, screen,x,y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
