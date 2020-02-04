@@ -25,6 +25,7 @@ class Camera:
         else:
             # Si le joueur est a droite"""
             if cameraX >= MAP_WIDTH - SCREEN_WIDTH:
+                self.x = MAP_WIDTH - SCREEN_WIDTH
                 playerX = player.rect.left - MAP_WIDTH + SCREEN_WIDTH
             # Si le joueur est a gauche"""
             else:
@@ -38,6 +39,7 @@ class Camera:
         else:
             # Si le joueur est en dessous
             if cameraY >= MAP_HEIGHT - SCREEN_HEIGHT:
+                self.y = MAP_HEIGHT - SCREEN_HEIGHT
                 playerY = player.rect.top - MAP_HEIGHT + SCREEN_HEIGHT
             # Si le joueur est au dessus    
             else:

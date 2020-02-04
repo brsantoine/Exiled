@@ -3,6 +3,7 @@ import pygame as pg
 from Player import *
 from Camera import *
 from Wall import *
+from Map import *
 from settings import *
 
 pg.init()
@@ -16,12 +17,13 @@ screen = pg.display.set_mode(size)
 
 fpsClock = pg.time.Clock()
 
-joueur = Player(1000, 1000, 64, 64)
-mur1 = Wall(128, 128, 256, 64)
-mur2 = Wall(128, 192, 64, 256)
+player = Player(1000, 1000, 64, 64)
 camera = Camera()
 
-collisionList = [mur1, mur2]
+map1 = Map("map1", None)
+
+collisionList = []
+collisionList += map1.wallList
 
 while 1:
     fpsClock.tick(60)
@@ -29,8 +31,8 @@ while 1:
     for event in pg.event.get():
         if event.type == pg.QUIT: sys.exit()
 
-    joueur.update(pg.key.get_pressed(), collisionList)
+    player.update(pg.key.get_pressed(), collisionList)
 
-    camera.draw(screen, joueur, collisionList)
+    camera.draw(screen, player, collisionList)
 
     pg.display.update()
