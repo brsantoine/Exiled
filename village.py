@@ -8,13 +8,18 @@ green = (0, 200, 0)
 bright_red = (255, 0, 0)
 bright_green = (0, 255, 0)
 
+LOW_PRICE = 500
+MID_PRICE = 5000
+
 class village(object):
     """Classe qui correspond au village et ressources ainsi qu'à son interface"""
 
     def __init__(self, gameDisplay, screenWidth, screenHeight):
         """Affectation des ressources en début de partie"""
-        self.gold = 0
-        self.air = 1000
+        self.gold = 5000
+        self.air = 0
+        self.population = 1
+
         self.gameDisplay = gameDisplay
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
@@ -34,10 +39,26 @@ class village(object):
                 if action == "quit":
                     pygame.quit()
                     quit()
-                #elif action == "goldToAir":
-                    ##
+                elif action == "nothing":
+                    pygame.time.delay(1)
+                elif action == "goldToAir1":
+                    if self.air < 100 and self.gold >= 500:
+                        self.air += 1
+                        self.gold -= 500
+                        pygame.time.delay(100)
+                elif action == "goldToAir10":
+                    if self.air <= 90 and self.gold >= 5000:
+                        self.air += 10
+                        self.gold -= 5000
+                        pygame.time.delay(100)
+                elif action == "goldToAirMax":
+                    while self.air < 100 and self.gold >= 500:
+                        self.gold -= 500
+                        self.air += 1                    
+
+
         else:
-            pygame.draw.rect(self.gameDisplay,ic, (x, y, w, h))
+            pygame.draw.rect(self.gameDisplay, ic, (x, y, w, h))
 
         smallText = pygame.font.Font('freesansbold.ttf', 15)
         textSurf, textRect = self.textObjects(msg, smallText, fontColor)
@@ -62,7 +83,23 @@ class village(object):
             self.gameDisplay.blit(TextSurf, TextRect)
 
             ####### RESSOURCES #######
-            
+            ## Air
+            smallText = pygame.font.Font('freesansbold.ttf', 30)
+            textSurf, textRect = self.textObjects("Air " + str(self.air), smallText, black)
+            textRect.center = (60, 20)
+            self.gameDisplay.blit(textSurf, textRect) 
+
+            ## Gold
+            smallText = pygame.font.Font('freesansbold.ttf', 30)
+            textSurf, textRect = self.textObjects("Gold " + str(self.gold), smallText, black)
+            textRect.center = (200, 20)
+            self.gameDisplay.blit(textSurf, textRect) 
+
+            ## Population
+            smallText = pygame.font.Font('freesansbold.ttf', 30)
+            textSurf, textRect = self.textObjects("Population " + str(self.population), smallText, black)
+            textRect.center = (900, 20)
+            self.gameDisplay.blit(textSurf, textRect) 
             ####### 
 
             ####### SHOP UPGRADE #######
@@ -78,11 +115,26 @@ class village(object):
 
             ####### CONVERT GOLD TO AIR #######
             x = 362 
-            y = 510
+            y = 450
             buttonWidth = 300
-            buttonHeight = 200
+            buttonHeight = 90
 
-            self.button("Gold -> Air", black, x, y, buttonWidth, buttonHeight, green, bright_green, "goldToAir")
-            ####### 
+            self.button("Gold -> Air 1", black, x, y, buttonWidth, buttonHeight, green, bright_green, "goldToAir1")
+            self.button("Gold -> Air 10",  black, x, y+(buttonHeight+10)*1, buttonWidth, buttonHeight, green, bright_green, "goldToAir10")
+            self.button("Gold -> Air MAX", black, x, y+(buttonHeight+10)*2, buttonWidth, buttonHeight, green, bright_green, "goldToAirMax")
+                
+            if self.gold < LOW_PRICE:
+                self.button("Gold -> Air 1", black, x, y, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
+                self.button("Gold -> Air MAX", black, x, y+(buttonHeight+10)*2, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
+                
+            if self.gold < MID_PRICE or self.air > 90:
+                self.button("Gold -> Air 10",  black, x, y+(buttonHeight+10)*1, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
+            
+            if self.air >= 100:
+                self.button("Gold -> Air 1", black, x, y, buttonWidth, buttonHeight, red, red)
+                self.button("Gold -> Air 10",  black, x, y+(buttonHeight+10)*1, buttonWidth, buttonHeight, red, red)
+                self.button("Gold -> Air MAX", black, x, y+(buttonHeight+10)*2, buttonWidth, buttonHeight, red, red)
+            #######
 
             pygame.display.update()
+            
