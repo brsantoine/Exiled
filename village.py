@@ -1,4 +1,5 @@
 import pygame
+from threading import Timer
 pygame.init()
 
 black = (0, 0, 0)
@@ -13,6 +14,9 @@ MID_PRICE = 5000
 
 class village(object):
     """Classe qui correspond au village et ressources ainsi qu a son interface"""
+    def minusAir(self):
+        self.timerOn = False
+        self.air -= 1
 
     def __init__(self, gameDisplay, screenWidth, screenHeight):
         """Affectation des ressources en debut de partie"""
@@ -29,7 +33,7 @@ class village(object):
         self.skills = False
 
         self.village = True
-        pygame.time.set_timer(1, 5000)
+        self.timerOn = False
 
     ###### Define in settings ######
     def textObjects(self, text, font, color):
@@ -93,12 +97,15 @@ class village(object):
     def draw(self):
         """Affiche le menu du village"""
         
+        if not self.timerOn:
+            self.timerOn = not self.timerOn
+            t = Timer(1.0, self.minusAir)
+            t.start()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            if event.type == 1:
-                self.air -= 1
 
         self.gameDisplay.fill(white)
         
