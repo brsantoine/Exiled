@@ -34,12 +34,12 @@ class Player:
 
         if self.rect.left <= TAILLE_CASE:
             self.rect.left = TAILLE_CASE
-        if self.rect.left > 10109 - TAILLE_CASE - self.rect.width:
-            self.rect.left = 10109 - TAILLE_CASE - self.rect.width
+        if self.rect.left > MAP_WIDTH - TAILLE_CASE - self.rect.width:
+            self.rect.left = MAP_WIDTH - TAILLE_CASE - self.rect.width
         if self.rect.top <= TAILLE_CASE:
             self.rect.top = TAILLE_CASE
-        if self.rect.top > 4542 - TAILLE_CASE - self.rect.height:
-            self.rect.top = 4542 - TAILLE_CASE - self.rect.height
+        if self.rect.top > MAP_HEIGHT - TAILLE_CASE - self.rect.height:
+            self.rect.top = MAP_HEIGHT - TAILLE_CASE - self.rect.height
 
     def draw(self, screen,x,y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
