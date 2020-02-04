@@ -44,4 +44,4 @@ class Player:
     def draw(self, screen,x,y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
 
-        pg.draw.rect(screen, (0, 255, 0), pg.Rect(x, y , self.rect.width, self.rect.height))
+        pg.draw.rect(screen, (255, 150, 255), pg.Rect(x, y , self.rect.width, self.rect.height))
