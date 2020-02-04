@@ -5,6 +5,7 @@ from Camera import *
 from Enemy import *
 from Wall import *
 from Map import *
+from village import *
 from settings import *
 
 pg.init()
@@ -29,27 +30,33 @@ camera = Camera()
 map1 = Map("map1", None)
 
 collisionList = []
-for enemy in enemies :
-    collisionList.append(enemy)
+collisionList += map1.wallList
+collisionList += enemies
+
+village = village(screen, 1024, 786)
 
 enemyHitboxList = []
 
 run = True
 while run:
-    fpsClock.tick(30)
+    fpsClock.tick(60)
 
-    for event in pg.event.get():
-        if event.type == pg.QUIT: sys.exit()
-    for enemy in enemies :
-        enemy.update()
-        for hitbox in enemy.getHitbox() :
-            enemyHitboxList.append(hitbox)
+    if village.village:
+        village.draw()
+    else:
 
-    run = joueur.update(pg.key.get_pressed(), collisionList,enemyHitboxList)
+        for event in pg.event.get():
+            if event.type == pg.QUIT: sys.exit()
+        for enemy in enemies :
+            enemy.update()
+            for hitbox in enemy.getHitbox() :
+                enemyHitboxList.append(hitbox)
 
-    camera.draw(screen, joueur, collisionList,enemyHitboxList)
+        run = joueur.update(pg.key.get_pressed(), collisionList,enemyHitboxList)
 
-    enemyHitboxList = []
+        camera.draw(screen, joueur, collisionList, enemyHitboxList)
+
+        enemyHitboxList = []
 
 
-    pg.display.update()
+        pg.display.update()
