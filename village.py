@@ -17,7 +17,7 @@ class village(object):
     def __init__(self, gameDisplay, screenWidth, screenHeight):
         """Affectation des ressources en début de partie"""
         self.gold = 5000
-        self.air = 0
+        self.air = 95
         self.population = 1
 
         self.gameDisplay = gameDisplay
@@ -45,12 +45,12 @@ class village(object):
                     if self.air < 100 and self.gold >= 500:
                         self.air += 1
                         self.gold -= 500
-                        pygame.time.delay(100)
+                        pygame.time.delay(150)
                 elif action == "goldToAir10":
                     if self.air <= 90 and self.gold >= 5000:
                         self.air += 10
                         self.gold -= 5000
-                        pygame.time.delay(100)
+                        pygame.time.delay(150)
                 elif action == "goldToAirMax":
                     while self.air < 100 and self.gold >= 500:
                         self.gold -= 500
