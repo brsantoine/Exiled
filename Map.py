@@ -3,7 +3,7 @@ from Wall import *
 from settings import *
 
 class Map:
-    """Une classe qui correspond à un building"""
+    """Une classe qui correspond a un building"""
     def __init__(self, hitboxFile, img):
         """Initialise la classe Building"""
 
@@ -36,6 +36,6 @@ class Map:
         file.close()
 
     def draw(self, screen, x, y):
-        """Appelée à chaque tour de boucle, cette fonction affiche le building"""
+        """Appelee a chaque tour de boucle, cette fonction affiche le building"""
 
         screen.blit(self.img, (x, y))
