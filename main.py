@@ -3,6 +3,8 @@ import pygame as pg
 from Player import *
 from Camera import *
 from Enemy import *
+from Wall import *
+from Map import *
 from settings import *
 
 pg.init()
@@ -22,16 +24,13 @@ enemies.append(Enemy((6.5 * TAILLE_CASE),(1.5 * TAILLE_CASE),(6 * TAILLE_CASE),1
 enemies.append(Enemy((9 * TAILLE_CASE),(5 * TAILLE_CASE),(25 * TAILLE_CASE),0,5,0))
 enemies.append(Enemy((19 * TAILLE_CASE),(2 * TAILLE_CASE),(5 * TAILLE_CASE),1,5,0))
 enemies.append(Enemy((30 * TAILLE_CASE),(2 * TAILLE_CASE),(7 * TAILLE_CASE),1,5,0))
-
-
-
-
 camera = Camera()
+
+map1 = Map("map1", None)
 
 collisionList = []
 for enemy in enemies :
     collisionList.append(enemy)
-
 
 enemyHitboxList = []
 
@@ -51,5 +50,6 @@ while run:
     camera.draw(screen, joueur, collisionList,enemyHitboxList)
 
     enemyHitboxList = []
+
 
     pg.display.update()
