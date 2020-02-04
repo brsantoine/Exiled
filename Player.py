@@ -22,15 +22,36 @@ class Player:
         if keys[pg.K_DOWN]:
             dy += VELOCITY
 
-        self.rect.left += dx
+        tempDx = dx
+        tempDy = dy
 
-        if self.rect.collidelist(collisionList) != -1:
-            self.rect.left -= dx
+        while self.rect.collidelist(collisionList) == -1 and tempDx != 0:
+            if tempDx > 0:
+                self.rect.left += 1
+                tempDx -= 1
+            else:
+                self.rect.left -= 1
+                tempDx += 1
             
-        self.rect.top += dy
-
         if self.rect.collidelist(collisionList) != -1:
-            self.rect.top -= dy
+            if dx > 0:
+                self.rect.left -= 1
+            else:
+                self.rect.left += 1
+
+        while self.rect.collidelist(collisionList) == -1 and tempDy != 0:
+            if tempDy > 0:
+                self.rect.top += 1
+                tempDy -= 1
+            else:
+                self.rect.top -= 1
+                tempDy += 1
+            
+        if self.rect.collidelist(collisionList) != -1:
+            if dy > 0:
+                self.rect.top -= 1
+            else:
+                self.rect.top += 1
 
         if self.rect.left <= TAILLE_CASE:
             self.rect.left = TAILLE_CASE
@@ -41,7 +62,7 @@ class Player:
         if self.rect.top > MAP_HEIGHT - TAILLE_CASE - self.rect.height:
             self.rect.top = MAP_HEIGHT - TAILLE_CASE - self.rect.height
 
-    def draw(self, screen,x,y):
+    def draw(self, screen, x, y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
 
-        pg.draw.rect(screen, (255, 150, 255), pg.Rect(x, y , self.rect.width, self.rect.height))
+        pg.draw.rect(screen, (255, 150, 255), pg.Rect(x, y, self.rect.width, self.rect.height))
