@@ -1,0 +1,1 @@
+        self.textDisplay("Gold -> Air MAX", black, 20, (x+(buttonWidth/2)), (y+(butto
