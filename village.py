@@ -14,9 +14,6 @@ MID_PRICE = 5000
 
 class village(object):
     """Classe qui correspond au village et ressources ainsi qu a son interface"""
-    def minusAir(self):
-        self.timerOn = False
-        self.air -= 1
 
     def __init__(self, gameDisplay, screenWidth, screenHeight):
         """Affectation des ressources en debut de partie"""
@@ -34,6 +31,10 @@ class village(object):
 
         self.village = True
         self.timerOn = False
+
+    def minusAir(self):
+        self.timerOn = False
+        self.air -= 1
 
     ###### Define in settings ######
     def textObjects(self, text, font, color):
@@ -98,7 +99,7 @@ class village(object):
         """Affiche le menu du village"""
         
         if not self.timerOn:
-            self.timerOn = not self.timerOn
+            self.timerOn = True
             t = Timer(1.0, self.minusAir)
             t.start()
 
