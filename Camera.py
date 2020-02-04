@@ -2,11 +2,8 @@ from settings import *
 
 class Camera:
     """Classe pour bouger la camera en fonction de la position du joueur dans la map"""
-    def __init__(self):
-        self.x = 0
-        self.y = 0
 
-    def draw(self, win, player, list):
+    def draw(self, win, player, displayList, enemyHitboxList):
         """Afficher les elements a l'ecran et bouger la camera en fonction de la position du joueur"""
         cameraX = player.rect.left + (player.rect.width // 2) - (SCREEN_WIDTH // 2)
         cameraY  = player.rect.top + (player.rect.height // 2) - (SCREEN_HEIGHT // 2)
@@ -44,7 +41,10 @@ class Camera:
                 self.y = 0
                 playerY = player.rect.top 
 
-
-
-        win.blit(MAP_BACKGROUND, (-self.x,-self.y))  
+        win.blit(MAP_BACKGROUND, (-self.x,-self.y)) 
+        for elem in enemyHitboxList:
+            pg.draw.rect(win, (200, 200, 200), pg.Rect(elem.left - self.x,elem.top - self.y, elem.width, elem.height)) 
         player.draw(win, playerX, playerY)
+        for element in displayList:
+            element.draw(win,element.rect.left - self.x,element.rect.top - self.y)
+        

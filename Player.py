@@ -7,7 +7,7 @@ class Player:
         """Initialise la classe Joueur"""
         self.rect = pg.Rect(x, y, w, h)
 
-    def update(self, keys, collisionList):
+    def update(self, keys, wallList,enemyHitboxList):
         """Appelee a chaque tour de boucle, cette methode permet de mettre les coordonnees a jour"""
 
         dx = 0
@@ -24,12 +24,12 @@ class Player:
 
         self.rect.left += dx
 
-        if self.rect.collidelist(collisionList) != -1:
+        if self.rect.collidelist(wallList) != -1:
             self.rect.left -= dx
             
         self.rect.top += dy
 
-        if self.rect.collidelist(collisionList) != -1:
+        if self.rect.collidelist(wallList) != -1:
             self.rect.top -= dy
 
         if self.rect.left <= TAILLE_CASE:
@@ -40,6 +40,11 @@ class Player:
             self.rect.top = TAILLE_CASE
         if self.rect.top > MAP_HEIGHT - TAILLE_CASE - self.rect.height:
             self.rect.top = MAP_HEIGHT - TAILLE_CASE - self.rect.height
+
+        safe = True       
+        if self.rect.collidelist(enemyHitboxList) != -1:
+            safe = False
+        return safe
 
     def draw(self, screen,x,y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
