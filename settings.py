@@ -5,7 +5,7 @@ SCREEN_HEIGHT = 768
 TAILLE_CASE = 64
 TITLE = "Temp"
 FPS = 30
-VELOCITY = 10
+VELOCITY = 8
 ENEMY_VELOCITY = 4
 
 MAP_BACKGROUND = pg.image.load("train.jpg")

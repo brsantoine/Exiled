@@ -1,5 +1,5 @@
-import pygame as pg
-pg.init()
+import pygame
+pygame.init()
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -29,6 +29,7 @@ class village(object):
         self.skills = False
 
         self.village = True
+        pygame.time.set_timer(1, 5000)
 
     ###### Define in settings ######
     def textObjects(self, text, font, color):
@@ -36,35 +37,35 @@ class village(object):
         return textSurface, textSurface.get_rect()
 
     def textDisplay(self, msg, color, size, x, y):
-        smallText = pg.font.Font('freesansbold.ttf', size)
+        smallText = pygame.font.Font('freesansbold.ttf', size)
         textSurf, textRect = self.textObjects(msg, smallText, color)
         textRect.center = (x, y)
         self.gameDisplay.blit(textSurf, textRect)
 
     def button(self, x, y, w, h, ic, ac, action=None):
-        mouse = pg.mouse.get_pos()
-        click = pg.mouse.get_pressed()
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
 
         if x+w > mouse[0] > x and y+h > mouse[1] > y:
-            pg.draw.rect(self.gameDisplay, ac, (x, y, w, h))
+            pygame.draw.rect(self.gameDisplay, ac, (x, y, w, h))
             if click[0] == 1 and action != None:
                 if action == "quit":
-                    pg.quit()
+                    pygame.quit()
                     quit()
                 elif action == "nothing":
-                    pg.time.delay(1)
+                    pygame.time.delay(1)
 
                 elif action == "goldToAir1":
                     if self.air < 100 and self.gold >= LOW_PRICE:
                         self.air += 1
                         self.gold -= LOW_PRICE
-                        pg.time.delay(150)
+                        pygame.time.delay(150)
 
                 elif action == "goldToAir10":
                     if self.air <= 90 and self.gold >= MID_PRICE:
                         self.air += 10
                         self.gold -= MID_PRICE
-                        pg.time.delay(150)
+                        pygame.time.delay(150)
 
                 elif action == "goldToAirMax":
                     while self.air < 100 and self.gold >= LOW_PRICE:
@@ -81,18 +82,24 @@ class village(object):
                     self.upgrades = False
                     self.skills = True
 
+                elif action == "expedition":
+                    self.village = False
+
         else:
-            pg.draw.rect(self.gameDisplay, ic, (x, y, w, h))
+            pygame.draw.rect(self.gameDisplay, ic, (x, y, w, h))
 
     #######   
             
     def draw(self):
         """Affiche le menu du village"""
-
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                pg.quit()
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
                 quit()
+            if event.type == 1:
+                self.air -= 1
+
         self.gameDisplay.fill(white)
         
         ## Titre en haut
@@ -109,65 +116,77 @@ class village(object):
         self.textDisplay("Population " + str(self.population), black, 30, 900, 20) 
         ####### 
 
+        ####### CONVERT GOLD TO AIR #######
+        x = 80 
+        y = 432
+        buttonWidth = 192
+        buttonHeight = 32
+        y2 = y+(buttonHeight+16)
+        y3 = y+(buttonHeight+16)*2
+
+        img = pygame.image.load("images/gold.png")
+        self.gameDisplay.blit(img, (85, 352))
+
+        img = pygame.image.load("images/airBottle.png")
+        self.gameDisplay.blit(img, (180, 352))
+
+        self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "goldToAir1")
+        self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "goldToAir10")
+        self.button(x, y3, buttonWidth, buttonHeight, green, bright_green, "goldToAirMax")
+
+        if self.gold < LOW_PRICE:
+            self.button(x, y, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
+            self.button(x, y3, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
+            
+        if self.gold < MID_PRICE or self.air > 90:
+            self.button(x, y2, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
+        
+        if self.air >= 100:
+            self.button(x, y, buttonWidth, buttonHeight, red, red)
+            self.button(x, y2, buttonWidth, buttonHeight, red, red)
+            self.button(x, y3, buttonWidth, buttonHeight, red, red)
+
+        self.textDisplay("500 -> 1", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/2))) 
+        self.textDisplay("5000 -> 10", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/2))) 
+        self.textDisplay("MAX", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/2))) 
+        #######
+
         ####### SHOP UPGRADE #######
-        x = 50
-        y = 450
-        buttonWidth = 250
-        buttonHeight = 90
-        y2 = y+(buttonHeight+10)
-        y3 = y+(buttonHeight+10)*2
+        x = 400
+        y = 320
+        buttonWidth = 224
+        buttonHeight = 80
+        y2 = y+(buttonHeight+32)
+        y3 = y+(buttonHeight+32)*2
 
         if self.menu:
             self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "townUpgrades")
             self.textDisplay("Town upgrades", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/2)) ) 
             
-            self.button(x, y+(buttonHeight+10)*1, buttonWidth, buttonHeight, green, bright_green, "skills")
+            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "skills")
             self.textDisplay("Skills", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/2)) )
 
         elif self.upgrades:
             self.button(x, y, buttonWidth, buttonHeight, green, bright_green)
             self.textDisplay("Maison", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
 
-            self.button(x, y+(buttonHeight+10)*1, buttonWidth, buttonHeight, green, bright_green)
+            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
             self.textDisplay("Purificateur", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
 
-            self.button(x, y+(buttonHeight+10)*2, buttonWidth, buttonHeight, green, bright_green)
+            self.button(x, y3, buttonWidth, buttonHeight, green, bright_green)
             self.textDisplay("Stockage d'air", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/3)) )
 
         elif self.skills:
             self.button(x, y, buttonWidth, buttonHeight, green, bright_green)
             self.textDisplay("Courir", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
 
-            self.button(x, y+(buttonHeight+10)*1, buttonWidth, buttonHeight, green, bright_green)
+            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
             self.textDisplay("Cape", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
         ####### 
+        ####### EXPEDITION #######
+        self.button(700, 600, buttonWidth, buttonHeight, green, bright_green, "expedition")
 
-        ####### CONVERT GOLD TO AIR #######
-        x = 362 
-        y = 450
-        buttonWidth = 300
-        buttonHeight = 90
-
-        self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "goldToAir1")
-        self.button(x, y+(buttonHeight+10)*1, buttonWidth, buttonHeight, green, bright_green, "goldToAir10")
-        self.button(x, y+(buttonHeight+10)*2, buttonWidth, buttonHeight, green, bright_green, "goldToAirMax")
-
-        if self.gold < LOW_PRICE:
-            self.button(x, y, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
-            self.button(x, y+(buttonHeight+10)*2, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
-            
-        if self.gold < MID_PRICE or self.air > 90:
-            self.button(x, y+(buttonHeight+10)*1, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
-        
-        if self.air >= 100:
-            self.button(x, y, buttonWidth, buttonHeight, red, red)
-            self.button(x, y+(buttonHeight+10)*1, buttonWidth, buttonHeight, red, red)
-            self.button(x, y+(buttonHeight+10)*2, buttonWidth, buttonHeight, red, red)
-
-        self.textDisplay("Gold -> Air 1", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/2))) 
-        self.textDisplay("Gold -> Air 10", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight+10)*1+(buttonHeight/2))) 
-        self.textDisplay("Gold -> Air MAX", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight+10)*2+(buttonHeight/2))) 
         #######
 
-        pg.display.update()
+        pygame.display.update()
         

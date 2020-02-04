@@ -46,7 +46,7 @@ class Camera:
 
         win.blit(MAP_BACKGROUND, (-self.x,-self.y)) 
         for elem in enemyHitboxList:
-            pg.draw.rect(win, (200, 200, 200), pg.Rect(elem.left - self.x,elem.top - self.y, elem.width, elem.height)) 
-        player.draw(win, playerX, playerY)
+            pg.draw.rect(win, (200, 200, 200), pg.Rect(elem.left - self.x,elem.top - self.y, elem.width, elem.height))
         for element in displayList:
             element.draw(win,element.rect.left - self.x,element.rect.top - self.y)
+        player.draw(win, playerX, playerY)
