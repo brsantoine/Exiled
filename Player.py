@@ -29,7 +29,7 @@ class Player:
         tempDx = dx
         tempDy = dy
 
-        while self.rect.collidelist(collisionList) == -1 and tempDx != 0:
+        while self.rect.collidelist(wallList) == -1 and tempDx != 0:
             if tempDx > 0:
                 self.rect.left += 1
                 tempDx -= 1
@@ -37,13 +37,13 @@ class Player:
                 self.rect.left -= 1
                 tempDx += 1
             
-        if self.rect.collidelist(collisionList) != -1:
+        if self.rect.collidelist(wallList) != -1:
             if dx > 0:
                 self.rect.left -= 1
             else:
                 self.rect.left += 1
 
-        while self.rect.collidelist(collisionList) == -1 and tempDy != 0:
+        while self.rect.collidelist(wallList) == -1 and tempDy != 0:
             if tempDy > 0:
                 self.rect.top += 1
                 tempDy -= 1
@@ -51,7 +51,7 @@ class Player:
                 self.rect.top -= 1
                 tempDy += 1
             
-        if self.rect.collidelist(collisionList) != -1:
+        if self.rect.collidelist(wallList) != -1:
             if dy > 0:
                 self.rect.top -= 1
             else:
