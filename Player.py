@@ -8,7 +8,7 @@ class Player:
         self.rect = pg.Rect(x, y, w, h)
         self.text = ""
 
-    def update(self, keys, collisionList):
+    def update(self, keys, wallList,enemyHitboxList):
         """Appelee a chaque tour de boucle, cette methode permet de mettre les coordonnees a jour"""
 
         dx = 0
@@ -68,7 +68,11 @@ class Player:
 
         font = pg.font.Font('freesansbold.ttf', 32)
         self.text = font.render("X : " + str(self.rect.left) + " ; Y : " + str(self.rect.top), True, (255, 255, 255), (0, 0, 0))
-
+        safe = True       
+        if self.rect.collidelist(enemyHitboxList) != -1:
+            safe = False
+        return safe
+      
     def draw(self, screen, x, y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
 
