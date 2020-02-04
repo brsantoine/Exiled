@@ -29,8 +29,8 @@ camera = Camera()
 map1 = Map("map1", None)
 
 collisionList = []
-for enemy in enemies :
-    collisionList.append(enemy)
+collisionList += map1.wallList
+collisionList += enemies 
 
 enemyHitboxList = []
 
@@ -47,7 +47,7 @@ while run:
 
     run = joueur.update(pg.key.get_pressed(), collisionList,enemyHitboxList)
 
-    camera.draw(screen, joueur, collisionList,enemyHitboxList)
+    camera.draw(screen, joueur, collisionList, enemyHitboxList)
 
     enemyHitboxList = []
 
