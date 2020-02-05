@@ -10,6 +10,38 @@ from settings import *
 from threading import Timer
 
 pg.init()
+def textObjects( text, font, color):
+        textSurface = font.render(text, True, color)
+        return textSurface, textSurface.get_rect()
+
+def textDisplay( msg, color, size, x, y):
+    smallText = pygame.font.Font('freesansbold.ttf', size)
+    textSurf, textRect = textObjects(msg, smallText, color)
+    textRect.center = (x, y)
+    screen.blit(textSurf, textRect)
+
+def button(x, y, w, h, ic, ac, action=None):
+        mouse = pg.mouse.get_pos()
+        click = pg.mouse.get_pressed()
+        if x+w > mouse[0] > x and y+h > mouse[1] > y:
+            pg.draw.rect(screen, ac, (x, y, w, h))
+            if click[0] == 1 and action != None:
+                if action == "quit":
+                    pg.quit()
+                    quit()
+                elif action == "exitExpedition":
+                    # village.gold += expedition.gold()
+                    return True
+                elif action == "loseExpedition":
+                    # village.gold += expedition.gold()
+                    return True
+        else:
+            pg.draw.rect(screen, ic, (x, y, w, h))
+            return False
+
+        #######   
+
+
 
 size = width, height = 1024, 768
 dx = 0
@@ -54,7 +86,9 @@ village = village(screen, 1024, 786)
 enemyHitboxList = []
 
 run = True
-while True:
+while run: 
+    #village.lose or village.win
+    # if ^ run = f alse
     fpsClock.tick(60)
 
     if not village.timerAir:
@@ -92,16 +126,38 @@ while True:
             village.village = True
             joueur.rect.left = MAP_START_X
             joueur.rect.top = MAP_START_Y
+
+            Clicked = False
+            see_through = pg.Surface((SCREEN_WIDTH - TAILLE_CASE,SCREEN_HEIGHT - TAILLE_CASE)).convert_alpha()
+            see_through.fill((140, 140, 140, 200))
+            screen.blit(see_through, (32,32))
+            # Attend que l'utilisateur clique sur le bouton continuer
+            while not Clicked:
+                Clicked = button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"loseExpedition")
+                textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
+                pg.display.update()
+                for event in pg.event.get():
+                    if event.type == pg.QUIT: sys.exit()
+
         if expeditionClear:
             village.village = True
             joueur.rect.left = MAP_START_X
             joueur.rect.top = MAP_START_Y
             # Draw the transparent rect
+            Clicked = False
             see_through = pg.Surface((SCREEN_WIDTH - TAILLE_CASE,SCREEN_HEIGHT - TAILLE_CASE)).convert_alpha()
             see_through.fill((140, 140, 140, 200))
             screen.blit(see_through, (32,32))
             # Attend que l'utilisateur clique sur le bouton continuer
-            
+            while not Clicked:
+                Clicked = button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"exitExpedition")
+                textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
+                for event in pg.event.get():
+                    if event.type == pg.QUIT: sys.exit()
+                pg.display.update()
+
+
+
 
              
                         
