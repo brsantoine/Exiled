@@ -9,6 +9,12 @@ class Player:
         self.text = ""
         self.img = pg.image.load("images/player.png")
 
+    def expeditionClear(self, start) :
+        if self.rect.colliderect(start):
+            return True
+        else:
+            return False
+
     def update(self, keys, wallList):
 
         """Appelee a chaque tour de boucle, cette methode permet de mettre les coordonnees a jour"""

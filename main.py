@@ -83,6 +83,8 @@ fpsClock = pg.time.Clock()
 
 village = village(screen, 1024, 786)
 
+startRect = pg.Rect(MAP_START_X - TAILLE_CASE, MAP_START_Y + (2*TAILLE_CASE), 3*TAILLE_CASE, TAILLE_CASE)
+
 enemyHitboxList = []
 running = True
 
@@ -142,6 +144,77 @@ while running:
         button(x, y3, buttonWidth, buttonHeight, green, bright_green,"hard")
         textDisplay("Hard", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/3)) )
     elif playing:
+        while playing: 
+        #village.lose or village.win
+        # if ^ run = f alse
+            fpsClock.tick(60)
+
+            if not village.timerAir:
+                village.timerAir = True
+                tAir = Timer(10.0, village.minusAir)
+                tAir.start()
+            if not village.timerPop:
+                village.timerPop = True
+                tPop = Timer(1.0, village.plusPopulation)
+                tPop.start()
+
+
+            if village.village:
+                village.draw()
+                
+                for event in pg.event.get():
+                        if event.type == pg.QUIT:
+                            sys.exit()
+            else:
+
+                expedition = Expedition("map1")
+
+                while expedition.inProgress:
+                    for event in pg.event.get():
+                        if event.type == pg.QUIT:
+                            sys.exit()
+
+                    expedition.update()
+
+                    expedition.draw(screen)
+
+                    expeditionClear = expedition.player.expeditionClear(startRect)
+
+                    pg.display.update()
+
+                if not expedition.inProgress:
+                    village.village = True
+                    expedition.player.rect.left = MAP_START_X
+                    expedition.player.rect.top = MAP_START_Y
+
+                    Clicked = False
+                    see_through = pg.Surface((SCREEN_WIDTH - TAILLE_CASE,SCREEN_HEIGHT - TAILLE_CASE)).convert_alpha()
+                    see_through.fill((140, 140, 140, 200))
+                    screen.blit(see_through, (32,32))
+                    # Attend que l'utilisateur clique sur le bouton continuer
+                    while not Clicked:
+                        Clicked = button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"loseExpedition")
+                        textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
+                        pg.display.update()
+                        for event in pg.event.get():
+                            if event.type == pg.QUIT: sys.exit()
+
+                if expeditionClear:
+                    village.village = True
+                    expedition.player.rect.left = MAP_START_X
+                    expedition.player.rect.top = MAP_START_Y
+                    # Draw the transparent rect
+                    Clicked = False
+                    see_through = pg.Surface((SCREEN_WIDTH - TAILLE_CASE,SCREEN_HEIGHT - TAILLE_CASE)).convert_alpha()
+                    see_through.fill((140, 140, 140, 200))
+                    screen.blit(see_through, (32,32))
+                    # Attend que l'utilisateur clique sur le bouton continuer
+                    while not Clicked:
+                        Clicked = button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"exitExpedition")
+                        textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
+                        for event in pg.event.get():
+                            if event.type == pg.QUIT: sys.exit()
+                        pg.display.update()
         playing = False
         mainMenu = True
        
@@ -153,74 +226,6 @@ while running:
 
              
                         
-while playing: 
-#village.lose or village.win
-# if ^ run = f alse
-    fpsClock.tick(60)
 
-    if not village.timerAir:
-        village.timerAir = True
-        tAir = Timer(10.0, village.minusAir)
-        tAir.start()
-    if not village.timerPop:
-        village.timerPop = True
-        tPop = Timer(1.0, village.plusPopulation)
-        tPop.start()
-
-
-    if village.village:
-        village.draw()
-        
-        for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    sys.exit()
-    else:
-
-        expedition = Expedition("map1")
-
-        while expedition.inProgress:
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    sys.exit()
-
-            expedition.update()
-
-            expedition.draw(screen)
-
-            pg.display.update()
-
-        if not expedition.inProgress:
-            village.village = True
-            joueur.rect.left = MAP_START_X
-            joueur.rect.top = MAP_START_Y
-
-            Clicked = False
-            see_through = pg.Surface((SCREEN_WIDTH - TAILLE_CASE,SCREEN_HEIGHT - TAILLE_CASE)).convert_alpha()
-            see_through.fill((140, 140, 140, 200))
-            screen.blit(see_through, (32,32))
-            # Attend que l'utilisateur clique sur le bouton continuer
-            while not Clicked:
-                Clicked = button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"loseExpedition")
-                textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
-                pg.display.update()
-                for event in pg.event.get():
-                    if event.type == pg.QUIT: sys.exit()
-
-        if expeditionClear:
-            village.village = True
-            joueur.rect.left = MAP_START_X
-            joueur.rect.top = MAP_START_Y
-            # Draw the transparent rect
-            Clicked = False
-            see_through = pg.Surface((SCREEN_WIDTH - TAILLE_CASE,SCREEN_HEIGHT - TAILLE_CASE)).convert_alpha()
-            see_through.fill((140, 140, 140, 200))
-            screen.blit(see_through, (32,32))
-            # Attend que l'utilisateur clique sur le bouton continuer
-            while not Clicked:
-                Clicked = button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"exitExpedition")
-                textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
-                for event in pg.event.get():
-                    if event.type == pg.QUIT: sys.exit()
-                pg.display.update()
 
 
