@@ -27,7 +27,7 @@ class Enemy:
             else :
                 self.side = "Down" 
 
-        
+        self.img = pg.image.load("images/guard.png")
 
 
     def update(self):
@@ -101,8 +101,8 @@ class Enemy:
 
 
 
-    def draw(self,win,x,y):
-        pg.draw.rect(win, (255, 200, 5), pg.Rect(x, y , self.rect.width, self.rect.height))
+    def draw(self,screen,x,y):
+        screen.blit(self.img, (x, y))
     
 
 
