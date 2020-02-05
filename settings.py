@@ -16,6 +16,9 @@ MAP_BACKGROUND = pg.image.load("images/background.png")
 MAP_WIDTH = MAP_BACKGROUND.get_rect().width
 MAP_HEIGHT = MAP_BACKGROUND.get_rect().height
 
+
+
+
 #Colors
 black = (0, 0, 0)
 white = (255, 255, 255)

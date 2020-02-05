@@ -14,11 +14,23 @@ class Menu:
 
         self.x = 416
         self.y = 320
-        self.buttonWidth = 224
+        self.buttonWidth = 192
         self.buttonHeight = 80
         self.y2 = self.y + (self.buttonHeight+32)
         self.y3 = self.y + (self.buttonHeight+32)*2
         self.y4 = self.y + (self.buttonHeight+32)*3
+        self.hover = False
+
+        # Images
+        self.image_credits = pg.image.load("images/mainMenu/credits.png").convert_alpha()
+        self.image_gameTitle = pg.image.load("images/mainMenu/game_title.png").convert_alpha()
+        self.image_highScores = pg.image.load("images/mainMenu/high_scores.png").convert_alpha()
+        self.image_mainMenu = pg.image.load("images/mainMenu/main_menu.png").convert_alpha()
+        self.image_mainMenuBackground = pg.image.load("images/mainMenu/main_menu_background.png").convert_alpha()
+
+        # Sounds
+        self.WOOD_HOVER = pg.mixer.Sound('sounds/wood_hover.ogg')
+        self.WOOD_CLICK = pg.mixer.Sound('sounds/wood_hover.ogg')
 
     def textObjects(self, text, font, color):
         textSurface = font.render(text, True, color)
@@ -35,6 +47,25 @@ class Menu:
         click = pg.mouse.get_pressed()
         if x + w > mouse[0] > x and y+h > mouse[1] > y:
             pg.draw.rect(self.screen, ac, (x, y, w, h))
+            #
+            #if action == "quit" and self.hover == False:
+            #    pg.time.delay(150)
+            #elif action == "Play" and self.hover == False:
+            #    pg.time.delay(150)
+            #elif action == "Help" and self.hover == False:
+            #    pg.time.delay(150)
+            #elif action == "Credits" and self.hover == False:
+            #   pg.time.delay(150)
+            #elif action == "easy" and self.hover == False:
+            #  pg.time.delay(150)
+            #elif action == "normal" and self.hover == False:
+            #    pg.time.delay(150)
+            #elif action == "hard" and self.hover == False:
+            #   pg.time.delay(150)
+            #elif action == "mainMenu" and self.hover == False:
+            #    pg.time.delay(150)
+            #self.hover = True
+            #
             if click[0] == 1 and action != None:
                 if action == "quit":
                     pg.display.quit()
@@ -49,34 +80,43 @@ class Menu:
                     pg.time.delay(150)
                 elif action == "Play":
                     self.currentWindow = "difficultyMenu"
+                    self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "Help":
                     self.currentWindow = "helpMenu"
+                    self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "Credits":
                     self.currentWindow = "creditsScreen"
+                    self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "easy":
                     self.closed = True
+                    self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "normal":
                     self.closed = True
+                    self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "hard":
                     self.closed = True
+                    self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "mainMenu":
                     self.currentWindow = "mainMenu"
+                    self.WOOD_CLICK.play()
                     pg.time.delay(150)
         else:
             pg.draw.rect(self.screen, ic, (x, y, w, h))
+            #self.hover = False
             return False
 
     def draw(self):
-        """Appelee a chaque tour de boucle, cette fonction affiche le mur"""
+        """Appelee a chaque tour de boucle, cette fonction affiche le menu"""
 
+        
+        
         self.screen.fill(white)
-
         if self.currentWindow == "mainMenu":
             self.textDisplay("Menu", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
             # self.button play
@@ -89,11 +129,15 @@ class Menu:
             self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green,"quit")
             self.textDisplay("Quit", black, 20, (self.x+(self.buttonWidth/2)), (self.y3+(self.buttonHeight/3)) )
             # self.button Credits
-            self.button(92, 560, 197, 123, green, bright_green,"Credits")
+            self.button(90, 581, 197, 126, green, bright_green,"Credits")
             self.textDisplay("Credits", black, 20, (92+(197/2)), (560+(123/2)) )
             # self.button Highscores
             self.button(736, 364, 193, 107, green, bright_green,"Credits")
-            self.textDisplay("Credits", black, 20, (461+(121/2)), (228+(67/2)) )
+            self.screen.blit(self.image_mainMenuBackground, (0, 0))
+            self.screen.blit(self.image_mainMenu, (0, 0))
+            self.screen.blit(self.image_gameTitle, (0, 0))
+            self.screen.blit(self.image_credits, (0, 0))
+            self.screen.blit(self.image_highScores, (0, 0))
 
         elif self.currentWindow == "helpMenu":
             self.textDisplay("How to play", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
@@ -116,6 +160,9 @@ class Menu:
             # self.button hard
             self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green,"hard")
             self.textDisplay("Hard", black, 20, (self.x+(self.buttonWidth/2)), (self.y3+(self.buttonHeight/3)) )
+            # Button retour
+            self.button(50, SCREEN_HEIGHT/15, self.buttonWidth/2, self.buttonHeight/2, green, bright_green, "mainMenu")
+            self.textDisplay("Main Menu", black, 10, (50+(self.buttonWidth/4)), ((SCREEN_HEIGHT/15)+(self.buttonHeight/4)) )
 
     def drawDeath(self):
         Clicked = False
