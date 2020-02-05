@@ -23,6 +23,9 @@ class Expedition:
         self.enemyHitboxList = self.map.update()
         self.player.update(pg.key.get_pressed(), self.collisionList)
         
+        if self.player.rect.collidelist(self.map.exitList) != -1:
+            self.inProgress = False
+
         if self.player.rect.collidelist(self.enemyHitboxList) != -1:
             self.inProgress = False
 
@@ -40,6 +43,7 @@ class Expedition:
     def draw(self, screen):
         self.displayList = []
         self.displayList += self.map.wallList
+        self.displayList += self.map.exitList
         self.displayList += self.map.moneyList
         self.displayList += self.map.enemies
         self.camera.draw(screen, self.player, self.displayList, self.enemyHitboxList)

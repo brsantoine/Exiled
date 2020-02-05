@@ -3,7 +3,7 @@ from settings import *
 
 pygame.init()
 
-class village(object):
+class Village:
     """Classe qui correspond au village et ressources ainsi qu a son interface"""
 
     def __init__(self, gameDisplay, screenWidth, screenHeight):
@@ -27,7 +27,8 @@ class village(object):
         self.skills2 = False
 
         # Utilities
-        self.village = True
+        self.launchExpedition = False
+        self.inTheVillage = True
         self.timerAir = False
         self.timerPop = False
         self.timerGold = False
@@ -160,10 +161,8 @@ class village(object):
                     pygame.time.delay(150)
 
                 elif action == "expedition":
-                    self.village = False
+                    self.launchExpedition = True
                     pygame.time.delay(150)
-                
-                
 
         else:
             pygame.draw.rect(self.gameDisplay, ic, (x, y, w, h))
