@@ -67,8 +67,6 @@ class Village(object):
         click = pygame.mouse.get_pressed()
 
         if x+w > mouse[0] > x and y+h > mouse[1] > y:
-            pygame.draw.rect(self.gameDisplay, ac, (x, y, w, h))
-            
             if action == "house":
                 img = pygame.image.load("images/house_sign.png")
                 self.gameDisplay.blit(img, (0, 0))
@@ -162,10 +160,7 @@ class Village(object):
                     self.launchExpedition = True
                     pygame.time.delay(150)
                 
-                
-
-        else:
-            pygame.draw.rect(self.gameDisplay, ic, (x, y, w, h))
+        #else:
 
         #######   
                 
