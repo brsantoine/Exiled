@@ -38,6 +38,7 @@ while True:
     for event in pg.event.get():
 
         if event.type == pg.QUIT:
+            pygame.display.quit()
             sys.exit()
     
     if not menu.closed:
@@ -58,7 +59,6 @@ while True:
                 expedition.update()
                 expedition.draw(screen)
             else:
-                musicPlayer.fadeOut()
                 menu.drawDeath()
                 musicPlayer.playMenuMusic()
                 village.gold += expedition.moneyGained

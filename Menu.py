@@ -37,6 +37,7 @@ class Menu:
             pg.draw.rect(self.screen, ac, (x, y, w, h))
             if click[0] == 1 and action != None:
                 if action == "quit":
+                    pg.display.quit()
                     sys.exit()
                 elif action == "exitExpedition":
                     # village.gold += expedition.gold()
@@ -127,4 +128,4 @@ class Menu:
             self.textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
             pg.display.update()
             for event in pg.event.get():
-                if event.type == pg.QUIT: sys.exit()
+                if event.type == pg.QUIT: pg.display.quit(); sys.exit()

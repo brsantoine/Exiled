@@ -3,7 +3,7 @@ import pygame as pg
 SCREEN_WIDTH = 1024
 SCREEN_HEIGHT = 768
 TAILLE_CASE = 64
-TITLE = "Temp"
+TITLE = "Breathless Town"
 FPS = 30
 VELOCITY = 8
 ENEMY_VELOCITY = 4
