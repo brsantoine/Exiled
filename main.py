@@ -113,6 +113,20 @@ while running:
     for event in pg.event.get():
             if event.type == pg.QUIT: sys.exit()
 
+    if not village.timerAir:
+        village.timerAir = True
+        tAir = Timer(10.0, village.minusAir)
+        tAir.start()
+
+    if not village.timerPop:
+        village.timerPop = True
+        tPop = Timer(1.0, village.plusPopulation)
+        tPop.start()
+    if not village.timerGold:
+        village.timerGold = True
+        tGold = Timer(1.0, village.plusGold)
+        tGold.start()
+
     screen.fill(white)
     if mainMenu:
         textDisplay("Menu", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
@@ -219,8 +233,6 @@ while running:
         mainMenu = True
        
     pg.display.update()
-    
-
 
 
 
