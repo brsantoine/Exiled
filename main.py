@@ -61,7 +61,7 @@ while True:
         village.timerAir = True
         tAir = Timer(10.0, village.minusAir)
         tAir.start()
-        
+
     if not village.timerPop:
         village.timerPop = True
         tPop = Timer(1.0, village.plusPopulation)

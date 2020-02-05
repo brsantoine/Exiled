@@ -14,6 +14,7 @@ class village(object):
         self.population = 2
         self.airTank = 100
         self.populationTank = 20
+        self.boots = False
 
         self.gameDisplay = gameDisplay
         self.screenWidth = screenWidth
@@ -66,6 +67,37 @@ class village(object):
 
         if x+w > mouse[0] > x and y+h > mouse[1] > y:
             pygame.draw.rect(self.gameDisplay, ac, (x, y, w, h))
+            
+            if action == "house":
+                img = pygame.image.load("images/house_sign.png")
+                self.gameDisplay.blit(img, (0, 0))
+
+            elif action == "airTank":
+                img = pygame.image.load("images/air_tank_sign.png")
+                self.gameDisplay.blit(img, (0, 0))
+
+            elif action == "purifier":
+                img = pygame.image.load("images/air_purifier_sign.png")
+                self.gameDisplay.blit(img, (0, 0))
+
+            elif action == "menu":
+                img = pygame.image.load("images/air_purifier_sign.png")
+                self.gameDisplay.blit(img, (0, 0))
+                
+            elif action == "upgrades":
+                img = pygame.image.load("images/air_purifier_sign.png")
+                self.gameDisplay.blit(img, (0, 0))
+
+            elif action == "skills":
+                img = pygame.image.load("images/air_purifier_sign.png")
+                self.gameDisplay.blit(img, (0, 0))
+
+            #elif action == "expedition":
+
+            elif action == "boots":
+                img = pygame.image.load("images/boots_sign.png")
+                self.gameDisplay.blit(img, (0, 0))
+
             if click[0] == 1 and action != None:
                 if action == "quit":
                     pygame.quit()
@@ -106,6 +138,10 @@ class village(object):
                     if self.gold >= PRICE_PURIFIER:
                         self.gold -= PRICE_PURIFIER
                         self.win = True
+                elif action == "boots":
+                    if self.gold >= PRICE_BOOTS:
+                        self.gold -= PRICE_BOOTS
+                        self.boots = True
 
                 elif action == "menu":
                     self.menu = True
@@ -115,11 +151,7 @@ class village(object):
                 elif action == "upgrades":
                     self.menu = self.upgrades2 = self.skills = False
                     self.upgrades = True
-                    pygame.time.delay(150)
 
-                elif action == "upgrades2":
-                    self.menu = self.upgrades = self.skills = False
-                    self.upgrades2 = True
                     pygame.time.delay(150)
 
                 elif action == "skills":
@@ -145,8 +177,8 @@ class village(object):
                 pygame.quit()
                 quit()
 
-        self.gameDisplay.fill(white)
-        
+        self.gameDisplay.fill(white) # a changer par l'image de background
+
         ## Titre en haut
         self.textDisplay("Village", black, 30, (self.screenWidth/2), (self.screenHeight/15))
 
@@ -163,6 +195,11 @@ class village(object):
         ####### 
 
         ####### CONVERT GOLD TO AIR #######
+        img = pygame.image.load("images/air_converter.png")
+        self.gameDisplay.blit(img, (0, 0))
+        img = pygame.image.load("images/expedition_sign.png")
+        self.gameDisplay.blit(img, (0, 0))
+
         x = 80 
         y = 432
         buttonWidth = 192
@@ -206,6 +243,9 @@ class village(object):
         y3 = y+(buttonHeight+32)*2
 
         if self.menu:
+            img = pygame.image.load("images/town_hall.png")
+            self.gameDisplay.blit(img, (0, 0))
+
             self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "upgrades")
             self.textDisplay("Town upgrades", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/2)) ) 
             
@@ -213,6 +253,9 @@ class village(object):
             self.textDisplay("Skills", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/2)) )
 
         elif self.upgrades:
+            img = pygame.image.load("images/town_upgrades.png")
+            self.gameDisplay.blit(img, (0, 0))
+
             self.button(x-48, y-64, 32, 32, (200, 200, 200), (100, 100, 100), "menu")
 
             self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "house")
@@ -231,23 +274,13 @@ class village(object):
                 self.button(x, y3, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100) )
             self.textDisplay("Air tank", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/3)) )
 
-            self.button(x+144, y3+buttonHeight+16, 32, 32, (200, 200, 200), (100, 100, 100), "upgrades2")
-
-        elif self.upgrades2:
-            self.button(x-32, y-32, 32, 32, (200, 200, 200), (100, 100, 100), "menu")
-
-            self.button(x, y, buttonWidth, buttonHeight, green, bright_green)
-            self.textDisplay("Nothing", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
-
-            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
-            self.textDisplay("Nothing", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
-
-            self.button(x+16, y3+32, 32, 32, (200, 200, 200), (100, 100, 100), "upgrades")
-
         elif self.skills:
+            img = pygame.image.load("images/skills.png")
+            self.gameDisplay.blit(img, (0, 0))
+
             self.button(x-48, y-64, 32, 32, (200, 200, 200), (100, 100, 100), "menu")
 
-            self.button(x, y, buttonWidth, buttonHeight, green, bright_green)
+            self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "boots")
             self.textDisplay("Courir", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
 
             self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
