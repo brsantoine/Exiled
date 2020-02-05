@@ -1,5 +1,6 @@
 import pygame as pg
 from Wall import *
+from Exit import *
 from Money import *
 from Enemy import *
 from settings import *
@@ -13,6 +14,7 @@ class Map:
         # self.img = pg.image.load("maps/" + fileName + ".png")
 
         self.wallList = []
+        self.exitList = []
         self.moneyList = []
         self.enemies = []
         self.playerSpawn = (0, 0)
@@ -34,6 +36,8 @@ class Map:
                 for lettre in line:
                     if lettre == 'W':
                         self.wallList.append(Wall(x * TAILLE_CASE, y * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
+                    if lettre == 'E':
+                        self.exitList.append(Exit(x * TAILLE_CASE, y * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
                     if lettre == 'C':
                         self.moneyList.append(Money(x * TAILLE_CASE, y * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
                     if lettre == 'S':
