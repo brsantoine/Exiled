@@ -90,9 +90,15 @@ class Menu:
             self.button(self.x, self.y4, self.buttonWidth, self.buttonHeight, green, bright_green,"quit")
             self.textDisplay("Quit", black, 20, (self.x+(self.buttonWidth/2)), (self.y4+(self.buttonHeight/3)) )
         elif self.currentWindow == "helpMenu":
-            pass
+            self.textDisplay("How to play", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
+            # Button retour
+            self.button(50, SCREEN_HEIGHT/15, self.buttonWidth/2, self.buttonHeight/2, green, bright_green, "mainMenu")
+            self.textDisplay("Main Menu", black, 10, (50+(self.buttonWidth/4)), ((SCREEN_HEIGHT/15)+(self.buttonHeight/4)) )
         elif self.currentWindow == "creditsScreen":
-            pass
+            self.textDisplay("Credits", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
+            # Button retour
+            self.button(50, SCREEN_HEIGHT/15, self.buttonWidth/2, self.buttonHeight/2, green, bright_green, "mainMenu")
+            self.textDisplay("Main Menu", black, 10, (50+(self.buttonWidth/4)), ((SCREEN_HEIGHT/15)+(self.buttonHeight/4)) )
         elif self.currentWindow == "difficultyMenu":
             self.textDisplay("Difficulty", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
             # self.button easy
