@@ -7,6 +7,7 @@ from Wall import *
 from Map import *
 from village import *
 from settings import *
+from threading import Timer
 
 pg.init()
 
@@ -55,6 +56,16 @@ enemyHitboxList = []
 run = True
 while True:
     fpsClock.tick(60)
+
+    if not village.timerAir:
+        village.timerAir = True
+        tAir = Timer(10.0, village.minusAir)
+        tAir.start()
+    if not village.timerPop:
+        village.timerPop = True
+        tPop = Timer(1.0, village.plusPopulation)
+        tPop.start()
+
 
     if village.village:
         village.draw()

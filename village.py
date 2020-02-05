@@ -1,18 +1,7 @@
 import pygame
-from threading import Timer
+from settings import *
+
 pygame.init()
-
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (200, 0, 0)
-green = (0, 200, 0)
-bright_red = (255, 0, 0)
-bright_green = (0, 255, 0)
-
-LOW_PRICE_AIR = 500
-MID_PRICE_AIR = 5000
-
-PRICE_HOUSE = 2000
 
 class village(object):
     """Classe qui correspond au village et ressources ainsi qu a son interface"""
@@ -54,7 +43,7 @@ class village(object):
             self.population += 1
             self.timerPop = False
 
-    ###### Define in settings ######
+    ###### FUNCTIONS ######
     def textObjects(self, text, font, color):
         textSurface = font.render(text, True, color)
         return textSurface, textSurface.get_rect()
@@ -119,24 +108,15 @@ class village(object):
                 elif action == "expedition":
                     self.village = False
 
-                
-
         else:
             pygame.draw.rect(self.gameDisplay, ic, (x, y, w, h))
 
-    #######   
-            
+        #######   
+                
     def draw(self):
         """Affiche le menu du village"""
         ## Timer a mettre dans le main
-        if not self.timerAir:
-            self.timerAir = True
-            tAir = Timer(10.0, self.minusAir)
-            tAir.start()
-        if not self.timerPop:
-            self.timerPop = True
-            tPop = Timer(1.0, self.plusPopulation)
-            tPop.start()
+        
         ##
 
         for event in pygame.event.get():
