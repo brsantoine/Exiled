@@ -172,10 +172,6 @@ class village(object):
                 
     def draw(self):
         """Affiche le menu du village"""
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
 
         self.gameDisplay.fill(white) # a changer par l'image de background
 

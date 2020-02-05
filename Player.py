@@ -3,10 +3,11 @@ from settings import *
 
 class Player:
     """Une classe qui correspond au joueur du jeu"""
-    def __init__(self, x, y, w, h):
+    def __init__(self, playerSpawn, w, h):
         """Initialise la classe Joueur"""
-        self.rect = pg.Rect(x, y, w, h)
+        self.rect = pg.Rect(playerSpawn[0], playerSpawn[1], w, h)
         self.text = ""
+        self.img = pg.image.load("images/player.png")
 
     def expeditionClear(self, start) :
         if self.rect.colliderect(start):
@@ -14,7 +15,8 @@ class Player:
         else:
             return False
 
-    def update(self, keys, wallList,enemyHitboxList):
+    def update(self, keys, wallList):
+
         """Appelee a chaque tour de boucle, cette methode permet de mettre les coordonnees a jour"""
 
         dx = 0
@@ -74,10 +76,7 @@ class Player:
 
         font = pg.font.Font('freesansbold.ttf', 32)
         self.text = font.render("X : " + str(self.rect.left) + " ; Y : " + str(self.rect.top), True, (255, 255, 255), (0, 0, 0))
-        safe = True       
-        if self.rect.collidelist(enemyHitboxList) != -1:
-            safe = False
-        return safe
+        
       
     def draw(self, screen, x, y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
@@ -86,4 +85,4 @@ class Player:
 
         screen.blit(self.text, textRect)
 
-        pg.draw.rect(screen, (255, 150, 255), pg.Rect(x, y, self.rect.width, self.rect.height))
+        screen.blit(self.img, (x, y))
