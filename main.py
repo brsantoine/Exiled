@@ -3,6 +3,7 @@ import pygame as pg
 from Expedition import *
 from Menu import *
 from Village import *
+from MusicPlayer import *
 from settings import *
 from threading import Timer
 
@@ -23,21 +24,16 @@ def updateTimers():
         tGold.start()
 
 size = width, height = 1024, 768
-
 screen = pg.display.set_mode(size)
-
 fpsClock = pg.time.Clock()
-
 village = Village(screen, 1024, 786)
-
 startRect = pg.Rect(MAP_START_X - TAILLE_CASE, MAP_START_Y + (2 * TAILLE_CASE), 3 * TAILLE_CASE, TAILLE_CASE)
 
-enemyHitboxList = []
-running = True
+musicPlayer = MusicPlayer()
 
 menu = Menu(screen)
 
-while running:
+while True:
     fpsClock.tick(60)
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -49,6 +45,7 @@ while running:
         updateTimers()
         if village.inTheVillage:
             if village.launchExpedition:
+                musicPlayer.playExpeditionMusic()
                 village.inTheVillage = False
                 village.launchExpedition = False
                 expedition = Expedition("map1")
@@ -59,7 +56,9 @@ while running:
                 expedition.update()
                 expedition.draw(screen)
             else:
+                musicPlayer.fadeOut()
                 menu.drawDeath()
+                musicPlayer.playMenuMusic()
                 village.gold += expedition.moneyGained
                 village.inTheVillage = True
 
