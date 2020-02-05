@@ -8,7 +8,7 @@ FPS = 30
 VELOCITY = 8
 ENEMY_VELOCITY = 4
 
-MAP_BACKGROUND = pg.image.load("train.jpg")
+MAP_BACKGROUND = pg.image.load("images/background.png")
 MAP_WIDTH = MAP_BACKGROUND.get_rect().width
 MAP_HEIGHT = MAP_BACKGROUND.get_rect().height
 
