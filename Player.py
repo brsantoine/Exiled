@@ -10,6 +10,7 @@ class Player:
         self.img = pg.image.load("images/player.png")
 
     def update(self, keys, wallList):
+
         """Appelee a chaque tour de boucle, cette methode permet de mettre les coordonnees a jour"""
 
         dx = 0

@@ -1,37 +1,49 @@
 import pygame
+from settings import *
+
 pygame.init()
-
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (200, 0, 0)
-green = (0, 200, 0)
-bright_red = (255, 0, 0)
-bright_green = (0, 255, 0)
-
-LOW_PRICE = 500
-MID_PRICE = 5000
 
 class village(object):
     """Classe qui correspond au village et ressources ainsi qu a son interface"""
 
     def __init__(self, gameDisplay, screenWidth, screenHeight):
         """Affectation des ressources en debut de partie"""
+        # Ressources
         self.gold = 12000
-        self.air = 0
-        self.population = 1
+        self.air = 100
+        self.population = 0
+        self.airTank = 100
+        self.populationTank = 10
+        self.lose = False
 
         self.gameDisplay = gameDisplay
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
 
+        # Interactive menu
         self.menu = True
         self.upgrades = False
         self.skills = False
+        self.skills2 = False
 
+        # Utilities
         self.village = True
-        pygame.time.set_timer(1, 5000)
+        self.timerAir = False
+        self.timerPop = False
 
-    ###### Define in settings ######
+    def minusAir(self):
+        self.timerAir = False
+        if self.air > 0:
+            self.air -= 1
+        else:
+            self.lose = True
+
+    def plusPopulation(self):
+        if self.population < self.populationTank:
+            self.population += 1
+            self.timerPop = False
+
+    ###### FUNCTIONS ######
     def textObjects(self, text, font, color):
         textSurface = font.render(text, True, color)
         return textSurface, textSurface.get_rect()
@@ -56,30 +68,41 @@ class village(object):
                     pygame.time.delay(1)
 
                 elif action == "goldToAir1":
-                    if self.air < 100 and self.gold >= LOW_PRICE:
+                    if self.air < self.airTank and self.gold >= LOW_PRICE_AIR:
                         self.air += 1
-                        self.gold -= LOW_PRICE
+                        self.gold -= LOW_PRICE_AIR
                         pygame.time.delay(150)
 
                 elif action == "goldToAir10":
-                    if self.air <= 90 and self.gold >= MID_PRICE:
+                    if self.air <= self.airTank-10 and self.gold >= MID_PRICE_AIR:
                         self.air += 10
-                        self.gold -= MID_PRICE
+                        self.gold -= MID_PRICE_AIR
                         pygame.time.delay(150)
 
                 elif action == "goldToAirMax":
-                    while self.air < 100 and self.gold >= LOW_PRICE:
-                        self.gold -= LOW_PRICE
+                    while self.air < self.airTank and self.gold >= LOW_PRICE_AIR:
+                        self.gold -= LOW_PRICE_AIR
                         self.air += 1
 
-                elif action == "townUpgrades":
-                    self.menu = False
+                elif action == "house":
+                    if self.gold >= PRICE_HOUSE:
+                        self.gold -= PRICE_HOUSE
+                        self.populationTank += 50
+
+                elif action == "menu":
+                    self.menu = True
+                    self.upgrades = self.upgrades2 = self.skills  = False
+
+                elif action == "upgrades":
+                    self.menu = self.upgrades2 = self.skills = False
                     self.upgrades = True
-                    self.skills = False
+
+                elif action == "upgrades2":
+                    self.menu = self.upgrades = self.skills = False
+                    self.upgrades2 = True
 
                 elif action == "skills":
-                    self.menu = False
-                    self.upgrades = False
+                    self.menu = self.upgrades = self.upgrades2 = False
                     self.skills = True
 
                 elif action == "expedition":
@@ -88,8 +111,8 @@ class village(object):
         else:
             pygame.draw.rect(self.gameDisplay, ic, (x, y, w, h))
 
-    #######   
-            
+        #######   
+                
     def draw(self):
         """Affiche le menu du village"""
 
@@ -127,11 +150,11 @@ class village(object):
         self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "goldToAir10")
         self.button(x, y3, buttonWidth, buttonHeight, green, bright_green, "goldToAirMax")
 
-        if self.gold < LOW_PRICE:
+        if self.gold < LOW_PRICE_AIR:
             self.button(x, y, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
             self.button(x, y3, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
             
-        if self.gold < MID_PRICE or self.air > 90:
+        if self.gold < MID_PRICE_AIR or self.air > 90:
             self.button(x, y2, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
         
         if self.air >= 100:
@@ -153,28 +176,52 @@ class village(object):
         y3 = y+(buttonHeight+32)*2
 
         if self.menu:
-            self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "townUpgrades")
+            self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "upgrades")
             self.textDisplay("Town upgrades", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/2)) ) 
             
             self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "skills")
             self.textDisplay("Skills", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/2)) )
 
         elif self.upgrades:
-            self.button(x, y, buttonWidth, buttonHeight, green, bright_green)
-            self.textDisplay("Maison", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
+            self.button(x-48, y-64, 32, 32, (200, 200, 200), (100, 100, 100), "menu")
+
+            self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "house")
+            self.textDisplay("House (-2000)", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
+
+            if self.gold < PRICE_HOUSE:
+                self.button(x, y, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100) )
+
 
             self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
-            self.textDisplay("Purificateur", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
+            self.textDisplay("Air purifier", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
 
             self.button(x, y3, buttonWidth, buttonHeight, green, bright_green)
-            self.textDisplay("Stockage d'air", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/3)) )
+            self.textDisplay("Air tank", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/3)) )
+
+            self.button(x+144, y3+buttonHeight+16, 32, 32, (200, 200, 200), (100, 100, 100), "upgrades2")
+
+        elif self.upgrades2:
+            self.button(x-32, y-32, 32, 32, (200, 200, 200), (100, 100, 100), "menu")
+
+            self.button(x, y, buttonWidth, buttonHeight, green, bright_green)
+            self.textDisplay("Nothing", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
+
+            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
+            self.textDisplay("Nothing", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
+
+            self.button(x+16, y3+32, 32, 32, (200, 200, 200), (100, 100, 100), "upgrades")
 
         elif self.skills:
+            self.button(x-48, y-64, 32, 32, (200, 200, 200), (100, 100, 100), "menu")
+
             self.button(x, y, buttonWidth, buttonHeight, green, bright_green)
             self.textDisplay("Courir", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
 
             self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
             self.textDisplay("Cape", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
+
+            
+            
         ####### 
         ####### EXPEDITION #######
         self.button(700, 600, buttonWidth, buttonHeight, green, bright_green, "expedition")

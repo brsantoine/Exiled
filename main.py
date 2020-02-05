@@ -8,6 +8,7 @@ from Wall import *
 from Money import *
 from village import *
 from settings import *
+from threading import Timer
 
 pg.init()
 
@@ -22,6 +23,16 @@ village = village(screen, 1024, 786)
 run = True
 while True:
     fpsClock.tick(60)
+
+    if not village.timerAir:
+        village.timerAir = True
+        tAir = Timer(10.0, village.minusAir)
+        tAir.start()
+    if not village.timerPop:
+        village.timerPop = True
+        tPop = Timer(1.0, village.plusPopulation)
+        tPop.start()
+
 
     if village.village:
         village.draw()
@@ -44,8 +55,6 @@ while True:
 
             pg.display.update()
 
-        for event in pg.event.get():
-            if event.type == pg.QUIT: sys.exit()
-
         if not expedition.inProgress:
             village.village = True
+
