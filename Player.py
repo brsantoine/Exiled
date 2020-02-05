@@ -8,6 +8,12 @@ class Player:
         self.rect = pg.Rect(x, y, w, h)
         self.text = ""
 
+    def expeditionClear(self, start) :
+        if self.rect.colliderect(start):
+            return True
+        else:
+            return False
+
     def update(self, keys, wallList,enemyHitboxList):
         """Appelee a chaque tour de boucle, cette methode permet de mettre les coordonnees a jour"""
 
