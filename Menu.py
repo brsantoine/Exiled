@@ -1,4 +1,5 @@
 import pygame as pg
+import sys
 from settings import *
 
 class Menu:
@@ -11,8 +12,8 @@ class Menu:
         self.currentWindow = "mainMenu"
         self.closed = False
 
-        self.x = 400
-        self.y = 220
+        self.x = 416
+        self.y = 320
         self.buttonWidth = 224
         self.buttonHeight = 80
         self.y2 = self.y + (self.buttonHeight+32)
@@ -36,6 +37,7 @@ class Menu:
             pg.draw.rect(self.screen, ac, (x, y, w, h))
             if click[0] == 1 and action != None:
                 if action == "quit":
+                    pg.display.quit()
                     sys.exit()
                 elif action == "exitExpedition":
                     # village.gold += expedition.gold()
@@ -83,12 +85,16 @@ class Menu:
             # self.button help
             self.button(self.x, self.y2, self.buttonWidth, self.buttonHeight, green, bright_green,"Help")
             self.textDisplay("Help", black, 20, (self.x + (self.buttonWidth/2)), (self.y2+(self.buttonHeight/3)) )
-            # self.button Credits
-            self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green,"Credits")
-            self.textDisplay("Credits", black, 20, (self.x+(self.buttonWidth/2)), (self.y3+(self.buttonHeight/3)) )
             # self.button quit
-            self.button(self.x, self.y4, self.buttonWidth, self.buttonHeight, green, bright_green,"quit")
-            self.textDisplay("Quit", black, 20, (self.x+(self.buttonWidth/2)), (self.y4+(self.buttonHeight/3)) )
+            self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green,"quit")
+            self.textDisplay("Quit", black, 20, (self.x+(self.buttonWidth/2)), (self.y3+(self.buttonHeight/3)) )
+            # self.button Credits
+            self.button(92, 560, 197, 123, green, bright_green,"Credits")
+            self.textDisplay("Credits", black, 20, (92+(197/2)), (560+(123/2)) )
+            # self.button Highscores
+            self.button(736, 364, 193, 107, green, bright_green,"Credits")
+            self.textDisplay("Credits", black, 20, (461+(121/2)), (228+(67/2)) )
+
         elif self.currentWindow == "helpMenu":
             self.textDisplay("How to play", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
             # Button retour
@@ -122,4 +128,4 @@ class Menu:
             self.textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
             pg.display.update()
             for event in pg.event.get():
-                if event.type == pg.QUIT: sys.exit()
+                if event.type == pg.QUIT: pg.display.quit(); sys.exit()
