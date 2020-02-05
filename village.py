@@ -115,14 +115,6 @@ class village(object):
                 
     def draw(self):
         """Affiche le menu du village"""
-        ## Timer a mettre dans le main
-        
-        ##
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
 
         self.gameDisplay.fill(white)
         
