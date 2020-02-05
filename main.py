@@ -6,7 +6,7 @@ from Enemy import *
 from Expedition import *
 from Wall import *
 from Money import *
-from village import *
+from Village import *
 from settings import *
 from threading import Timer
 
