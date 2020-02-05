@@ -27,12 +27,13 @@ class village(object):
         self.skills2 = False
 
         # Utilities
-        self.village = True
+        self.inTheVillage = True
         self.timerAir = False
         self.timerPop = False
         self.timerGold = False
         self.lose = False
         self.win = False
+        self.launchExpedition = False
 
     def minusAir(self):
         self.timerAir = False
@@ -158,7 +159,7 @@ class village(object):
                     pygame.time.delay(150)
 
                 elif action == "expedition":
-                    self.village = False
+                    self.launchExpedition = True
                     pygame.time.delay(150)
                 
                 
