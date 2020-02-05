@@ -36,6 +36,7 @@ menu = Menu(screen)
 while True:
     fpsClock.tick(60)
     for event in pg.event.get():
+
         if event.type == pg.QUIT:
             sys.exit()
     
@@ -50,6 +51,7 @@ while True:
                 village.launchExpedition = False
                 expedition = Expedition("map1")
             else:
+
                 village.draw()
         else:
             if expedition.inProgress:
@@ -61,5 +63,6 @@ while True:
                 musicPlayer.playMenuMusic()
                 village.gold += expedition.moneyGained
                 village.inTheVillage = True
+
 
     pg.display.update()
