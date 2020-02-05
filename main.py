@@ -61,10 +61,16 @@ while True:
         village.timerAir = True
         tAir = Timer(10.0, village.minusAir)
         tAir.start()
+        
     if not village.timerPop:
         village.timerPop = True
         tPop = Timer(1.0, village.plusPopulation)
         tPop.start()
+
+    if not village.timerGold:
+        village.timerGold = True
+        tGold = Timer(1.0, village.plusGold)
+        tGold.start()
 
 
     if village.village:
