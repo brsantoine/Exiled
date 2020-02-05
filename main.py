@@ -46,10 +46,12 @@ def button(x, y, w, h, ic, ac, action=None):
                     difficultyMenu = True
                     pygame.time.delay(150)
                 elif action == "Help":
-                    pass
+                    mainMenu = False
+                    helpMenu = True
                     pygame.time.delay(150)
                 elif action == "Credits":
-                    pass
+                    mainMenu = False
+                    creditsScreen = True
                     pygame.time.delay(150)
                 elif action == "easy":
                     difficultyMenu = False
