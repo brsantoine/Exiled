@@ -32,6 +32,10 @@ enemies.append(Enemy((24 * TAILLE_CASE),(11 * TAILLE_CASE),0,1,5,4))
 enemies.append(Enemy((7 * TAILLE_CASE),(16 * TAILLE_CASE),(6 * TAILLE_CASE),0,30,0))
 enemies.append(Enemy((12 * TAILLE_CASE),(22 * TAILLE_CASE),(14 * TAILLE_CASE),0,5,0))
 enemies.append(Enemy((1.5 * TAILLE_CASE),(18.5 * TAILLE_CASE),(8 * TAILLE_CASE),1,30,0))
+enemies.append(Enemy((29 * TAILLE_CASE),(30 * TAILLE_CASE),0,1,1,3))
+enemies.append(Enemy((23 * TAILLE_CASE),(30 * TAILLE_CASE),0,1,1,2))
+enemies.append(Enemy((44 * TAILLE_CASE),(31 * TAILLE_CASE),0,1,1,1))
+enemies.append(Enemy((32 * TAILLE_CASE),(19 * TAILLE_CASE),(2 * TAILLE_CASE),1,30,0))
 
 
 
