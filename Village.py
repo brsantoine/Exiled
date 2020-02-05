@@ -35,6 +35,24 @@ class Village(object):
         self.win = False
         self.launchExpedition = False
 
+        # Images
+        self.image_background = pygame.image.load("images/background_image.png").convert_alpha()
+        self.image_ressources = pygame.image.load("images/resources.png").convert_alpha()
+        self.image_house_sign = pygame.image.load("images/house_sign.png").convert_alpha()
+        self.image_air_tank_sign = pygame.image.load("images/air_tank_sign.png").convert_alpha()
+        self.image_population = pygame.image.load("images/population.png").convert_alpha()
+        self.image_town_name = pygame.image.load("images/town_name.png").convert_alpha()
+        self.image_air_converter = pygame.image.load("images/air_converter.png").convert_alpha()
+        self.image_town_upgrades = pygame.image.load("images/town_upgrades.png").convert_alpha()
+        self.image_town_hall = pygame.image.load("images/town_hall.png").convert_alpha()
+        self.image_skills = pygame.image.load("images/skills.png").convert_alpha()
+        self.image_expedition = pygame.image.load("images/expedition.png").convert_alpha()
+        self.image_air_purifier_sign = pygame.image.load("images/air_purifier_sign.png").convert_alpha()
+        self.image_town_upgrades_sign = pygame.image.load("images/town_upgrades_sign.png").convert_alpha()
+        self.image_skills_sign = pygame.image.load("images/skills_sign.png").convert_alpha()
+        self.image_expedition_sign = pygame.image.load("images/expedition_sign.png").convert_alpha()
+        self.image_boots_sign = pygame.image.load("images/boots_sign.png").convert_alpha()                
+
     def minusAir(self):
         self.timerAir = False
         if self.air > 0:
@@ -68,32 +86,25 @@ class Village(object):
 
         if x+w > mouse[0] > x and y+h > mouse[1] > y:
             if action == "house":
-                img = pygame.image.load("images/house_sign.png")
-                self.gameDisplay.blit(img, (0, 0))
+                self.gameDisplay.blit(self.image_house_sign, (0, 0))
 
             elif action == "airTank":
-                img = pygame.image.load("images/air_tank_sign.png")
-                self.gameDisplay.blit(img, (0, 0))
+                self.gameDisplay.blit(self.image_air_tank_sign, (0, 0))
 
             elif action == "purifier":
-                img = pygame.image.load("images/air_purifier_sign.png")
-                self.gameDisplay.blit(img, (0, 0))
+                self.gameDisplay.blit(self.image_air_purifier_sign, (0, 0))
 
             elif action == "upgrades":
-                img = pygame.image.load("images/town_upgrades_sign.png")
-                self.gameDisplay.blit(img, (0, 0))
+                self.gameDisplay.blit(self.image_town_upgrades_sign, (0, 0))
 
             elif action == "skills":
-                img = pygame.image.load("images/skills_sign.png")
-                self.gameDisplay.blit(img, (0, 0))
+                self.gameDisplay.blit(self.image_skills_sign, (0, 0))
 
             elif action == "expedition":
-                img = pygame.image.load("images/expedition_sign.png")
-                self.gameDisplay.blit(img, (0, 0))
+                self.gameDisplay.blit(self.image_expedition_sign, (0, 0))
 
             elif action == "boots":
-                img = pygame.image.load("images/boots_sign.png")
-                self.gameDisplay.blit(img, (0, 0))
+                self.gameDisplay.blit(self.image_boots_sign, (0, 0))
 
             if click[0] == 1 and action != None:
                 if action == "quit":
@@ -167,12 +178,10 @@ class Village(object):
     def draw(self):
         """Affiche le menu du village"""
 
-        img = pygame.image.load("images/background_image.png")
-        self.gameDisplay.blit(img, (0, 0))
+        self.gameDisplay.blit(self.image_background, (0, 0))
 
         ####### RESSOURCES #######
-        img = pygame.image.load("images/resources.png")
-        self.gameDisplay.blit(img, (0, 0))
+        self.gameDisplay.blit(self.image_ressources, (0, 0))
         ## Air
         self.textDisplay("Air " + str(self.air) + " / " + str(self.airTank), black, 30, 100, 20)
 
@@ -180,15 +189,13 @@ class Village(object):
         self.textDisplay("Gold " + str(self.gold), black, 30, 85, 55)
 
         ## Population
-        img = pygame.image.load("images/population.png")
-        self.gameDisplay.blit(img, (0, 0))
+        self.gameDisplay.blit(self.image_population, (0, 0))
         self.textDisplay("Population " + str(self.population) + " / " + str(self.populationTank), black, 30, 870, 20) 
         
         ####### 
 
         ####### GENERAL ####### 
-        img = pygame.image.load("images/town_name.png")
-        self.gameDisplay.blit(img, (0, 0))
+        self.gameDisplay.blit(self.image_town_name, (0, 0))
         #######
 
         ####### CONVERT GOLD TO AIR #######
@@ -199,10 +206,10 @@ class Village(object):
         y2 = y+(buttonHeight+16)
         y3 = y+(buttonHeight+16)*2
 
-        #img = pygame.image.load("images/gold.png")
+        #img = pygame.image.load("images/gold.png").convert_alpha()
         #self.gameDisplay.blit(img, (85, 352))
 
-        #img = pygame.image.load("images/airBottle.png")
+        #img = pygame.image.load("images/airBottle.png").convert_alpha()
         #self.gameDisplay.blit(img, (180, 352))
 
         self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "goldToAir1")
@@ -221,11 +228,10 @@ class Village(object):
             self.button(x, y2, buttonWidth, buttonHeight, red, red)
             self.button(x, y3, buttonWidth, buttonHeight, red, red)
 
-        img = pygame.image.load("images/air_converter.png")
-        self.gameDisplay.blit(img, (0, 0))
+        self.gameDisplay.blit(self.image_air_converter, (0, 0))
 
-        self.textDisplay("500 -> 1", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/2))) 
-        self.textDisplay("5000 -> 10", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/2))) 
+        self.textDisplay("100 -> 1", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/2))) 
+        self.textDisplay("1000 -> 10", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/2))) 
         self.textDisplay("MAX", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/2)))
         #######
 
@@ -244,8 +250,7 @@ class Village(object):
             self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "skills")
             self.textDisplay("Skills", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/2)) )
 
-            img = pygame.image.load("images/town_hall.png")
-            self.gameDisplay.blit(img, (0, 0))
+            self.gameDisplay.blit(self.image_town_hall, (0, 0))
 
         elif self.upgrades:
             self.button(388, 222, 61, 66, (200, 200, 200), (100, 100, 100), "menu")
@@ -265,8 +270,7 @@ class Village(object):
                 self.button(x, y2, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100) )
             self.textDisplay("Air tank", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/3)) )
 
-            img = pygame.image.load("images/town_upgrades.png")
-            self.gameDisplay.blit(img, (0, 0))
+            self.gameDisplay.blit(self.image_town_upgrades, (0, 0))
 
         elif self.skills:
             self.button(388, 222, 61, 66, (200, 200, 200), (100, 100, 100), "menu")
@@ -277,8 +281,7 @@ class Village(object):
             #self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
             #self.textDisplay("Cape", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
 
-            img = pygame.image.load("images/skills.png")
-            self.gameDisplay.blit(img, (0, 0))
+            self.gameDisplay.blit(self.image_skills, (0, 0))
             
             
         ####### 
@@ -289,8 +292,7 @@ class Village(object):
         buttonWidth = 990-731
         buttonHeight = 547-469
         self.button(731, 469, buttonWidth, buttonHeight, green, bright_green, "expedition")
-        img = pygame.image.load("images/expedition.png")
-        self.gameDisplay.blit(img, (0, 0))
+        self.gameDisplay.blit(self.image_expedition, (0, 0))
         #######
 
         pygame.display.update()

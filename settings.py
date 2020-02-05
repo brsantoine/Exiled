@@ -24,8 +24,8 @@ green = (0, 200, 0)
 bright_red = (255, 0, 0)
 bright_green = (0, 255, 0)
 
-LOW_PRICE_AIR = 500
-MID_PRICE_AIR = 5000
+LOW_PRICE_AIR = 100
+MID_PRICE_AIR = 1000
 
 PRICE_PURIFIER = 50000
 PRICE_AIR_TANK = 5000
