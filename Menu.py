@@ -28,7 +28,7 @@ class Menu:
         self.image_highScores = pg.image.load("images/mainMenu/high_scores.png").convert_alpha()
         self.image_mainMenu = pg.image.load("images/mainMenu/main_menu.png").convert_alpha()
         self.image_mainMenuBackground = pg.image.load("images/mainMenu/main_menu_background.png").convert_alpha()
-        self.image_normalBackGround = pg.image.load("images/mainMenu/main_menu_background.png").convert_alpha()
+        self.image_normalBackGround = pg.image.load("images/mainMenu/intro_background.png").convert_alpha()
         self.image_difficultyBackground = pg.image.load("images/mainMenu/difficulty_background.png").convert_alpha()
         self.image_backSign = pg.image.load("images/mainMenu/back_sign.png").convert_alpha()
         self.image_difficultyBuilding = pg.image.load("images/mainMenu/difficulty_building.png").convert_alpha()
