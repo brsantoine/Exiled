@@ -5,6 +5,7 @@ from Map import *
 from Camera import *
 from Player import *
 from AirBall import *
+from threading import Timer
 
 class Expedition:
     def __init__(self, mapFileName, boots, airSkill):
@@ -34,6 +35,10 @@ class Expedition:
             self.player.gotAirSkill()
         if boots == True:
             self.player.gotBoots()
+        self.win = True
+        self.timerExped = False
+        self.time = 0
+
 
     def update(self):
         self.enemyHitboxList = self.map.update()
@@ -53,6 +58,12 @@ class Expedition:
 
         if self.player.rect.collidelist(self.enemyHitboxList) != -1:
             self.inProgress = False
+            self.win = False
+
+        if not self.timerExped:
+            self.timerExped = True
+            t = Timer(1, self.updateTime)
+            t.start()
 
         moneyIndex = 0
         while moneyIndex < len(self.map.moneyList):
@@ -60,10 +71,9 @@ class Expedition:
                 self.moneyGained += randint(40, 60)
                 del self.map.moneyList[moneyIndex]
             moneyIndex += 1
-                
-
-        if self.player.rect.collidelist(self.enemyHitboxList) != -1:
-            self.inProgress = False
+    def updateTime(self):
+        self.timerExped = False
+        self.time += 1
 
     def draw(self, screen):
         self.displayList = []
