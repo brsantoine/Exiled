@@ -210,7 +210,6 @@ class Village(object):
         self.gameDisplay.blit(self.image_population, (0, 0))
         self.textDisplay(str(int(self.population)) + " / " + str(int(self.populationTank)), black, 30, 911, 64) 
 
-
         self.textDisplay(str(format((self.population/20)*0.2, '.2f')) + " /s", black, 30, 910, 116)
         self.textDisplay(str(format((self.population/20)*7.5, '.2f')) + " /s", black, 30, 910, 162)  
         #self.air -= (self.population/20)*0.2
