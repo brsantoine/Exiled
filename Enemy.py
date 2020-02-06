@@ -29,6 +29,7 @@ class Enemy:
 
         self.img = pg.image.load("images/guard.png")
         self.stunned = False
+        self.stunnedCounter = 0
 
     def update(self):
         if self.stand_still == 0 and self.stunned == False:
@@ -69,7 +70,12 @@ class Enemy:
                 self.rect.left = temp
             else:
                 self.rect.top = temp
-                
+        elif self.stunned == True:
+            self.stunnedCounter += 1
+            if self.stunnedCounter >= ENEMY_STUNNEDTIME:
+                self.stunnedCounter = 0
+                self.stunned = False
+
     def getHitbox(self) :
         hitbox = []
         if self.stunned == False:
@@ -100,7 +106,9 @@ class Enemy:
        
         return hitbox
 
-
+    def gotStunned(self):
+        self.stunned = True
+        self.stunnedCounter = 0
 
     def draw(self,screen,x,y):
         screen.blit(self.img, (x, y))

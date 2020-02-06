@@ -2,7 +2,6 @@ from settings import *
 
 class Camera:
     """Classe pour bouger la camera en fonction de la position du joueur dans la map"""
-
     def draw(self, win, player, displayList, enemyHitboxList):
 
         """Afficher les elements a l'ecran et bouger la camera en fonction de la position du joueur"""
