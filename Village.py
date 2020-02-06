@@ -14,8 +14,12 @@ class Village(object):
         self.population = 2
         self.airTank = 100
         self.populationTank = 20
-        self.boots = False
 
+        # Skills
+        self.boots = False
+        self.airskill = False
+
+        # Screen
         self.gameDisplay = gameDisplay
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
@@ -51,7 +55,7 @@ class Village(object):
         self.image_town_upgrades_sign = pygame.image.load("images/town_upgrades_sign.png").convert_alpha()
         self.image_skills_sign = pygame.image.load("images/skills_sign.png").convert_alpha()
         self.image_expedition_sign = pygame.image.load("images/expedition_sign.png").convert_alpha()
-        self.image_boots_sign = pygame.image.load("images/boots_sign.png").convert_alpha()                
+        self.image_boots_sign = pygame.image.load("images/boots_sign.png").convert_alpha()
 
     def minusAir(self):
         self.timerAir = False
@@ -105,6 +109,9 @@ class Village(object):
 
             elif action == "boots":
                 self.gameDisplay.blit(self.image_boots_sign, (0, 0))
+            
+            #elif action == "airskill":
+                #self.gameDisplay.blit(self.image_air_skill, (0, 0))
 
             if click[0] == 1 and action != None:
                 if action == "quit":
@@ -146,10 +153,16 @@ class Village(object):
                     if self.gold >= PRICE_PURIFIER:
                         self.gold -= PRICE_PURIFIER
                         self.win = True
+
                 elif action == "boots":
-                    if self.gold >= PRICE_BOOTS:
+                    if self.gold >= PRICE_BOOTS and self.boots = False:
                         self.gold -= PRICE_BOOTS
                         self.boots = True
+
+                elif action == "airskill":
+                    if self.gold >= PRICE_AIR_SKILL and self.airskill = False:
+                        self.gold -= PRICE_AIR_SKILL
+                        self.airskill = True
 
                 elif action == "menu":
                     self.menu = True
@@ -276,10 +289,10 @@ class Village(object):
             self.button(388, 222, 61, 66, (200, 200, 200), (100, 100, 100), "menu")
 
             self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "boots")
-            self.textDisplay("Courir", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
+            self.textDisplay("Boots", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
 
-            #self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
-            #self.textDisplay("Cape", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
+            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
+            self.textDisplay("Air skill", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
 
             self.gameDisplay.blit(self.image_skills, (0, 0))
             
