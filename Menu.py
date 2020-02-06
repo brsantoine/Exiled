@@ -260,9 +260,9 @@ class Menu:
             # self.button easy
             self.button(self.x, self.y, self.buttonWidth, self.buttonHeight, green, bright_green, "easy")
             # self.button normal
-            self.button(self.x, self.y2, self.buttonWidth, self.buttonHeight, green, bright_green,"normal")
+            self.button(self.x, self.y2, self.buttonWidth, self.buttonHeight, green, bright_green, "normal")
             # self.button hard
-            self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green,"hard")
+            self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green, "hard")
             # Button retour
             self.button(25, 466, 259, 70, green, bright_green, "mainMenu")
             self.screen.blit(self.image_difficultyBackground, (0, 0))

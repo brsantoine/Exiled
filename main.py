@@ -68,6 +68,7 @@ while True:
     if not menu.closed:
         menu.draw()
     else:
+        village.setDifficulty(menu.difficulty)
         updateTimers()
         if village.inTheVillage:
             if village.win:
@@ -76,7 +77,7 @@ while True:
                 musicPlayer.playExpeditionMusic()
                 village.inTheVillage = False
                 village.launchExpedition = False
-                expedition = Expedition("map1", village.boots, village.airskill)
+                expedition = Expedition("map1", village.boots, village.airskill, menu.difficulty)
             else:
 
                 village.draw()
