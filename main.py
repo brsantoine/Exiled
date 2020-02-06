@@ -12,7 +12,7 @@ pg.init()
 def updateTimers():
     if not village.timerAir:
         village.timerAir = True
-        tAir = Timer(1.0, village.minusAir)
+        tAir = Timer(10.0, village.minusAir)
         tAir.start()
     if not village.timerPop:
         village.timerPop = True
@@ -27,10 +27,7 @@ size = width, height = 1024, 768
 screen = pg.display.set_mode(size)
 fpsClock = pg.time.Clock()
 village = Village(screen, 1024, 786)
-startRect = pg.Rect(MAP_START_X - TAILLE_CASE, MAP_START_Y + (2 * TAILLE_CASE), 3 * TAILLE_CASE, TAILLE_CASE)
-
 musicPlayer = MusicPlayer()
-
 menu = Menu(screen)
 
 while True:
