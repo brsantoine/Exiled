@@ -32,6 +32,7 @@ class Menu:
         self.image_normalBackGround = pg.image.load("images/mainMenu/normal_background.png").convert_alpha()
         self.image_introBackGround = pg.image.load("images/mainMenu/intro_background.png").convert_alpha()
         self.image_difficultyBackground = pg.image.load("images/mainMenu/difficulty_background.png").convert_alpha()
+        self.image_creditsBackground = pg.image.load("images/mainMenu/credits_background.png").convert_alpha()
         self.image_backSign = pg.image.load("images/mainMenu/back_sign.png").convert_alpha()
         self.image_difficultyBuilding = pg.image.load("images/mainMenu/difficulty_building.png").convert_alpha()
         self.image_debris = pg.image.load("images/mainMenu/debris.png").convert_alpha()
@@ -193,10 +194,12 @@ class Menu:
             self.button(50, SCREEN_HEIGHT/15, self.buttonWidth/2, self.buttonHeight/2, green, bright_green, "mainMenu")
             self.textDisplay("Main Menu", black, 10, (50+(self.buttonWidth/4)), ((SCREEN_HEIGHT/15)+(self.buttonHeight/4)) )
         elif self.currentWindow == "creditsScreen":
-            self.textDisplay("Credits", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
-
-
-            self.screen.blit(self.image_normalBackGround, (0, 0))
+            x = 731
+            y = 469
+            buttonWidth = 990-731
+            buttonHeight = 547-469
+            self.button(731, 469, buttonWidth, buttonHeight, green, bright_green, "skip")
+            self.screen.blit(self.image_creditsBackground, (0, 0))
             y = 35
             x = SCREEN_WIDTH//2
             textColor = white
@@ -217,12 +220,6 @@ class Menu:
             self.textDisplay("Game Designer", textColor, 20, x, ((self.buttonHeight/3)+offset+(y*7)),'font/Glegoo-Bold.ttf' )
             offset -= 20
             self.textDisplay("Maxime Morin", textColor, 20, x, ((self.buttonHeight/3)+offset+(y*9)) )
-            x = 731
-            y = 469
-            buttonWidth = 990-731
-            buttonHeight = 547-469
-
-            self.button(731, 469, buttonWidth, buttonHeight, green, bright_green, "skip")
             #
             see_through = pg.Surface((SCREEN_WIDTH//6 * 3 - 15,SCREEN_HEIGHT//8 * 2 - 50)).convert_alpha()
             see_through.fill((80, 80, 80, 150))
@@ -235,7 +232,7 @@ class Menu:
             self.textDisplay("Sound effects", textColor, 20, (SCREEN_WIDTH/10) + 25, 615,'font/Glegoo-Bold.ttf') 
             self.textDisplay("Youtube channel \"All Sounds\"", textColor, 20, (SCREEN_WIDTH/3) + 15, 615 )
         elif self.currentWindow == "Highscores":
-            self.screen.blit(self.image_normalBackGround, (0, 0))
+            self.screen.blit(self.image_creditsBackground, (0, 0))
             self.button(25, 466, 259, 70, green, bright_green, "mainMenu")
             y = 60
             x = SCREEN_WIDTH//2
