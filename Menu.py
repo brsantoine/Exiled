@@ -28,7 +28,8 @@ class Menu:
         self.image_highScores = pg.image.load("images/mainMenu/high_scores.png").convert_alpha()
         self.image_mainMenu = pg.image.load("images/mainMenu/main_menu.png").convert_alpha()
         self.image_mainMenuBackground = pg.image.load("images/mainMenu/main_menu_background.png").convert_alpha()
-        self.image_normalBackGround = pg.image.load("images/mainMenu/intro_background.png").convert_alpha()
+        self.image_normalBackGround = pg.image.load("images/mainMenu/normal_background.png").convert_alpha()
+        self.image_introBackGround = pg.image.load("images/mainMenu/intro_background.png").convert_alpha()
         self.image_difficultyBackground = pg.image.load("images/mainMenu/difficulty_background.png").convert_alpha()
         self.image_backSign = pg.image.load("images/mainMenu/back_sign.png").convert_alpha()
         self.image_difficultyBuilding = pg.image.load("images/mainMenu/difficulty_building.png").convert_alpha()
@@ -136,7 +137,15 @@ class Menu:
         self.screen.fill(white)
         
         if self.currentWindow == "context":
-            self.screen.blit(self.image_normalBackGround, (0, 0))
+            #skip button
+            x = 731
+            y = 469
+            buttonWidth = 990-731
+            buttonHeight = 547-469
+            self.button(731, 469, buttonWidth, buttonHeight, green, bright_green, "skip")
+            #background
+            self.screen.blit(self.image_introBackGround, (0, 0))
+            #rectangle
             y = 25
             x = SCREEN_WIDTH//2
             textColor = white
@@ -153,12 +162,7 @@ class Menu:
             self.textDisplay("air to assert their superiority. In order to surive, you decided", textColor, 20, x, ((self.buttonHeight/3)+64+(y*6)) )
             self.textDisplay("to raid the surrounding ruins to find money in order to purchase ", textColor, 20, x, ((self.buttonHeight/3)+64+(y*7)) )
             self.textDisplay("an air purifier which could offer you and your village independance.", textColor, 20, x, ((self.buttonHeight/3)+64+(y*8)) )
-            x = 731
-            y = 469
-            buttonWidth = 990-731
-            buttonHeight = 547-469
-
-            self.button(731, 469, buttonWidth, buttonHeight, green, bright_green, "skip")
+            
             
 
         elif self.currentWindow == "mainMenu":
