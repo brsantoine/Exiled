@@ -6,7 +6,7 @@ from Player import *
 from AirBall import *
 
 class Expedition:
-    def __init__(self, mapFileName):
+    def __init__(self, mapFileName, boots, airSkill):
         self.moneyGained = 0
         self.map = Map(mapFileName)
         self.camera = Camera()
@@ -20,6 +20,10 @@ class Expedition:
 
         self.enemyHitboxList = []
         self.airballs = []
+        if airSkill == True:
+            self.player.gotAirSkill()
+        if boots == True:
+            self.player.gotBoots()
 
     def update(self):
         self.enemyHitboxList = self.map.update()
