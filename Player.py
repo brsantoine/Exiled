@@ -12,6 +12,8 @@ class Player:
         self.facing = "Down"
         self.AirBallCooldown = AIRBALL_COOLDOWN
         self.AirBallCooldownCounter = 0
+        self.boots = 1
+        self.hasAirSkill = False
 
     def update(self, keys, wallList):
 
@@ -22,18 +24,20 @@ class Player:
 
         if keys[pg.K_LEFT]:
             self.facing = "Left"
-            dx -= VELOCITY
+            dx -= VELOCITY * self.boots
         if keys[pg.K_RIGHT]:
             self.facing = "Right"
-            dx += VELOCITY
+            dx += VELOCITY * self.boots
         if keys[pg.K_UP]:
             self.facing = "Up"
-            dy -= VELOCITY
+            dy -= VELOCITY * self.boots
         if keys[pg.K_DOWN]:
             self.facing = "Down"
-            dy += VELOCITY
+            dy += VELOCITY * self.boots
         if keys[pg.K_LSHIFT]:
+            dx = dx * self.boots
             dx //= 2
+            dy = dy * self.boots
             dy //= 2
 
         tempDx = dx
@@ -83,12 +87,15 @@ class Player:
         self.text = font.render("X : " + str(self.rect.left) + " ; Y : " + str(self.rect.top), True, (255, 255, 255), (0, 0, 0))
         
     def AirBall(self,keys):
-        if keys[pg.K_SPACE] and self.AirBallCooldownCounter >= self.AirBallCooldown:
+        if keys[pg.K_SPACE] and self.AirBallCooldownCounter >= self.AirBallCooldown and self.hasAirSkill == True:
             self.AirBallCooldownCounter = 0
             return AirBall(self.rect.left ,self.rect.top ,self.facing)
         else:
             return False
-            
+    def gotBoots():
+        self.boots = 1.5
+    def gotAirSkill():
+        self.hasAirSkill = True
     def draw(self, screen, x, y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
 
