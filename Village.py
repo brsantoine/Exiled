@@ -59,8 +59,8 @@ class Village(object):
 
     def minusAir(self):
         self.timerAir = False
-        if self.air > 0:
-            self.air -= int(self.population/5)
+        if self.air > 0.0:
+            self.air -= (self.population/20)*0.2
         else:
             self.lose = True
 
@@ -70,8 +70,8 @@ class Village(object):
             self.population += 1
     
     def plusGold(self):
-        self.gold += int(self.population/4)
         self.timerGold = False
+        self.gold += (self.population/20)*7.5
 
     ###### FUNCTIONS ######
     def textObjects(self, text, font, color):
@@ -132,10 +132,10 @@ class Village(object):
                         self.gold -= MID_PRICE_AIR
                         pygame.time.delay(150)
 
-                elif action == "goldToAirMax":
-                    while self.air < self.airTank and self.gold >= LOW_PRICE_AIR:
-                        self.gold -= LOW_PRICE_AIR
-                        self.air += 1
+                elif action == "goldToAir50":
+                    while self.air < self.airMax-50 and self.gold >= HIGH_PRICE_AIR:
+                        self.gold -= HIGH_PRICE_AIR
+                        self.air += 50
 
                 elif action == "house":
                     if self.gold >= PRICE_HOUSE:
@@ -208,7 +208,15 @@ class Village(object):
 
         ## Population
         self.gameDisplay.blit(self.image_population, (0, 0))
-        self.textDisplay(str(self.population) + " / " + str(self.populationTank), black, 30, 911, 64) 
+        self.textDisplay(str(int(self.population)) + " / " + str(int(self.populationTank)), black, 30, 911, 64) 
+
+
+        self.textDisplay(str(format((self.population/20)*0.2, '.2f')) + " /s", black, 30, 910, 116)
+        self.textDisplay(str(format((self.population/20)*7.5, '.2f')) + " /s", black, 30, 910, 162)  
+        #self.air -= (self.population/20)*0.2
+        #self.gold += (self.population/20)*7.5
+        #format(math.pi, '.2f')
+
         
         ####### 
 
