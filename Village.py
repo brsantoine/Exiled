@@ -1,4 +1,6 @@
 import pygame
+import sys
+from MusicPlayer import *
 from settings import *
 
 pygame.init()
@@ -9,12 +11,12 @@ class Village(object):
     def __init__(self, gameDisplay, screenWidth, screenHeight):
         """Affectation des ressources en debut de partie"""
         # Ressources
-        self.gold = 500.0
+        self.gold = 50000.0
         self.population = 20
         self.populationTank = 20
         self.house = 0
 
-        self.air = 80.0
+        self.air = 1.0
         self.airMax = 100
         self.airTank = 0
 
@@ -32,6 +34,7 @@ class Village(object):
         self.upgrades = False
         self.skills = False
         self.skills2 = False
+        self.alreadyLost = False
 
         # Utilities
         self.inTheVillage = True
@@ -42,6 +45,7 @@ class Village(object):
         self.win = False
         self.launchExpedition = False
         self.difficulty = ""
+        self.musicPlayer = MusicPlayer()
 
         # Images
         self.image_background = pygame.image.load("images/background_image.png").convert_alpha()
@@ -64,16 +68,19 @@ class Village(object):
         self.image_expedition_sign = pygame.image.load("images/expedition_sign.png").convert_alpha()
         self.image_boots_sign = pygame.image.load("images/boots_sign.png").convert_alpha()
         self.image_gauntlets_sign = pygame.image.load("images/gauntlets_sign.png").convert_alpha() 
+        self.image_gold= pygame.image.load("images/gold.png").convert_alpha() 
 
         # Sound
-        self.WOOD_CLICK = pg.mixer.Sound('sounds/wood_click.ogg')
+        self.WOOD_CLICK = pygame.mixer.Sound('sounds/wood_click.ogg')
+        self.AIRBUY_CLICK = pygame.mixer.Sound('sounds/breath.ogg')
+        self.LOSEGAME = pygame.mixer.Sound('sounds/loseGame.ogg')
                 
     def setDifficulty(self, difficulty):
         self.difficulty = difficulty
 
     def minusAir(self):
         self.timerAir = False
-        if self.air > 0.0:
+        if self.air > 1.0:
             if self.difficulty == "Easy":
                 self.air -= (self.population/20)*0.17
             else:
@@ -109,6 +116,8 @@ class Village(object):
         click = pygame.mouse.get_pressed()
 
         if x+w > mouse[0] > x and y+h > mouse[1] > y:
+            if action == "endGame":
+                pg.draw.rect(self.gameDisplay, ac, (x, y, w, h))
             if action == "house":
                 self.gameDisplay.blit(self.image_house_sign, (0, 0))
 
@@ -144,23 +153,30 @@ class Village(object):
                     quit()
                 elif action == "nothing":
                     pygame.time.delay(1)
+                
+                elif action == "endGame":
+                    return True;
 
                 elif action == "goldToAir1":
                     if self.air < self.airMax and self.gold >= LOW_PRICE_AIR:
                         self.air += 1
                         self.gold -= LOW_PRICE_AIR
+                        self.AIRBUY_CLICK.play()
                         pygame.time.delay(150)
 
                 elif action == "goldToAir10":
                     if self.air <= self.airMax-10 and self.gold >= MID_PRICE_AIR:
                         self.air += 10
                         self.gold -= MID_PRICE_AIR
+                        self.AIRBUY_CLICK.play()
                         pygame.time.delay(150)
 
                 elif action == "goldToAir50":
                     while self.air < self.airMax-50 and self.gold >= HIGH_PRICE_AIR:
                         self.gold -= HIGH_PRICE_AIR
                         self.air += 50
+                        self.AIRBUY_CLICK.play()
+                        pygame.time.delay(150)
 
                 elif action == "house":
                     if self.gold >= PRICE_HOUSE+(self.house*HOUSE_INCREASE):
@@ -175,6 +191,7 @@ class Village(object):
                         self.gold -= PRICE_AIR_TANK+(self.airTank*AIR_TANK_INCREASE)
                         self.airTank += 1
                         self.airMax += AIR_TANK_VALUE
+                        self.AIRBUY_CLICK.play()
                         pygame.time.delay(150)
 
                 elif action == "purifier":
@@ -219,9 +236,9 @@ class Village(object):
                     self.WOOD_CLICK.play()
                     pygame.time.delay(150)
                 
-        #else:
-
-        #######   
+        else:
+            if action == "endGame":
+                pg.draw.rect(self.gameDisplay, ic, (x, y, w, h))
                 
     def draw(self):
         """Affiche le menu du village"""
@@ -373,4 +390,49 @@ class Village(object):
         #######
 
         pygame.display.update()
-        
+
+    def drawDeath(self,time):
+        if self.alreadyLost == False:
+            self.alreadyLost = True
+            Clicked = False
+            see_through = pygame.Surface((SCREEN_WIDTH - TAILLE_CASE,SCREEN_HEIGHT - TAILLE_CASE)).convert_alpha()
+            see_through.fill((140, 140, 140, 200))
+            self.gameDisplay.blit(see_through, (32,32))
+            # Attend que l'utilisateur clique sur le bouton continuer
+            if self.win == True:
+                textStr = "Congratulations, you saved your town!"
+                self.musicPlayer.playWinMusic()
+            else:
+                textStr = "You lost!"
+                self.LOSEGAME.play()
+            goldStr = "Gold collected:"
+            self.textDisplay(textStr,black,40,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//8))
+            # Gold
+            goldImgX = (SCREEN_WIDTH//6 * 1) + 40
+            if self.gold > 9:
+                goldImgX += 40
+            elif self.gold > 99:
+                goldImgX += 70
+            elif self.gold > 999:
+                goldImgX += 100
+            elif self.gold > 9999:
+                goldImgX += 135
+            self.textDisplay(goldStr,black,40,(SCREEN_WIDTH//4 * 1),(SCREEN_HEIGHT//4))
+            self.textDisplay(str(int(self.gold)),black,40,(SCREEN_WIDTH//6 * 1) + 35,(SCREEN_HEIGHT//3))
+            self.gameDisplay.blit(self.image_gold, (goldImgX, (SCREEN_HEIGHT//3) - 35))
+
+            # Time
+            minutes = str(time//60)
+            seconds = str(time % 60)
+            if int(seconds) <= 9:
+                seconds = "0" + seconds
+            self.textDisplay("Time spent:",black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//4))
+            self.textDisplay(minutes + " : " + seconds,black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//3))
+            while not Clicked:
+                            
+                Clicked = self.button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"endGame")
+                self.textDisplay("Submit your score",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
+                pygame.display.update()
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT: pygame.display.quit(); sys.exit()
+            

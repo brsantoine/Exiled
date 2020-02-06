@@ -40,6 +40,8 @@ class Expedition:
         self.timerExped = False
         self.time = 0
 
+        self.PICKUP_GOLD = pg.mixer.Sound('sounds/pickUpCoins.ogg')
+
 
     def update(self):
         self.enemyHitboxList = self.map.update()
@@ -73,6 +75,7 @@ class Expedition:
                     self.moneyGained += randint(MIN_GOLD_PER_CASH-20, MAX_GOLD_PER_CASH-20)
                 else:
                     self.moneyGained += randint(MIN_GOLD_PER_CASH, MAX_GOLD_PER_CASH)
+                self.PICKUP_GOLD.play()
                 del self.map.moneyList[moneyIndex]
             moneyIndex += 1
     def updateTime(self):
