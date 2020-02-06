@@ -79,7 +79,7 @@ class Village(object):
         return textSurface, textSurface.get_rect()
 
     def textDisplay(self, msg, color, size, x, y):
-        smallText = pygame.font.Font('freesansbold.ttf', size)
+        smallText = pygame.font.Font('font/Glegoo-Regular.ttf', size)
         textSurf, textRect = self.textObjects(msg, smallText, color)
         textRect.center = (x, y)
         self.gameDisplay.blit(textSurf, textRect)
@@ -196,14 +196,19 @@ class Village(object):
         ####### RESSOURCES #######
         self.gameDisplay.blit(self.image_ressources, (0, 0))
         ## Air
-        self.textDisplay("Air " + str(self.air) + " / " + str(self.airTank), black, 30, 100, 20)
+        if (self.air == self.airTank):
+            self.textDisplay(str(self.air), black, 30, 160, 56)
+            self.textDisplay("(full)", black, 30, 160, 86)
+        else:
+            self.textDisplay(str(self.air) + " / " + str(self.airTank), black, 30, 160, 70)
 
+        
         ## Gold
-        self.textDisplay("Gold " + str(self.gold), black, 30, 85, 55)
+        self.textDisplay(str(self.gold), black, 30, 160, 167)
 
         ## Population
         self.gameDisplay.blit(self.image_population, (0, 0))
-        self.textDisplay("Population " + str(self.population) + " / " + str(self.populationTank), black, 30, 870, 20) 
+        self.textDisplay(str(self.population) + " / " + str(self.populationTank), black, 30, 911, 64) 
         
         ####### 
 
