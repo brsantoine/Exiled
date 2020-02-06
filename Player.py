@@ -127,9 +127,6 @@ class Player:
 
         if self.AirBallCooldownCounter < self.AirBallCooldown:
             self.AirBallCooldownCounter += 1
-
-        font = pg.font.Font('freesansbold.ttf', 32)
-        self.text = font.render("X : " + str(self.rect.left) + " ; Y : " + str(self.rect.top), True, (255, 255, 255), (0, 0, 0))
         
     def AirBall(self,keys):
         if keys[pg.K_SPACE] and self.AirBallCooldownCounter >= self.AirBallCooldown and self.hasAirSkill == True:
@@ -143,9 +140,5 @@ class Player:
         self.hasAirSkill = True
     def draw(self, screen, x, y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
-
-        textRect = self.text.get_rect()
-
-        screen.blit(self.text, textRect)
 
         screen.blit(self.sprite, (x, y))

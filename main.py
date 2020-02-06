@@ -4,8 +4,10 @@ from Expedition import *
 from Menu import *
 from Village import *
 from MusicPlayer import *
+from NamePrompt import *
 from settings import *
 from threading import Timer
+import tkinter as tk
 
 pg.init()
 
@@ -23,12 +25,19 @@ def updateTimers():
         tGold = Timer(1.0, village.plusGold)
         tGold.start()
 
+
+namePrompt = NamePrompt()
+playerName = namePrompt.getName()
+
+print(playerName)
+
 size = width, height = 1024, 768
 screen = pg.display.set_mode(size)
 fpsClock = pg.time.Clock()
 village = Village(screen, 1024, 786)
 musicPlayer = MusicPlayer()
 menu = Menu(screen)
+
 
 while True:
     fpsClock.tick(60)
