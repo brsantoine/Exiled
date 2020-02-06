@@ -196,15 +196,11 @@ class Village(object):
         ####### RESSOURCES #######
         self.gameDisplay.blit(self.image_ressources, (0, 0))
         ## Air
-        if (self.air == self.airTank):
-            self.textDisplay(str(self.air), black, 30, 160, 56)
-            self.textDisplay("(full)", black, 30, 160, 86)
-        else:
-            self.textDisplay(str(self.air) + " / " + str(self.airTank), black, 30, 160, 70)
-
+        self.textDisplay(str(int(self.air)), black, 30, 160, 55)
+        self.textDisplay(" / " + str(int(self.airTank)), black, 30, 160, 86)
         
         ## Gold
-        self.textDisplay(str(self.gold), black, 30, 160, 167)
+        self.textDisplay(str(int(self.gold)), black, 30, 160, 167)
 
         ## Population
         self.gameDisplay.blit(self.image_population, (0, 0))
