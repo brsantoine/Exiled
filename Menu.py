@@ -20,6 +20,7 @@ class Menu:
         self.y3 = self.y + (self.buttonHeight+32)*2
         self.y4 = self.y + (self.buttonHeight+32)*3
         self.hover = False
+        self.exiting = False
         self.difficulty = "Easy"
 
         # Images
@@ -105,18 +106,21 @@ class Menu:
                     self.currentWindow = "Highscores"
                     self.difficulty = "Easy"
                     self.closed = True
+                    self.exiting = True
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "normal":
                     self.currentWindow = "Highscores"
                     self.difficulty = "Normal"
                     self.closed = True
+                    self.exiting = True
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "hard":
                     self.currentWindow = "Highscores"
                     self.difficulty = "Hard"
                     self.closed = True
+                    self.exiting = True
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "mainMenu":

@@ -48,7 +48,6 @@ def updateTimers():
         tGame = Timer(1.0, updateGameTimer)
         tGame.start()
 
-
 def endVillage():
     global village
     hsManager.addScore(Score(1, inGameTime, playerName))
@@ -75,13 +74,17 @@ while True:
 
         if event.type == pg.QUIT:
             pygame.display.quit()
+            musicPlayer.stop()
             sys.exit()
     
     if not menu.closed:
         menu.draw(hsManager.getStrings())
         inGameTime = 0
     else:
-        village.setDifficulty(menu.difficulty)
+        if menu.exiting:
+            musicPlayer.playMenuMusic()
+            village.setDifficulty(menu.difficulty)
+            menu.exiting = False
         updateTimers()
         if village.inTheVillage:
             if village.win:
@@ -94,7 +97,6 @@ while True:
                 village.launchExpedition = False
                 expedition = Expedition("map1", village.boots, village.airskill, menu.difficulty)
             else:
-
                 village.draw()
         else:
             if expedition.inProgress:
