@@ -8,7 +8,7 @@ from AirBall import *
 from threading import Timer
 
 class Expedition:
-    def __init__(self, mapFileName, boots, airSkill):
+    def __init__(self, mapFileName, boots, airSkill, difficulty):
         self.moneyGained = 0
 
         mapList = []
@@ -27,6 +27,9 @@ class Expedition:
         self.collisionList = []
         self.collisionList += self.map.wallList
         self.collisionList += self.map.enemies
+
+        self.difficulty = difficulty
+        print(self.difficulty)
 
         self.enemyHitboxList = []
         self.airballs = []
@@ -67,7 +70,10 @@ class Expedition:
         moneyIndex = 0
         while moneyIndex < len(self.map.moneyList):
             if self.map.moneyList[moneyIndex].rect.colliderect(self.player.rect):
-                self.moneyGained += randint(MIN_GOLD_PER_CASH, MAX_GOLD_PER_CASH)
+                if self.difficulty == "Hard":
+                    self.moneyGained += randint(MIN_GOLD_PER_CASH-20, MAX_GOLD_PER_CASH-20)
+                else:
+                    self.moneyGained += randint(MIN_GOLD_PER_CASH, MAX_GOLD_PER_CASH)
                 del self.map.moneyList[moneyIndex]
             moneyIndex += 1
     def updateTime(self):

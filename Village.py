@@ -41,6 +41,7 @@ class Village(object):
         self.lose = False
         self.win = False
         self.launchExpedition = False
+        self.difficulty = ""
 
         # Images
         self.image_background = pygame.image.load("images/background_image.png").convert_alpha()
@@ -60,10 +61,16 @@ class Village(object):
         self.image_expedition_sign = pygame.image.load("images/expedition_sign.png").convert_alpha()
         self.image_boots_sign = pygame.image.load("images/boots_sign.png").convert_alpha()
 
+    def setDifficulty(self, difficulty):
+        self.difficulty = difficulty
+
     def minusAir(self):
         self.timerAir = False
         if self.air > 0.0:
-            self.air -= (self.population/20)*0.2
+            if self.difficulty == "Easy":
+                self.air -= (self.population/20)*0.17
+            else:
+                self.air -= (self.population/20)*0.2
         else:
             self.lose = True
 
@@ -74,7 +81,10 @@ class Village(object):
     
     def plusGold(self):
         self.timerGold = False
-        self.gold += (self.population/20)*7.5
+        if self.difficulty == "Easy":
+            self.gold += (self.population/20)*9
+        else:
+            self.gold += (self.population/20)*7.5
 
     ###### FUNCTIONS ######
     def textObjects(self, text, font, color):
@@ -211,8 +221,20 @@ class Village(object):
         self.gameDisplay.blit(self.image_population, (0, 0))
         self.textDisplay(str(int(self.population)) + " / " + str(int(self.populationTank)), black, 30, 911, 64) 
 
-        self.textDisplay(str(format((self.population/20)*0.2, '.2f')) + " /s", black, 30, 910, 116)
-        self.textDisplay(str(format((self.population/20)*7.5, '.2f')) + " /s", black, 30, 910, 162)  
+        popAirValue = 0.0
+        popGoldValue = 0.0
+        if self.difficulty == "Easy":
+            popGoldValue = (self.population/20)*9
+        else:
+            popGoldValue = (self.population/20)*7.5
+
+        if self.difficulty == "Easy":
+            popAirValue = (self.population/20)*0.17
+        else:
+            popAirValue = (self.population/20)*0.2
+
+        self.textDisplay(str(format(popAirValue, '.2f')) + " /s", black, 30, 910, 116)
+        self.textDisplay(str(format(popGoldValue, '.2f')) + " /s", black, 30, 910, 162)  
         #self.air -= (self.population/20)*0.2
         #self.gold += (self.population/20)*7.5
         #format(math.pi, '.2f')
