@@ -9,7 +9,7 @@ class Menu:
 
         self.screen = screen
 
-        self.currentWindow = "mainMenu"
+        self.currentWindow = "context"
         self.closed = False
 
         self.x = 416
@@ -28,6 +28,11 @@ class Menu:
         self.image_highScores = pg.image.load("images/mainMenu/high_scores.png").convert_alpha()
         self.image_mainMenu = pg.image.load("images/mainMenu/main_menu.png").convert_alpha()
         self.image_mainMenuBackground = pg.image.load("images/mainMenu/main_menu_background.png").convert_alpha()
+        self.image_normalBackGround = pg.image.load("images/mainMenu/main_menu_background.png").convert_alpha()
+        self.image_difficultyBackground = pg.image.load("images/mainMenu/difficulty_background.png").convert_alpha()
+        self.image_backSign = pg.image.load("images/mainMenu/back_sign.png").convert_alpha()
+        self.image_difficultyBuilding = pg.image.load("images/mainMenu/difficulty_building.png").convert_alpha()
+        self.image_debris = pg.image.load("images/mainMenu/debris.png").convert_alpha()
 
         # Sounds
         self.WOOD_HOVER = pg.mixer.Sound('sounds/wood_hover.ogg')
@@ -37,8 +42,8 @@ class Menu:
         textSurface = font.render(text, True, color)
         return textSurface, textSurface.get_rect()
 
-    def textDisplay(self, msg, color, size, x, y):
-        smallText = pg.font.Font('font/Glegoo-Regular.ttf', size)
+    def textDisplay(self, msg, color, size, x, y, font = 'font/Glegoo-Regular.ttf'):
+        smallText = pg.font.Font(font, size)
         textSurf, textRect = self.textObjects(msg, smallText, color)
         textRect.center = (x, y)
         self.screen.blit(textSurf, textRect)
@@ -92,19 +97,30 @@ class Menu:
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "easy":
+                    self.currentWindow = "Highscores"
                     self.closed = True
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "normal":
+                    self.currentWindow = "Highscores"
                     self.closed = True
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "hard":
+                    self.currentWindow = "Highscores"
                     self.closed = True
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "mainMenu":
                     self.currentWindow = "mainMenu"
+                    self.WOOD_CLICK.play()
+                    pg.time.delay(150)
+                elif action == "skip":
+                    self.currentWindow = "mainMenu"
+                    self.WOOD_CLICK.play()
+                    pg.time.delay(150)
+                elif action == "Highscores":
+                    self.currentWindow = "Highscores"
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
         else:
@@ -120,7 +136,7 @@ class Menu:
         self.screen.fill(white)
         
         if self.currentWindow == "context":
-            self.screen.blit(self.image_mainMenuBackground, (0, 0))
+            self.screen.blit(self.image_normalBackGround, (0, 0))
             y = 25
             x = SCREEN_WIDTH//2
             textColor = white
@@ -146,21 +162,16 @@ class Menu:
             
 
         elif self.currentWindow == "mainMenu":
-            self.textDisplay("Menu", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
             # self.button play
             self.button(self.x, self.y, self.buttonWidth, self.buttonHeight, green, bright_green, "Play")
-            self.textDisplay("Play", black, 20, (self.x + (self.buttonWidth/2)), (self.y+(self.buttonHeight/3)) )
             # self.button help
             self.button(self.x, self.y2, self.buttonWidth, self.buttonHeight, green, bright_green,"Help")
-            self.textDisplay("Help", black, 20, (self.x + (self.buttonWidth/2)), (self.y2+(self.buttonHeight/3)) )
             # self.button quit
             self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green,"quit")
-            self.textDisplay("Quit", black, 20, (self.x+(self.buttonWidth/2)), (self.y3+(self.buttonHeight/3)) )
             # self.button Credits
             self.button(90, 581, 197, 126, green, bright_green,"Credits")
-            self.textDisplay("Credits", black, 20, (92+(197/2)), (560+(123/2)) )
             # self.button Highscores
-            self.button(736, 364, 193, 107, green, bright_green,"Credits")
+            self.button(736, 364, 193, 107, green, bright_green,"Highscores")
             self.screen.blit(self.image_mainMenuBackground, (0, 0))
             self.screen.blit(self.image_mainMenu, (0, 0))
             self.screen.blit(self.image_gameTitle, (0, 0))
@@ -168,29 +179,93 @@ class Menu:
             self.screen.blit(self.image_highScores, (0, 0))
 
         elif self.currentWindow == "helpMenu":
+            self.screen.blit(self.image_normalBackGround, (0, 0))
             self.textDisplay("How to play", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
             # Button retour
             self.button(50, SCREEN_HEIGHT/15, self.buttonWidth/2, self.buttonHeight/2, green, bright_green, "mainMenu")
             self.textDisplay("Main Menu", black, 10, (50+(self.buttonWidth/4)), ((SCREEN_HEIGHT/15)+(self.buttonHeight/4)) )
         elif self.currentWindow == "creditsScreen":
             self.textDisplay("Credits", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
-            # Button retour
-            self.button(50, SCREEN_HEIGHT/15, self.buttonWidth/2, self.buttonHeight/2, green, bright_green, "mainMenu")
-            self.textDisplay("Main Menu", black, 10, (50+(self.buttonWidth/4)), ((SCREEN_HEIGHT/15)+(self.buttonHeight/4)) )
+
+
+            self.screen.blit(self.image_normalBackGround, (0, 0))
+            y = 35
+            x = SCREEN_WIDTH//2
+            textColor = white
+            # Rectangle derriere les credits
+            see_through = pg.Surface((SCREEN_WIDTH//6 * 2 - 15,SCREEN_HEIGHT//11 * 5)).convert_alpha()
+            see_through.fill((80, 80, 80, 150))
+            self.screen.blit(see_through, (350,70))
+            offset = 64
+            self.textDisplay("Credits", white, 45, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/24),'font/Glegoo-Bold.ttf')
+            #1st Programmers
+            self.textDisplay("Programmers", textColor, 20, x, ((self.buttonHeight/3)+offset),'font/Glegoo-Bold.ttf') 
+            offset -= 20
+            self.textDisplay("Telmo Marques", textColor, 20, x, ((self.buttonHeight/3)+offset+y*2) )
+            self.textDisplay("Adrien Gervraud", textColor, 20, x, ((self.buttonHeight/3)+offset+(y*3)))
+            self.textDisplay("Antoine Breso", textColor, 20, x, ((self.buttonHeight/3)+offset+(y*4)) )
+            self.textDisplay("Colin Vaufrey", textColor, 20, x, ((self.buttonHeight/3)+offset+(y*5)) )
+            #2nd Game Designer
+            self.textDisplay("Game Designer", textColor, 20, x, ((self.buttonHeight/3)+offset+(y*7)),'font/Glegoo-Bold.ttf' )
+            offset -= 20
+            self.textDisplay("Maxime Morin", textColor, 20, x, ((self.buttonHeight/3)+offset+(y*9)) )
+            x = 731
+            y = 469
+            buttonWidth = 990-731
+            buttonHeight = 547-469
+
+            self.button(731, 469, buttonWidth, buttonHeight, green, bright_green, "skip")
+            #
+            see_through = pg.Surface((SCREEN_WIDTH//6 * 3 - 15,SCREEN_HEIGHT//8 * 2 - 50)).convert_alpha()
+            see_through.fill((80, 80, 80, 150))
+            self.screen.blit(see_through, (50,520))
+            self.textDisplay("Sources", white, 45, (SCREEN_WIDTH/4) + 50, 480,'font/Glegoo-Bold.ttf')
+            #1st Programmers
+            self.textDisplay("Music", textColor, 20, (SCREEN_WIDTH/10) - 10, 550,'font/Glegoo-Bold.ttf') 
+            self.textDisplay("Aerocity - Stranger", textColor, 20, (SCREEN_WIDTH/3) - 40, 550 )
+            self.textDisplay("Cloudkicker - Night", textColor, 20, (SCREEN_WIDTH/3) - 40, 585 )
+            self.textDisplay("Sound effects", textColor, 20, (SCREEN_WIDTH/10) + 25, 615,'font/Glegoo-Bold.ttf') 
+            self.textDisplay("Youtube channel \"All Sounds\"", textColor, 20, (SCREEN_WIDTH/3) + 15, 615 )
+        elif self.currentWindow == "Highscores":
+            self.screen.blit(self.image_normalBackGround, (0, 0))
+            self.button(25, 466, 259, 70, green, bright_green, "mainMenu")
+            y = 60
+            x = SCREEN_WIDTH//2
+            textColor = white
+            # Rectangle derriere les credits
+            see_through = pg.Surface((SCREEN_WIDTH//6 * 2 - 15,SCREEN_HEIGHT//5 * 4)).convert_alpha()
+            see_through.fill((80, 80, 80, 150))
+            self.screen.blit(see_through, (350,70))
+            self.textDisplay("Highscores", white, 45, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/24),'font/Glegoo-Bold.ttf')
+            #1st Programmers
+            baseY = (SCREEN_HEIGHT/24)
+            offset = -55
+            self.textDisplay("Telmo Marques", textColor, 20, x,offset +  baseY+(y*2) )
+            self.textDisplay("Adrien Gervraud", textColor, 20, x,offset + baseY+(y*3))
+            self.textDisplay("Antoine Breso", textColor, 20, x, offset +baseY+(y*4))
+            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*5))
+            self.textDisplay("Colin Vaufrey", textColor, 20, x, offset +baseY+(y*6))
+            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*7))
+            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*8))
+            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*9))
+            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*10))
+            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*11))
+            #2nd Game Designer
         elif self.currentWindow == "difficultyMenu":
-            self.textDisplay("Difficulty", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
             # self.button easy
             self.button(self.x, self.y, self.buttonWidth, self.buttonHeight, green, bright_green, "easy")
-            self.textDisplay("Easy", black, 20, (self.x+(self.buttonWidth/2)), (self.y+(self.buttonHeight/3)) )
             # self.button normal
             self.button(self.x, self.y2, self.buttonWidth, self.buttonHeight, green, bright_green,"normal")
-            self.textDisplay("Normal", black, 20, (self.x+(self.buttonWidth/2)), (self.y2+(self.buttonHeight/3)) )
             # self.button hard
             self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green,"hard")
-            self.textDisplay("Hard", black, 20, (self.x+(self.buttonWidth/2)), (self.y3+(self.buttonHeight/3)) )
             # Button retour
-            self.button(50, SCREEN_HEIGHT/15, self.buttonWidth/2, self.buttonHeight/2, green, bright_green, "mainMenu")
-            self.textDisplay("Main Menu", black, 10, (50+(self.buttonWidth/4)), ((SCREEN_HEIGHT/15)+(self.buttonHeight/4)) )
+            self.button(25, 466, 259, 70, green, bright_green, "mainMenu")
+            self.screen.blit(self.image_difficultyBackground, (0, 0))
+            self.screen.blit(self.image_backSign, (0, 0))
+            self.screen.blit(self.image_difficultyBuilding, (0, 0))
+            self.screen.blit(self.image_debris, (0, 0))
+            self.screen.blit(self.image_gameTitle, (0, 0))
+            
 
     def drawDeath(self,win,time,money):
         Clicked = False
@@ -211,11 +286,11 @@ class Menu:
             # Gold
             goldImgX = (SCREEN_WIDTH//6 * 1) + 40
             if money > 9:
-                goldImgX += 15
+                goldImgX += 40
             elif money > 99:
-                goldImgX += 35
+                goldImgX += 70
             elif money > 999:
-                goldImgX += 60
+                goldImgX += 100
             self.textDisplay(goldStr,black,40,(SCREEN_WIDTH//4 * 1),(SCREEN_HEIGHT//4))
             self.textDisplay(str(money),black,40,(SCREEN_WIDTH//6 * 1) + 35,(SCREEN_HEIGHT//3))
             self.screen.blit(self.image_money, (goldImgX, (SCREEN_HEIGHT//3) - 35))
