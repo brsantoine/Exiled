@@ -155,12 +155,12 @@ class Village(object):
                         self.win = True
 
                 elif action == "boots":
-                    if self.gold >= PRICE_BOOTS and self.boots = False:
+                    if self.gold >= PRICE_BOOTS and self.boots == False:
                         self.gold -= PRICE_BOOTS
                         self.boots = True
 
                 elif action == "airskill":
-                    if self.gold >= PRICE_AIR_SKILL and self.airskill = False:
+                    if self.gold >= PRICE_AIR_SKILL and self.airskill == False:
                         self.gold -= PRICE_AIR_SKILL
                         self.airskill = True
 
