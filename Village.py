@@ -10,7 +10,6 @@ class Village(object):
         """Affectation des ressources en debut de partie"""
         # Ressources
         self.gold = 500.0
-        
         self.population = 20
         self.populationTank = 20
         self.house = 0
