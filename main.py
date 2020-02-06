@@ -5,13 +5,27 @@ from Menu import *
 from Village import *
 from MusicPlayer import *
 from NamePrompt import *
+from Score import *
+from HSManager import *
 from settings import *
 from threading import Timer
 import tkinter as tk
 
 pg.init()
 
+inGameTime = 0
+gameTimer = False
+
+def updateGameTimer():
+    global inGameTime
+    global gameTimer
+    
+    inGameTime += 1
+    gameTimer = False
+
 def updateTimers():
+    global gameTimer
+
     if not village.timerAir:
         village.timerAir = True
         tAir = Timer(1.0, village.minusAir)
@@ -24,13 +38,18 @@ def updateTimers():
         village.timerGold = True
         tGold = Timer(1.0, village.plusGold)
         tGold.start()
+    if not gameTimer:
+        gameTimer = True
+        tGame = Timer(1.0, updateGameTimer)
+        tGame.start()
+
+
 
 
 namePrompt = NamePrompt()
 playerName = namePrompt.getName()
 
-print(playerName)
-
+hsManager = HSManager()
 size = width, height = 1024, 768
 screen = pg.display.set_mode(size)
 fpsClock = pg.time.Clock()
@@ -51,6 +70,8 @@ while True:
     else:
         updateTimers()
         if village.inTheVillage:
+            if village.win:
+                hsManager.addScore(Score(1, inGameTime, playerName))
             if village.launchExpedition:
                 musicPlayer.playExpeditionMusic()
                 village.inTheVillage = False
