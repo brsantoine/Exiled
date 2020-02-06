@@ -66,7 +66,7 @@ while True:
             sys.exit()
     
     if not menu.closed:
-        menu.draw()
+        menu.draw(hsManager.getStrings())
     else:
         village.setDifficulty(menu.difficulty)
         updateTimers()

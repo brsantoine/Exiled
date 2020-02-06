@@ -134,7 +134,7 @@ class Menu:
             #self.hover = False
             return False
 
-    def draw(self):
+    def draw(self,highscores):
         """Appelee a chaque tour de boucle, cette fonction affiche le menu"""
 
         
@@ -232,29 +232,31 @@ class Menu:
             self.textDisplay("Sound effects", textColor, 20, (SCREEN_WIDTH/10) + 25, 615,'font/Glegoo-Bold.ttf') 
             self.textDisplay("Youtube channel \"All Sounds\"", textColor, 20, (SCREEN_WIDTH/3) + 15, 615 )
         elif self.currentWindow == "Highscores":
+            x = 731
+            y = 469
+            buttonWidth = 990-731
+            buttonHeight = 547-469
+            self.button(731, 469, buttonWidth, buttonHeight, green, bright_green, "skip")
+            # draw background
             self.screen.blit(self.image_creditsBackground, (0, 0))
-            self.button(25, 466, 259, 70, green, bright_green, "mainMenu")
+            #button a gauche
+            #self.button(25, 466, 259, 70, green, bright_green, "mainMenu")
             y = 60
             x = SCREEN_WIDTH//2
             textColor = white
             # Rectangle derriere les credits
-            see_through = pg.Surface((SCREEN_WIDTH//6 * 2 - 15,SCREEN_HEIGHT//5 * 4)).convert_alpha()
+            see_through = pg.Surface((SCREEN_WIDTH//7 * 4 - 100,SCREEN_HEIGHT//5 * 4)).convert_alpha()
             see_through.fill((80, 80, 80, 150))
-            self.screen.blit(see_through, (350,70))
+            self.screen.blit(see_through, (170,70))
             self.textDisplay("Highscores", white, 45, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/24),'font/Glegoo-Bold.ttf')
             #1st Programmers
             baseY = (SCREEN_HEIGHT/24)
             offset = -55
-            self.textDisplay("Telmo Marques", textColor, 20, x,offset +  baseY+(y*2) )
-            self.textDisplay("Adrien Gervraud", textColor, 20, x,offset + baseY+(y*3))
-            self.textDisplay("Antoine Breso", textColor, 20, x, offset +baseY+(y*4))
-            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*5))
-            self.textDisplay("Colin Vaufrey", textColor, 20, x, offset +baseY+(y*6))
-            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*7))
-            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*8))
-            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*9))
-            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*10))
-            self.textDisplay("Colin Vaufrey", textColor, 20, x,offset + baseY+(y*11))
+            i = 1
+            for highscore in highscores:
+                i += 1
+                self.textDisplay(highscore [2] + " : " + highscore[1] + " - " + highscore[0] , textColor, 20, x - 115,offset +  baseY+(y*i) )
+            
             #2nd Game Designer
         elif self.currentWindow == "difficultyMenu":
             # self.button easy
