@@ -5,6 +5,7 @@ from Map import *
 from Camera import *
 from Player import *
 from AirBall import *
+from threading import Timer
 
 class Expedition:
     def __init__(self, mapFileName, boots, airSkill):
