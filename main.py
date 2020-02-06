@@ -12,7 +12,7 @@ pg.init()
 def updateTimers():
     if not village.timerAir:
         village.timerAir = True
-        tAir = Timer(10.0, village.minusAir)
+        tAir = Timer(1.0, village.minusAir)
         tAir.start()
     if not village.timerPop:
         village.timerPop = True
