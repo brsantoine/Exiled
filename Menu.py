@@ -46,6 +46,7 @@ class Menu:
         # Sounds
         self.WOOD_CLICK = pg.mixer.Sound('sounds/wood_click.ogg')
         self.GARAGE_CLICK = pg.mixer.Sound('sounds/garage.ogg')
+        self.ROCKET_CLICK = pg.mixer.Sound('sounds/rocket.ogg')
 
     def textObjects(self, text, font, color):
         textSurface = font.render(text, True, color)
@@ -132,7 +133,7 @@ class Menu:
                     pg.time.delay(150)
                 elif action == "Highscores":
                     self.currentWindow = "Highscores"
-                    self.WOOD_CLICK.play()
+                    self.ROCKET_CLICK.play()
                     pg.time.delay(150)
         else:
             if action == "exitExpedition" or action == "loseExpedition":

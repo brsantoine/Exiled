@@ -48,6 +48,14 @@ def updateTimers():
         tGame = Timer(1.0, updateGameTimer)
         tGame.start()
 
+def endVillage():
+    global village
+    hsManager.addScore(Score(1, inGameTime, playerName))
+    village.drawDeath(inGameTime)
+    village = Village(screen, 1024, 786)
+    musicPlayer.playMenuMusic()
+    menu.closed = False
+
 namePrompt = NamePrompt()
 playerName = namePrompt.getName()
 
@@ -55,6 +63,7 @@ hsManager = HSManager()
 size = width, height = 1024, 768
 screen = pg.display.set_mode(size)
 fpsClock = pg.time.Clock()
+global village
 village = Village(screen, 1024, 786)
 musicPlayer = MusicPlayer()
 menu = Menu(screen)
@@ -70,6 +79,7 @@ while True:
     
     if not menu.closed:
         menu.draw(hsManager.getStrings())
+        inGameTime = 0
     else:
         if menu.exiting:
             musicPlayer.playMenuMusic()
@@ -78,7 +88,9 @@ while True:
         updateTimers()
         if village.inTheVillage:
             if village.win:
-                hsManager.addScore(Score(1, inGameTime, playerName))
+                endVillage()
+            if village.lose:
+                endVillage()
             if village.launchExpedition:
                 musicPlayer.playExpeditionMusic()
                 village.inTheVillage = False
