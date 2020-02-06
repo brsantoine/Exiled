@@ -20,6 +20,7 @@ class Menu:
         self.y3 = self.y + (self.buttonHeight+32)*2
         self.y4 = self.y + (self.buttonHeight+32)*3
         self.hover = False
+        self.difficulty = "Easy"
 
         # Images
         self.image_money = pg.image.load("images/gold.png").convert_alpha()
@@ -99,16 +100,19 @@ class Menu:
                     pg.time.delay(150)
                 elif action == "easy":
                     self.currentWindow = "Highscores"
+                    self.difficulty = "Easy"
                     self.closed = True
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "normal":
                     self.currentWindow = "Highscores"
+                    self.difficulty = "Normal"
                     self.closed = True
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
                 elif action == "hard":
                     self.currentWindow = "Highscores"
+                    self.difficulty = "Hard"
                     self.closed = True
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
@@ -269,6 +273,7 @@ class Menu:
             self.screen.blit(self.image_difficultyBuilding, (0, 0))
             self.screen.blit(self.image_debris, (0, 0))
             self.screen.blit(self.image_gameTitle, (0, 0))
+            
             
 
     def drawDeath(self,win,time,money):
