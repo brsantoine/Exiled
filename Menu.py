@@ -9,7 +9,7 @@ class Menu:
 
         self.screen = screen
 
-        self.currentWindow = "context"
+        self.currentWindow = "mainMenu"
         self.closed = False
 
         self.x = 416
@@ -27,7 +27,6 @@ class Menu:
         self.image_highScores = pg.image.load("images/mainMenu/high_scores.png").convert_alpha()
         self.image_mainMenu = pg.image.load("images/mainMenu/main_menu.png").convert_alpha()
         self.image_mainMenuBackground = pg.image.load("images/mainMenu/main_menu_background.png").convert_alpha()
-        self.image_introBackground = pg.image.load("images/mainMenu/introBackground.png").convert_alpha()
 
         # Sounds
         self.WOOD_HOVER = pg.mixer.Sound('sounds/wood_hover.ogg')
@@ -106,12 +105,7 @@ class Menu:
                 elif action == "mainMenu":
                     self.currentWindow = "mainMenu"
                     self.WOOD_CLICK.play()
-                    pg.time.delay(150)     
-                elif action == "skip":
-                    self.currentWindow = "mainMenu"
-                    self.WOOD_CLICK.play()
                     pg.time.delay(150)
-                
         else:
             pg.draw.rect(self.screen, ic, (x, y, w, h))
             #self.hover = False
@@ -123,30 +117,7 @@ class Menu:
         
         
         self.screen.fill(white)
-        
-        if self.currentWindow == "context":
-            self.screen.blit(self.image_mainMenuBackground, (0, 0))
-            y = 20
-            textColor = white
-            #1st paragraph
-            self.textDisplay("World War 3 was a devastating war involving 90% of the world's", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64) )
-            self.textDisplay("countries. It had numerous consequences on the environment.", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+y) )
-            self.textDisplay("Air became unbreathable in more than half of the inhabited", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*2)))
-            self.textDisplay("territories on Earth, including your town.", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*3)) )
-            #2nd paragraph
-            self.textDisplay("However, you still have hope. The winners of the war decided to monetize", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*5)) )
-            self.textDisplay("air to assert their superiority. In order to surive, you decided", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*6)) )
-            self.textDisplay("to raid the surrounding ruins to find money in order to purchase ", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*7)) )
-            self.textDisplay("an air purifier which could offer you and your village independance.", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*8)) )
-            x = 731
-            y = 469
-            buttonWidth = 990-731
-            buttonHeight = 547-469
-            
-            self.button(731, 469, buttonWidth, buttonHeight, green, bright_green, "skip")
-            
-
-        elif self.currentWindow == "mainMenu":
+        if self.currentWindow == "mainMenu":
             self.textDisplay("Menu", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
             # self.button play
             self.button(self.x, self.y, self.buttonWidth, self.buttonHeight, green, bright_green, "Play")

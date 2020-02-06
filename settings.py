@@ -17,9 +17,7 @@ MAP_START_X = 6 * TAILLE_CASE
 MAP_START_Y = 33 * TAILLE_CASE
 BOOTS_SPEED = 1.3
 
-MAP_BACKGROUND = pg.image.load("images/background.png")
-MAP_WIDTH = MAP_BACKGROUND.get_rect().width
-MAP_HEIGHT = MAP_BACKGROUND.get_rect().height
+
 
 
 
