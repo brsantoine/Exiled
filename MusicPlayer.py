@@ -12,3 +12,6 @@ class MusicPlayer:
 
     def fadeOut(self):
         pg.mixer.music.fadeout(10000)
+
+    def stop(self):
+        pg.mixer.music.stop()
