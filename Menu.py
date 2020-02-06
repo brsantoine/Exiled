@@ -22,6 +22,7 @@ class Menu:
         self.hover = False
 
         # Images
+        self.image_money = pg.image.load("images/gold.png").convert_alpha()
         self.image_credits = pg.image.load("images/mainMenu/credits.png").convert_alpha()
         self.image_gameTitle = pg.image.load("images/mainMenu/game_title.png").convert_alpha()
         self.image_highScores = pg.image.load("images/mainMenu/high_scores.png").convert_alpha()
@@ -38,7 +39,7 @@ class Menu:
         return textSurface, textSurface.get_rect()
 
     def textDisplay(self, msg, color, size, x, y):
-        smallText = pg.font.Font('freesansbold.ttf', size)
+        smallText = pg.font.Font('font/Glegoo-Regular.ttf', size)
         textSurf, textRect = self.textObjects(msg, smallText, color)
         textRect.center = (x, y)
         self.screen.blit(textSurf, textRect)
@@ -126,23 +127,27 @@ class Menu:
         
         if self.currentWindow == "context":
             self.screen.blit(self.image_mainMenuBackground, (0, 0))
-            y = 20
+            y = 25
+            x = SCREEN_WIDTH//2
             textColor = white
+            see_through = pg.Surface((SCREEN_WIDTH//5 * 4,SCREEN_HEIGHT//2 - 100)).convert_alpha()
+            see_through.fill((80, 80, 80, 150))
+            self.screen.blit(see_through, (100,52))
             #1st paragraph
-            self.textDisplay("World War 3 was a devastating war involving 90% of the world's", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64) )
-            self.textDisplay("countries. It had numerous consequences on the environment.", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+y) )
-            self.textDisplay("Air became unbreathable in more than half of the inhabited", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*2)))
-            self.textDisplay("territories on Earth, including your town.", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*3)) )
+            self.textDisplay("World War 3 was a devastating war involving 90% of the world's", textColor, 20, x, ((self.buttonHeight/3)+64) )
+            self.textDisplay("countries. It had numerous consequences on the environment.", textColor, 20, x, ((self.buttonHeight/3)+64+y) )
+            self.textDisplay("Air became unbreathable in more than half of the inhabited", textColor, 20, x, ((self.buttonHeight/3)+64+(y*2)))
+            self.textDisplay("territories on Earth, including your town.", textColor, 20, x, ((self.buttonHeight/3)+64+(y*3)) )
             #2nd paragraph
-            self.textDisplay("However, you still have hope. The winners of the war decided to monetize", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*5)) )
-            self.textDisplay("air to assert their superiority. In order to surive, you decided", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*6)) )
-            self.textDisplay("to raid the surrounding ruins to find money in order to purchase ", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*7)) )
-            self.textDisplay("an air purifier which could offer you and your village independance.", textColor, 20, (350 + (self.buttonWidth/2)), ((self.buttonHeight/3)+64+(y*8)) )
+            self.textDisplay("However, you still have hope. The winners of the war decided to monetize", textColor, 20, x, ((self.buttonHeight/3)+64+(y*5)) )
+            self.textDisplay("air to assert their superiority. In order to surive, you decided", textColor, 20, x, ((self.buttonHeight/3)+64+(y*6)) )
+            self.textDisplay("to raid the surrounding ruins to find money in order to purchase ", textColor, 20, x, ((self.buttonHeight/3)+64+(y*7)) )
+            self.textDisplay("an air purifier which could offer you and your village independance.", textColor, 20, x, ((self.buttonHeight/3)+64+(y*8)) )
             x = 731
             y = 469
             buttonWidth = 990-731
             buttonHeight = 547-469
-            
+
             self.button(731, 469, buttonWidth, buttonHeight, green, bright_green, "skip")
             
 
@@ -193,7 +198,7 @@ class Menu:
             self.button(50, SCREEN_HEIGHT/15, self.buttonWidth/2, self.buttonHeight/2, green, bright_green, "mainMenu")
             self.textDisplay("Main Menu", black, 10, (50+(self.buttonWidth/4)), ((SCREEN_HEIGHT/15)+(self.buttonHeight/4)) )
 
-    def drawDeath(self):
+    def drawDeath(self,win,time,money):
         Clicked = False
         see_through = pg.Surface((SCREEN_WIDTH - TAILLE_CASE,SCREEN_HEIGHT - TAILLE_CASE)).convert_alpha()
         see_through.fill((140, 140, 140, 200))
@@ -202,6 +207,34 @@ class Menu:
         while not Clicked:
             Clicked = self.button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"loseExpedition")
             self.textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
+            if win == True:
+                textStr = "You made it back safely!"
+                goldStr = "Gold collected:"
+            else:
+                goldStr = "Gold lost:"
+                textStr = "You got caught!"
+            self.textDisplay(textStr,black,40,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//8))
+            # Gold
+            goldImgX = (SCREEN_WIDTH//6 * 1) + 40
+            if money > 9:
+                goldImgX += 15
+            elif money > 99:
+                goldImgX += 30
+            elif money > 999:
+                goldImgX += 45
+            self.textDisplay(goldStr,black,40,(SCREEN_WIDTH//4 * 1),(SCREEN_HEIGHT//4))
+            self.textDisplay(str(money),black,40,(SCREEN_WIDTH//6 * 1) + 35,(SCREEN_HEIGHT//3))
+            self.screen.blit(self.image_money, (goldImgX, (SCREEN_HEIGHT//3) - 35))
+
+            # Time
+            minutes = str(time//60)
+            seconds = str(time % 60)
+            if int(seconds) <= 9:
+                seconds = "0" + seconds
+            self.textDisplay("Time spent:",black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//4))
+            self.textDisplay(minutes + " : " + seconds,black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//3))
+
+
             pg.display.update()
             for event in pg.event.get():
                 if event.type == pg.QUIT: pg.display.quit(); sys.exit()
