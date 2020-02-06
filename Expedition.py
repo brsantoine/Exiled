@@ -19,7 +19,6 @@ class Expedition:
         randomMap = randint(0, len(mapList) - 1)
 
         self.map = Map("maps/" + mapList[randomMap])
-        print(self.map.width)
         self.camera = Camera()
         self.inProgress = True
 
