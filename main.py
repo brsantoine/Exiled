@@ -37,7 +37,7 @@ def updateTimers():
         tAir.start()
     if not village.timerPop:
         village.timerPop = True
-        tPop = Timer(10.0, village.plusPopulation)
+        tPop = Timer(5.0, village.plusPopulation)
         tPop.start()
     if not village.timerGold:
         village.timerGold = True
