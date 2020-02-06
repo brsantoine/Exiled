@@ -9,7 +9,7 @@ class Menu:
 
         self.screen = screen
 
-        self.currentWindow = "context"
+        self.currentWindow = "mainMenu"
         self.closed = False
 
         self.x = 416
@@ -28,7 +28,6 @@ class Menu:
         self.image_highScores = pg.image.load("images/mainMenu/high_scores.png").convert_alpha()
         self.image_mainMenu = pg.image.load("images/mainMenu/main_menu.png").convert_alpha()
         self.image_mainMenuBackground = pg.image.load("images/mainMenu/main_menu_background.png").convert_alpha()
-        self.image_introBackground = pg.image.load("images/mainMenu/introBackground.png").convert_alpha()
 
         # Sounds
         self.WOOD_HOVER = pg.mixer.Sound('sounds/wood_hover.ogg')
@@ -107,12 +106,7 @@ class Menu:
                 elif action == "mainMenu":
                     self.currentWindow = "mainMenu"
                     self.WOOD_CLICK.play()
-                    pg.time.delay(150)     
-                elif action == "skip":
-                    self.currentWindow = "mainMenu"
-                    self.WOOD_CLICK.play()
                     pg.time.delay(150)
-                
         else:
             pg.draw.rect(self.screen, ic, (x, y, w, h))
             #self.hover = False
