@@ -56,8 +56,7 @@ while True:
                 expedition.update()
                 expedition.draw(screen)
             else:
-                menu.drawDeath(expedition.win,expedition.time,expedition.moneyGained)
-                pg.time.delay(150)
+                menu.drawDeath()
                 musicPlayer.playMenuMusic()
                 village.gold += expedition.moneyGained
                 village.inTheVillage = True
