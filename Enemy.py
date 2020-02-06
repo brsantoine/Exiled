@@ -28,10 +28,12 @@ class Enemy:
                 self.side = "Down" 
 
         self.img = pg.image.load("images/guard.png")
-
+        self.imgStunned = pg.image.load("images/airBottle.png")
+        self.stunned = False
+        self.stunnedCounter = 0
 
     def update(self):
-        if self.stand_still == 0:
+        if self.stand_still == 0 and self.stunned == False:
             if self.direction == 0:
                 temp = self.rect.left
             else:
@@ -69,40 +71,51 @@ class Enemy:
                 self.rect.left = temp
             else:
                 self.rect.top = temp
-                
+        elif self.stunned == True:
+            self.stunnedCounter += 1
+            if self.stunnedCounter >= ENEMY_STUNNEDTIME:
+                self.stunnedCounter = 0
+                self.stunned = False
+
     def getHitbox(self) :
         hitbox = []
-        if self.side == "Left" :
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top - (TAILLE_CASE * 2), TAILLE_CASE * 1,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 2),self.rect.top - (TAILLE_CASE * 1), TAILLE_CASE * 3,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 3),self.rect.top , TAILLE_CASE * 5,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 2),self.rect.top + (TAILLE_CASE * 1), TAILLE_CASE * 3,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top + (TAILLE_CASE * 2), TAILLE_CASE * 1,TAILLE_CASE * 1))
-        elif self.side == "Right" :
-            hitbox.append(pg.Rect(self.rect.left + (TAILLE_CASE * 1),self.rect.top - (TAILLE_CASE * 2), TAILLE_CASE * 1,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left ,self.rect.top - (TAILLE_CASE * 1), TAILLE_CASE * 3,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top , TAILLE_CASE * 5,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left ,self.rect.top + (TAILLE_CASE * 1), TAILLE_CASE * 3,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left + (TAILLE_CASE * 1),self.rect.top + (TAILLE_CASE * 2), TAILLE_CASE * 1,TAILLE_CASE * 1))
-        elif self.side == "Up" :
-            hitbox.append(pg.Rect(self.rect.left,self.rect.top - (TAILLE_CASE * 3), TAILLE_CASE * 1,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top - (TAILLE_CASE * 2), TAILLE_CASE * 3,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 2),self.rect.top - (TAILLE_CASE * 1), TAILLE_CASE * 5,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top, TAILLE_CASE * 3,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left,self.rect.top + (TAILLE_CASE * 1), TAILLE_CASE * 1,TAILLE_CASE * 1))
-        elif self.side == "Down" :
-            hitbox.append(pg.Rect(self.rect.left,self.rect.top - (TAILLE_CASE * 1), TAILLE_CASE * 1,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top , TAILLE_CASE * 3,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 2),self.rect.top + (TAILLE_CASE * 1), TAILLE_CASE * 5,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top + (TAILLE_CASE * 2), TAILLE_CASE * 3,TAILLE_CASE * 1))
-            hitbox.append(pg.Rect(self.rect.left,self.rect.top + (TAILLE_CASE * 3), TAILLE_CASE * 1,TAILLE_CASE * 1))
+        if self.stunned == False:
+            if self.side == "Left" :
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top - (TAILLE_CASE * 2), TAILLE_CASE * 1,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 2),self.rect.top - (TAILLE_CASE * 1), TAILLE_CASE * 3,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 3),self.rect.top , TAILLE_CASE * 5,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 2),self.rect.top + (TAILLE_CASE * 1), TAILLE_CASE * 3,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top + (TAILLE_CASE * 2), TAILLE_CASE * 1,TAILLE_CASE * 1))
+            elif self.side == "Right" :
+                hitbox.append(pg.Rect(self.rect.left + (TAILLE_CASE * 1),self.rect.top - (TAILLE_CASE * 2), TAILLE_CASE * 1,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left ,self.rect.top - (TAILLE_CASE * 1), TAILLE_CASE * 3,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top , TAILLE_CASE * 5,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left ,self.rect.top + (TAILLE_CASE * 1), TAILLE_CASE * 3,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left + (TAILLE_CASE * 1),self.rect.top + (TAILLE_CASE * 2), TAILLE_CASE * 1,TAILLE_CASE * 1))
+            elif self.side == "Up" :
+                hitbox.append(pg.Rect(self.rect.left,self.rect.top - (TAILLE_CASE * 3), TAILLE_CASE * 1,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top - (TAILLE_CASE * 2), TAILLE_CASE * 3,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 2),self.rect.top - (TAILLE_CASE * 1), TAILLE_CASE * 5,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top, TAILLE_CASE * 3,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left,self.rect.top + (TAILLE_CASE * 1), TAILLE_CASE * 1,TAILLE_CASE * 1))
+            elif self.side == "Down" :
+                hitbox.append(pg.Rect(self.rect.left,self.rect.top - (TAILLE_CASE * 1), TAILLE_CASE * 1,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top , TAILLE_CASE * 3,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 2),self.rect.top + (TAILLE_CASE * 1), TAILLE_CASE * 5,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left - (TAILLE_CASE * 1),self.rect.top + (TAILLE_CASE * 2), TAILLE_CASE * 3,TAILLE_CASE * 1))
+                hitbox.append(pg.Rect(self.rect.left,self.rect.top + (TAILLE_CASE * 3), TAILLE_CASE * 1,TAILLE_CASE * 1))
        
         return hitbox
 
-
+    def gotStunned(self):
+        self.stunned = True
+        self.stunnedCounter = 0
 
     def draw(self,screen,x,y):
-        screen.blit(self.img, (x, y))
+        if self.stunned == True:
+            screen.blit(self.imgStunned, (x, y))
+        else:
+            screen.blit(self.img, (x, y))
     
 
 

@@ -1,4 +1,5 @@
 import pygame as pg
+from AirBall import *
 from settings import *
 
 class Player:
@@ -8,6 +9,9 @@ class Player:
         self.rect = pg.Rect(playerSpawn[0], playerSpawn[1], w, h)
         self.text = ""
         self.img = pg.image.load("images/player.png")
+        self.facing = "Down"
+        self.AirBallCooldown = AIRBALL_COOLDOWN
+        self.AirBallCooldownCounter = 0
 
     def update(self, keys, wallList):
 
@@ -17,12 +21,16 @@ class Player:
         dy = 0
 
         if keys[pg.K_LEFT]:
+            self.facing = "Left"
             dx -= VELOCITY
         if keys[pg.K_RIGHT]:
+            self.facing = "Right"
             dx += VELOCITY
         if keys[pg.K_UP]:
+            self.facing = "Up"
             dy -= VELOCITY
         if keys[pg.K_DOWN]:
+            self.facing = "Down"
             dy += VELOCITY
         if keys[pg.K_LSHIFT]:
             dx //= 2
@@ -68,10 +76,19 @@ class Player:
         if self.rect.top > MAP_HEIGHT - self.rect.height:
             self.rect.top = MAP_HEIGHT - self.rect.height
 
+        if self.AirBallCooldownCounter < self.AirBallCooldown:
+            self.AirBallCooldownCounter += 1
+
         font = pg.font.Font('freesansbold.ttf', 32)
         self.text = font.render("X : " + str(self.rect.left) + " ; Y : " + str(self.rect.top), True, (255, 255, 255), (0, 0, 0))
         
-      
+    def AirBall(self,keys):
+        if keys[pg.K_SPACE] and self.AirBallCooldownCounter >= self.AirBallCooldown:
+            self.AirBallCooldownCounter = 0
+            return AirBall(self.rect.left ,self.rect.top ,self.facing)
+        else:
+            return False
+            
     def draw(self, screen, x, y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""
 
