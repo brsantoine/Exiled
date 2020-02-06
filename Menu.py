@@ -213,9 +213,9 @@ class Menu:
             if money > 9:
                 goldImgX += 15
             elif money > 99:
-                goldImgX += 30
+                goldImgX += 35
             elif money > 999:
-                goldImgX += 45
+                goldImgX += 60
             self.textDisplay(goldStr,black,40,(SCREEN_WIDTH//4 * 1),(SCREEN_HEIGHT//4))
             self.textDisplay(str(money),black,40,(SCREEN_WIDTH//6 * 1) + 35,(SCREEN_HEIGHT//3))
             self.screen.blit(self.image_money, (goldImgX, (SCREEN_HEIGHT//3) - 35))
