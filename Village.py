@@ -54,13 +54,17 @@ class Village(object):
         self.image_town_upgrades = pygame.image.load("images/town_upgrades.png").convert_alpha()
         self.image_town_hall = pygame.image.load("images/town_hall.png").convert_alpha()
         self.image_skills = pygame.image.load("images/skills.png").convert_alpha()
+        self.image_skills_air = pygame.image.load("images/skills_gauntlets_sold_out.png").convert_alpha()
+        self.image_skills_boots = pygame.image.load("images/skills_boots_sold_out.png").convert_alpha()
+        self.image_skills_out = pygame.image.load("images/skills_both_sold_out.png").convert_alpha()
         self.image_expedition = pygame.image.load("images/expedition.png").convert_alpha()
         self.image_air_purifier_sign = pygame.image.load("images/air_purifier_sign.png").convert_alpha()
         self.image_town_upgrades_sign = pygame.image.load("images/town_upgrades_sign.png").convert_alpha()
         self.image_skills_sign = pygame.image.load("images/skills_sign.png").convert_alpha()
         self.image_expedition_sign = pygame.image.load("images/expedition_sign.png").convert_alpha()
         self.image_boots_sign = pygame.image.load("images/boots_sign.png").convert_alpha()
-
+        self.image_gauntlets_sign = pygame.image.load("images/gauntlets_sign.png").convert_alpha() 
+                
     def setDifficulty(self, difficulty):
         self.difficulty = difficulty
 
@@ -121,7 +125,12 @@ class Village(object):
                 self.gameDisplay.blit(self.image_expedition_sign, (0, 0))
 
             elif action == "boots":
-                self.gameDisplay.blit(self.image_boots_sign, (0, 0))
+                if not self.boots:
+                    self.gameDisplay.blit(self.image_boots_sign, (0, 0))
+
+            elif action == "airskill":
+                if not self.airskill:
+                    self.gameDisplay.blit(self.image_gauntlets_sign, (0, 0))
             
             #elif action == "airskill":
                 #self.gameDisplay.blit(self.image_air_skill, (0, 0))
@@ -262,7 +271,7 @@ class Village(object):
 
         self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "goldToAir1")
         self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "goldToAir10")
-        self.button(x, y3, buttonWidth, buttonHeight, green, bright_green, "goldToAirMax")
+        self.button(x, y3, buttonWidth, buttonHeight, green, bright_green, "goldToAir50")
 
         if self.gold < LOW_PRICE_AIR:
             self.button(x, y, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
@@ -319,6 +328,8 @@ class Village(object):
             self.textDisplay("Air tank", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/3)) )
 
             self.gameDisplay.blit(self.image_town_upgrades, (0, 0))
+            self.textDisplay(str(PRICE_HOUSE+(self.house*HOUSE_INCREASE)), black, 17, 558, 384)
+            self.textDisplay(str(PRICE_AIR_TANK+(self.airTank*AIR_TANK_INCREASE)), black, 17, 558, 496)
 
         elif self.skills:
             self.button(388, 222, 61, 66, (200, 200, 200), (100, 100, 100), "menu")
@@ -329,7 +340,14 @@ class Village(object):
             self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "airskill")
             self.textDisplay("Air skill", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
 
-            self.gameDisplay.blit(self.image_skills, (0, 0))
+            if not self.boots and not self.airskill:
+                self.gameDisplay.blit(self.image_skills, (0, 0))
+            if not self.boots and self.airskill:
+                self.gameDisplay.blit(self.image_skills_air, (0, 0))
+            if self.boots and not self.airskill:
+                self.gameDisplay.blit(self.image_skills_boots, (0, 0))
+            if self.boots and self.airskill:
+                self.gameDisplay.blit(self.image_skills_out, (0, 0))
             
             
         ####### 
