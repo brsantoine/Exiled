@@ -5,6 +5,9 @@ class NamePrompt:
     def __init__(self):
         
         self.nameWindow = tk.Tk()
+        self.nameWindow.title("Breathless Town")
+        self.nameWindow.geometry("300x100")
+        self.nameWindow.iconbitmap('images/airIcon.ico')
         self.nameLabel = tk.Label(self.nameWindow, text="Entrez votre pseudo ici")
         self.nameLabel.pack()
         self.nameValue = tk.StringVar()

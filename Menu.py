@@ -36,10 +36,14 @@ class Menu:
         self.image_backSign = pg.image.load("images/mainMenu/back_sign.png").convert_alpha()
         self.image_difficultyBuilding = pg.image.load("images/mainMenu/difficulty_building.png").convert_alpha()
         self.image_debris = pg.image.load("images/mainMenu/debris.png").convert_alpha()
+        self.image_easySign = pg.image.load("images/mainMenu/easy_sign.png").convert_alpha()
+        self.image_mediumSign = pg.image.load("images/mainMenu/medium_sign.png").convert_alpha()
+        self.image_hardSign = pg.image.load("images/mainMenu/hard_sign.png").convert_alpha()
+        self.image_highScoresOn = pg.image.load("images/mainMenu/high_scores_on.png").convert_alpha()
 
         # Sounds
-        self.WOOD_HOVER = pg.mixer.Sound('sounds/wood_hover.ogg')
-        self.WOOD_CLICK = pg.mixer.Sound('sounds/wood_hover.ogg')
+        self.WOOD_CLICK = pg.mixer.Sound('sounds/wood_click.ogg')
+        self.GARAGE_CLICK = pg.mixer.Sound('sounds/garage.ogg')
 
     def textObjects(self, text, font, color):
         textSurface = font.render(text, True, color)
@@ -55,27 +59,19 @@ class Menu:
         mouse = pg.mouse.get_pos()
         click = pg.mouse.get_pressed()
         if x + w > mouse[0] > x and y+h > mouse[1] > y:
-            pg.draw.rect(self.screen, ac, (x, y, w, h))
-            #
-            #if action == "quit" and self.hover == False:
-            #    pg.time.delay(150)
-            #elif action == "Play" and self.hover == False:
-            #    pg.time.delay(150)
-            #elif action == "Help" and self.hover == False:
-            #    pg.time.delay(150)
-            #elif action == "Credits" and self.hover == False:
-            #   pg.time.delay(150)
-            #elif action == "easy" and self.hover == False:
-            #  pg.time.delay(150)
-            #elif action == "normal" and self.hover == False:
-            #    pg.time.delay(150)
-            #elif action == "hard" and self.hover == False:
-            #   pg.time.delay(150)
-            #elif action == "mainMenu" and self.hover == False:
-            #    pg.time.delay(150)
-            #self.hover = True
-            #
+            #pg.draw.rect(self.screen, ac, (x, y, w, h))
+            if action == "easy":
+                self.screen.blit(self.image_easySign, (0, 0))
+            elif action == "normal":
+                self.screen.blit(self.image_mediumSign, (0, 0))
+            elif action == "hard" :
+                self.screen.blit(self.image_hardSign, (0, 0))
+            elif action == "Highscores":
+                self.screen.blit(self.image_highScoresOn, (0, 0))
+            
             if click[0] == 1 and action != None:
+               
+
                 if action == "quit":
                     pg.display.quit()
                     sys.exit()
@@ -97,7 +93,7 @@ class Menu:
                     pg.time.delay(150)
                 elif action == "Credits":
                     self.currentWindow = "creditsScreen"
-                    self.WOOD_CLICK.play()
+                    self.GARAGE_CLICK.play()
                     pg.time.delay(150)
                 elif action == "easy":
                     self.currentWindow = "Highscores"
@@ -130,8 +126,7 @@ class Menu:
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
         else:
-            pg.draw.rect(self.screen, ic, (x, y, w, h))
-            #self.hover = False
+            #pg.draw.rect(self.screen, ic, (x, y, w, h))
             return False
 
     def draw(self,highscores):
@@ -180,12 +175,14 @@ class Menu:
             # self.button Credits
             self.button(90, 581, 197, 126, green, bright_green,"Credits")
             # self.button Highscores
+            
+            self.screen.blit(self.image_mainMenuBackground, (0, 0))        
+            self.screen.blit(self.image_highScores, (0, 0))
             self.button(736, 364, 193, 107, green, bright_green,"Highscores")
-            self.screen.blit(self.image_mainMenuBackground, (0, 0))
             self.screen.blit(self.image_mainMenu, (0, 0))
             self.screen.blit(self.image_gameTitle, (0, 0))
             self.screen.blit(self.image_credits, (0, 0))
-            self.screen.blit(self.image_highScores, (0, 0))
+            
 
         elif self.currentWindow == "helpMenu":
             self.screen.blit(self.image_normalBackGround, (0, 0))
@@ -259,19 +256,21 @@ class Menu:
             
             #2nd Game Designer
         elif self.currentWindow == "difficultyMenu":
-            # self.button easy
+            
+            # Button retour
+            self.button(25, 466, 259, 70, green, bright_green, "mainMenu")
+            self.screen.blit(self.image_difficultyBackground, (0, 0))
+             # self.button easy
             self.button(self.x, self.y, self.buttonWidth, self.buttonHeight, green, bright_green, "easy")
             # self.button normal
             self.button(self.x, self.y2, self.buttonWidth, self.buttonHeight, green, bright_green, "normal")
             # self.button hard
             self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green, "hard")
-            # Button retour
-            self.button(25, 466, 259, 70, green, bright_green, "mainMenu")
-            self.screen.blit(self.image_difficultyBackground, (0, 0))
             self.screen.blit(self.image_backSign, (0, 0))
             self.screen.blit(self.image_difficultyBuilding, (0, 0))
             self.screen.blit(self.image_debris, (0, 0))
             self.screen.blit(self.image_gameTitle, (0, 0))
+           
             
             
 

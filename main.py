@@ -12,6 +12,9 @@ from threading import Timer
 import tkinter as tk
 
 pg.init()
+pg.display.set_caption("Breathless Town")
+programIcon = pygame.image.load('images/airBottle.png')
+pygame.display.set_icon(programIcon)
 
 inGameTime = 0
 gameTimer = False
