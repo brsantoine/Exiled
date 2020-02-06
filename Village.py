@@ -9,14 +9,11 @@ class Village(object):
     def __init__(self, gameDisplay, screenWidth, screenHeight):
         """Affectation des ressources en debut de partie"""
         # Ressources
-        self.gold = 500.0
-        self.population = 20
+        self.gold = 12000
+        self.air = 100
+        self.population = 2
+        self.airTank = 100
         self.populationTank = 20
-        self.house = 0
-
-        self.air = 80.0
-        self.airMax = 100
-        self.airTank = 0
 
         # Skills
         self.boots = False
@@ -75,7 +72,6 @@ class Village(object):
     def plusGold(self):
         self.timerGold = False
         self.gold += (self.population/20)*7.5
-        
 
     ###### FUNCTIONS ######
     def textObjects(self, text, font, color):
@@ -96,7 +92,7 @@ class Village(object):
             if action == "house":
                 self.gameDisplay.blit(self.image_house_sign, (0, 0))
 
-            elif action == "airMax":
+            elif action == "airTank":
                 self.gameDisplay.blit(self.image_air_tank_sign, (0, 0))
 
             elif action == "purifier":
@@ -125,13 +121,13 @@ class Village(object):
                     pygame.time.delay(1)
 
                 elif action == "goldToAir1":
-                    if self.air < self.airMax and self.gold >= LOW_PRICE_AIR:
+                    if self.air < self.airTank and self.gold >= LOW_PRICE_AIR:
                         self.air += 1
                         self.gold -= LOW_PRICE_AIR
                         pygame.time.delay(150)
 
                 elif action == "goldToAir10":
-                    if self.air <= self.airMax-10 and self.gold >= MID_PRICE_AIR:
+                    if self.air <= self.airTank-10 and self.gold >= MID_PRICE_AIR:
                         self.air += 10
                         self.gold -= MID_PRICE_AIR
                         pygame.time.delay(150)
@@ -142,17 +138,15 @@ class Village(object):
                         self.air += 50
 
                 elif action == "house":
-                    if self.gold >= PRICE_HOUSE+(self.house*HOUSE_INCREASE):
-                        self.gold -= PRICE_HOUSE+(self.house*HOUSE_INCREASE)
-                        self.house += 1
-                        self.populationTank += HOUSE_VALUE
+                    if self.gold >= PRICE_HOUSE:
+                        self.gold -= PRICE_HOUSE
+                        self.populationTank += 20
                         pygame.time.delay(150)
 
-                elif action == "airMax":
-                    if self.gold >= PRICE_AIR_TANK+(self.airTank*AIR_TANK_INCREASE):
-                        self.gold -= PRICE_AIR_TANK+(self.airTank*AIR_TANK_INCREASE)
-                        self.airTank += 1
-                        self.airMax += AIR_TANK_VALUE
+                elif action == "airTank":
+                    if self.gold >= PRICE_AIR_TANK:
+                        self.gold -= PRICE_AIR_TANK
+                        self.airTank += 50
                         pygame.time.delay(150)
 
                 elif action == "purifier":
@@ -202,15 +196,15 @@ class Village(object):
         ####### RESSOURCES #######
         self.gameDisplay.blit(self.image_ressources, (0, 0))
         ## Air
-        if (self.air == self.airMax):
-            self.textDisplay(str(int(self.air)), black, 30, 160, 56)
+        if (self.air == self.airTank):
+            self.textDisplay(str(self.air), black, 30, 160, 56)
             self.textDisplay("(full)", black, 30, 160, 86)
         else:
-            self.textDisplay(str(int(self.air)) + " / " + str(int(self.airMax)), black, 30, 160, 70)
+            self.textDisplay(str(self.air) + " / " + str(self.airTank), black, 30, 160, 70)
 
         
         ## Gold
-        self.textDisplay(str(int(self.gold)), black, 30, 160, 167)
+        self.textDisplay(str(self.gold), black, 30, 160, 167)
 
         ## Population
         self.gameDisplay.blit(self.image_population, (0, 0))
@@ -222,6 +216,7 @@ class Village(object):
         #self.air -= (self.population/20)*0.2
         #self.gold += (self.population/20)*7.5
         #format(math.pi, '.2f')
+
         
         ####### 
 
@@ -245,25 +240,25 @@ class Village(object):
 
         self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "goldToAir1")
         self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "goldToAir10")
-        self.button(x, y3, buttonWidth, buttonHeight, green, bright_green, "goldToAir50")
+        self.button(x, y3, buttonWidth, buttonHeight, green, bright_green, "goldToAirMax")
 
         if self.gold < LOW_PRICE_AIR:
             self.button(x, y, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
             self.button(x, y3, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
             
-        if self.gold < MID_PRICE_AIR or self.air > self.airMax - 10:
+        if self.gold < MID_PRICE_AIR or self.air > self.airTank - 10:
             self.button(x, y2, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))
         
-        if self.air >= self.airMax:
+        if self.air >= self.airTank:
             self.button(x, y, buttonWidth, buttonHeight, red, red)
             self.button(x, y2, buttonWidth, buttonHeight, red, red)
             self.button(x, y3, buttonWidth, buttonHeight, red, red)
 
         self.gameDisplay.blit(self.image_air_converter, (0, 0))
 
-        self.textDisplay("50 -> 1", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/2))) 
-        self.textDisplay("400 -> 10", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/2))) 
-        self.textDisplay("1500 -> 50", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/2)))
+        self.textDisplay("100 -> 1", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/2))) 
+        self.textDisplay("1000 -> 10", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/2))) 
+        self.textDisplay("MAX", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/2)))
         #######
 
         ####### SHOP UPGRADE #######
@@ -296,7 +291,7 @@ class Village(object):
                 self.button(x, y3, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100) )
             self.textDisplay("Air purifier", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
 
-            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "airMax")
+            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "airTank")
             if self.gold < PRICE_AIR_TANK:
                 self.button(x, y2, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100) )
             self.textDisplay("Air tank", black, 20, (x+(buttonWidth/2)), (y3+(buttonHeight/3)) )
