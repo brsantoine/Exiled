@@ -9,7 +9,7 @@ from random import randint
 
 class Map:
     """Une classe qui correspond a un building"""
-    def __init__(self, filePath):
+    def __init__(self, filePath, difficulty):
 
         self.wallList = []
         self.grassList = []
@@ -19,6 +19,8 @@ class Map:
         self.playerSpawn = (0, 0)
         self.width = 0
         self.height = 0
+
+        self.difficulty = difficulty
 
         file = open(filePath)
 
@@ -79,7 +81,10 @@ class Map:
         file.close()
 
         nbInList = len(self.moneyList)
-        moneyNb = randint((nbInList // 3) - (nbInList // 8), (nbInList // 3) + (nbInList // 8))
+        if self.difficulty == "Hard":
+            moneyNb = randint((nbInList // 5) - (nbInList // 8), (nbInList // 5) + (nbInList // 8))
+        else:
+            moneyNb = randint((nbInList // 3) - (nbInList // 8), (nbInList // 3) + (nbInList // 8))
 
         index = 0
 

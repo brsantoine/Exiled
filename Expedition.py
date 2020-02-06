@@ -18,7 +18,7 @@ class Expedition:
 
         randomMap = randint(0, len(mapList) - 1)
 
-        self.map = Map("maps/" + mapList[randomMap])
+        self.map = Map("maps/" + mapList[randomMap], difficulty)
         self.camera = Camera()
         self.inProgress = True
 
@@ -29,7 +29,6 @@ class Expedition:
         self.collisionList += self.map.enemies
 
         self.difficulty = difficulty
-        print(self.difficulty)
 
         self.enemyHitboxList = []
         self.airballs = []
