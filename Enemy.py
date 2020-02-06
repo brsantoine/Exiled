@@ -28,6 +28,7 @@ class Enemy:
                 self.side = "Down" 
 
         self.img = pg.image.load("images/guard.png")
+        self.imgStunned = pg.image.load("images/airBottle.png")
         self.stunned = False
         self.stunnedCounter = 0
 
@@ -111,7 +112,10 @@ class Enemy:
         self.stunnedCounter = 0
 
     def draw(self,screen,x,y):
-        screen.blit(self.img, (x, y))
+        if self.stunned == True:
+            screen.blit(self.imgStunned, (x, y))
+        else:
+            screen.blit(self.img, (x, y))
     
 
 
