@@ -64,6 +64,9 @@ class Village(object):
         self.image_expedition_sign = pygame.image.load("images/expedition_sign.png").convert_alpha()
         self.image_boots_sign = pygame.image.load("images/boots_sign.png").convert_alpha()
         self.image_gauntlets_sign = pygame.image.load("images/gauntlets_sign.png").convert_alpha() 
+
+        # Sound
+        self.WOOD_CLICK = pg.mixer.Sound('sounds/wood_click.ogg')
                 
     def setDifficulty(self, difficulty):
         self.difficulty = difficulty
@@ -164,6 +167,7 @@ class Village(object):
                         self.gold -= PRICE_HOUSE+(self.house*HOUSE_INCREASE)
                         self.house += 1
                         self.populationTank += HOUSE_VALUE
+                        self.WOOD_CLICK.play()
                         pygame.time.delay(150)
 
                 elif action == "airMax":
@@ -176,36 +180,43 @@ class Village(object):
                 elif action == "purifier":
                     if self.gold >= PRICE_PURIFIER:
                         self.gold -= PRICE_PURIFIER
+                        self.WOOD_CLICK.play()
                         self.win = True
 
                 elif action == "boots":
                     if self.gold >= PRICE_BOOTS and self.boots == False:
                         self.gold -= PRICE_BOOTS
+                        self.WOOD_CLICK.play()
                         self.boots = True
 
                 elif action == "airskill":
                     if self.gold >= PRICE_AIR_SKILL and self.airskill == False:
                         self.gold -= PRICE_AIR_SKILL
+                        self.WOOD_CLICK.play()
                         self.airskill = True
 
                 elif action == "menu":
                     self.menu = True
                     self.upgrades = self.upgrades2 = self.skills  = False
+                    self.WOOD_CLICK.play()
                     pygame.time.delay(150)
 
                 elif action == "upgrades":
                     self.menu = self.upgrades2 = self.skills = False
                     self.upgrades = True
+                    self.WOOD_CLICK.play()
 
                     pygame.time.delay(150)
 
                 elif action == "skills":
                     self.menu = self.upgrades = self.upgrades2 = False
                     self.skills = True
+                    self.WOOD_CLICK.play()
                     pygame.time.delay(150)
 
                 elif action == "expedition":
                     self.launchExpedition = True
+                    self.WOOD_CLICK.play()
                     pygame.time.delay(150)
                 
         #else:

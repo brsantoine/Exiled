@@ -13,8 +13,10 @@ import tkinter as tk
 
 pg.init()
 pg.display.set_caption("Breathless Town")
-programIcon = pygame.image.load('images/airBottle.png')
-pygame.display.set_icon(programIcon)
+programIcon = pg.image.load('images/airBottle.png')
+pg.display.set_icon(programIcon)
+
+sound_cashing = pg.mixer.Sound('sounds/cashing.ogg')
 
 inGameTime = 0
 gameTimer = False
@@ -90,10 +92,12 @@ while True:
                 expedition.draw(screen)
             else:
                 menu.drawDeath(expedition.win,expedition.time,expedition.moneyGained)
+                if expedition.win == True:
+                    sound_cashing.play()
+                    village.gold += expedition.moneyGained
                 pg.time.delay(150)
                 musicPlayer.playMenuMusic()
-                if expedition.win == True:
-                    village.gold += expedition.moneyGained
+                
                 village.inTheVillage = True
 
 

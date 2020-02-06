@@ -40,6 +40,7 @@ class Menu:
         self.image_mediumSign = pg.image.load("images/mainMenu/medium_sign.png").convert_alpha()
         self.image_hardSign = pg.image.load("images/mainMenu/hard_sign.png").convert_alpha()
         self.image_highScoresOn = pg.image.load("images/mainMenu/high_scores_on.png").convert_alpha()
+        self.image_credits_opened = pg.image.load("images/mainMenu/credits_opened.png").convert_alpha()
 
         # Sounds
         self.WOOD_CLICK = pg.mixer.Sound('sounds/wood_click.ogg')
@@ -59,6 +60,8 @@ class Menu:
         mouse = pg.mouse.get_pos()
         click = pg.mouse.get_pressed()
         if x + w > mouse[0] > x and y+h > mouse[1] > y:
+            if action == "exitExpedition" or action == "loseExpedition":
+                pg.draw.rect(self.screen, ac, (x, y, w, h))
             #pg.draw.rect(self.screen, ac, (x, y, w, h))
             if action == "easy":
                 self.screen.blit(self.image_easySign, (0, 0))
@@ -68,6 +71,8 @@ class Menu:
                 self.screen.blit(self.image_hardSign, (0, 0))
             elif action == "Highscores":
                 self.screen.blit(self.image_highScoresOn, (0, 0))
+            elif action == "Credits":
+                self.screen.blit(self.image_credits_opened, (0,0))
             
             if click[0] == 1 and action != None:
                
@@ -126,6 +131,9 @@ class Menu:
                     self.WOOD_CLICK.play()
                     pg.time.delay(150)
         else:
+            if action == "exitExpedition" or action == "loseExpedition":
+                pg.draw.rect(self.screen, ic, (x, y, w, h))
+
             #pg.draw.rect(self.screen, ic, (x, y, w, h))
             return False
 
@@ -172,16 +180,18 @@ class Menu:
             self.button(self.x, self.y2, self.buttonWidth, self.buttonHeight, green, bright_green,"Help")
             # self.button quit
             self.button(self.x, self.y3, self.buttonWidth, self.buttonHeight, green, bright_green,"quit")
-            # self.button Credits
-            self.button(90, 581, 197, 126, green, bright_green,"Credits")
-            # self.button Highscores
+            
+            
             
             self.screen.blit(self.image_mainMenuBackground, (0, 0))        
             self.screen.blit(self.image_highScores, (0, 0))
+            # self.button Highscores
             self.button(736, 364, 193, 107, green, bright_green,"Highscores")
             self.screen.blit(self.image_mainMenu, (0, 0))
             self.screen.blit(self.image_gameTitle, (0, 0))
             self.screen.blit(self.image_credits, (0, 0))
+            # self.button Credits
+            self.button(90, 581, 197, 126, green, bright_green,"Credits")
             
 
         elif self.currentWindow == "helpMenu":
