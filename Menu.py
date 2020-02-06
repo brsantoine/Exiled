@@ -42,6 +42,7 @@ class Menu:
         self.image_hardSign = pg.image.load("images/mainMenu/hard_sign.png").convert_alpha()
         self.image_highScoresOn = pg.image.load("images/mainMenu/high_scores_on.png").convert_alpha()
         self.image_credits_opened = pg.image.load("images/mainMenu/credits_opened.png").convert_alpha()
+        self.image_return_town = pg.image.load("images/Signs/return_town.png").convert_alpha()
 
         # Sounds
         self.WOOD_CLICK = pg.mixer.Sound('sounds/wood_click.ogg')
@@ -62,8 +63,6 @@ class Menu:
         mouse = pg.mouse.get_pos()
         click = pg.mouse.get_pressed()
         if x + w > mouse[0] > x and y+h > mouse[1] > y:
-            if action == "exitExpedition" or action == "loseExpedition":
-                pg.draw.rect(self.screen, ac, (x, y, w, h))
             #pg.draw.rect(self.screen, ac, (x, y, w, h))
             if action == "easy":
                 self.screen.blit(self.image_easySign, (0, 0))
@@ -136,9 +135,6 @@ class Menu:
                     self.ROCKET_CLICK.play()
                     pg.time.delay(150)
         else:
-            if action == "exitExpedition" or action == "loseExpedition":
-                pg.draw.rect(self.screen, ic, (x, y, w, h))
-
             #pg.draw.rect(self.screen, ic, (x, y, w, h))
             return False
 
@@ -294,36 +290,37 @@ class Menu:
         see_through = pg.Surface((SCREEN_WIDTH - TAILLE_CASE,SCREEN_HEIGHT - TAILLE_CASE)).convert_alpha()
         see_through.fill((140, 140, 140, 200))
         self.screen.blit(see_through, (32,32))
+        if win == True:
+            textStr = "You made it back safely!"
+            goldStr = "Gold collected:"
+        else:
+            goldStr = "Gold lost:"
+            textStr = "You got caught!"
+        self.textDisplay(textStr,black,40,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//8))
+        # Gold
+        goldImgX = (SCREEN_WIDTH//6 * 1) + 40
+        if money > 9:
+            goldImgX += 40
+        elif money > 99:
+            goldImgX += 70
+        elif money > 999:
+            goldImgX += 100
+        self.textDisplay(goldStr,black,40,(SCREEN_WIDTH//4 * 1),(SCREEN_HEIGHT//4))
+        self.textDisplay(str(money),black,40,(SCREEN_WIDTH//6 * 1) + 35,(SCREEN_HEIGHT//3))
+        self.screen.blit(self.image_money, (goldImgX, (SCREEN_HEIGHT//3) - 35))
+
+        # Time
+        minutes = str(time//60)
+        seconds = str(time % 60)
+        if int(seconds) <= 9:
+            seconds = "0" + seconds
+        self.textDisplay("Time spent:",black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//4))
+        self.textDisplay(minutes + " : " + seconds,black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//3))
+        self.screen.blit(self.image_return_town, (0, 0))
+
         # Attend que l'utilisateur clique sur le bouton continuer
         while not Clicked:
-            Clicked = self.button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"loseExpedition")
-            self.textDisplay("Return to town",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
-            if win == True:
-                textStr = "You made it back safely!"
-                goldStr = "Gold collected:"
-            else:
-                goldStr = "Gold lost:"
-                textStr = "You got caught!"
-            self.textDisplay(textStr,black,40,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//8))
-            # Gold
-            goldImgX = (SCREEN_WIDTH//6 * 1) + 40
-            if money > 9:
-                goldImgX += 40
-            elif money > 99:
-                goldImgX += 70
-            elif money > 999:
-                goldImgX += 100
-            self.textDisplay(goldStr,black,40,(SCREEN_WIDTH//4 * 1),(SCREEN_HEIGHT//4))
-            self.textDisplay(str(money),black,40,(SCREEN_WIDTH//6 * 1) + 35,(SCREEN_HEIGHT//3))
-            self.screen.blit(self.image_money, (goldImgX, (SCREEN_HEIGHT//3) - 35))
-
-            # Time
-            minutes = str(time//60)
-            seconds = str(time % 60)
-            if int(seconds) <= 9:
-                seconds = "0" + seconds
-            self.textDisplay("Time spent:",black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//4))
-            self.textDisplay(minutes + " : " + seconds,black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//3))
+            Clicked = self.button((SCREEN_WIDTH//2) - 190,(SCREEN_HEIGHT//2) + 100,380,100,green,bright_green,"loseExpedition")
 
 
             pg.display.update()

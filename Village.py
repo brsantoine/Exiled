@@ -16,7 +16,7 @@ class Village(object):
         self.populationTank = 20
         self.house = 0
 
-        self.air = 1.0
+        self.air = 80.0
         self.airMax = 100
         self.airTank = 0
 
@@ -68,7 +68,8 @@ class Village(object):
         self.image_expedition_sign = pygame.image.load("images/expedition_sign.png").convert_alpha()
         self.image_boots_sign = pygame.image.load("images/boots_sign.png").convert_alpha()
         self.image_gauntlets_sign = pygame.image.load("images/gauntlets_sign.png").convert_alpha() 
-        self.image_gold= pygame.image.load("images/gold.png").convert_alpha() 
+        self.image_gold= pygame.image.load("images/gold.png").convert_alpha()
+        self.image_submit_score = pygame.image.load("images/Signs/submit_score.png").convert_alpha() 
 
         # Sound
         self.WOOD_CLICK = pygame.mixer.Sound('sounds/wood_click.ogg')
@@ -116,8 +117,6 @@ class Village(object):
         click = pygame.mouse.get_pressed()
 
         if x+w > mouse[0] > x and y+h > mouse[1] > y:
-            if action == "endGame":
-                pg.draw.rect(self.gameDisplay, ac, (x, y, w, h))
             if action == "house":
                 self.gameDisplay.blit(self.image_house_sign, (0, 0))
 
@@ -236,9 +235,7 @@ class Village(object):
                     self.WOOD_CLICK.play()
                     pygame.time.delay(150)
                 
-        else:
-            if action == "endGame":
-                pg.draw.rect(self.gameDisplay, ic, (x, y, w, h))
+        #else:
                 
     def draw(self):
         """Affiche le menu du village"""
@@ -404,6 +401,7 @@ class Village(object):
                 self.musicPlayer.playWinMusic()
             else:
                 textStr = "You lost!"
+                self.musicPlayer.stop()
                 self.LOSEGAME.play()
             goldStr = "Gold collected:"
             self.textDisplay(textStr,black,40,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//8))
@@ -428,10 +426,13 @@ class Village(object):
                 seconds = "0" + seconds
             self.textDisplay("Time spent:",black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//4))
             self.textDisplay(minutes + " : " + seconds,black,40,(SCREEN_WIDTH//4 * 3),(SCREEN_HEIGHT//3))
+            self.gameDisplay.blit(self.image_submit_score, (0, 0))
+
             while not Clicked:
                             
-                Clicked = self.button((SCREEN_WIDTH//2) - 125,(SCREEN_HEIGHT//2) + 100,250,70,green,bright_green,"endGame")
-                self.textDisplay("Submit your score",black,20,(SCREEN_WIDTH//2),(SCREEN_HEIGHT//2) + 100 + 35)
+                Clicked = self.button((SCREEN_WIDTH//2) - 190,(SCREEN_HEIGHT//2) + 100,380,100,green,bright_green,"endGame")
+                
+                
                 pygame.display.update()
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT: pygame.display.quit(); sys.exit()
