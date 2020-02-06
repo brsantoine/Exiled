@@ -68,7 +68,7 @@ class Expedition:
         moneyIndex = 0
         while moneyIndex < len(self.map.moneyList):
             if self.map.moneyList[moneyIndex].rect.colliderect(self.player.rect):
-                self.moneyGained += randint(40, 60)
+                self.moneyGained += randint(MIN_GOLD_PER_CASH, MAX_GOLD_PER_CASH)
                 del self.map.moneyList[moneyIndex]
             moneyIndex += 1
     def updateTime(self):
