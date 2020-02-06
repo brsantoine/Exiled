@@ -13,7 +13,6 @@ class HSManager:
 
         stringsList = []
         for score in self.scoreList:
-            print("yo")
             stringsList.append(score.getPrintStrings())
 
         return stringsList
