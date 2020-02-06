@@ -24,20 +24,20 @@ class Player:
 
         if keys[pg.K_LEFT]:
             self.facing = "Left"
-            dx -= VELOCITY * self.boots
+            dx -= int(VELOCITY * self.boots)
         if keys[pg.K_RIGHT]:
             self.facing = "Right"
-            dx += VELOCITY * self.boots
+            dx += int(VELOCITY * self.boots)
         if keys[pg.K_UP]:
             self.facing = "Up"
-            dy -= VELOCITY * self.boots
+            dy -= int(VELOCITY * self.boots)
         if keys[pg.K_DOWN]:
             self.facing = "Down"
-            dy += VELOCITY * self.boots
+            dy += int(VELOCITY * self.boots)
         if keys[pg.K_LSHIFT]:
-            dx = dx * self.boots
+            dx = int(dx * self.boots)
             dx //= 2
-            dy = dy * self.boots
+            dy = int(dy * self.boots)
             dy //= 2
 
         tempDx = dx
@@ -92,9 +92,9 @@ class Player:
             return AirBall(self.rect.left ,self.rect.top ,self.facing)
         else:
             return False
-    def gotBoots():
-        self.boots = 1.5
-    def gotAirSkill():
+    def gotBoots(self):
+        self.boots = BOOTS_SPEED
+    def gotAirSkill(self):
         self.hasAirSkill = True
     def draw(self, screen, x, y):
         """Appelee a chaque tour de boucle, cette fonction affiche le joueur"""

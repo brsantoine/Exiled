@@ -291,7 +291,7 @@ class Village(object):
             self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "boots")
             self.textDisplay("Boots", black, 20, (x+(buttonWidth/2)), (y+(buttonHeight/3)) )
 
-            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green)
+            self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "airskill")
             self.textDisplay("Air skill", black, 20, (x+(buttonWidth/2)), (y2+(buttonHeight/3)) )
 
             self.gameDisplay.blit(self.image_skills, (0, 0))

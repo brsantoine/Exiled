@@ -50,7 +50,7 @@ while True:
                 musicPlayer.playExpeditionMusic()
                 village.inTheVillage = False
                 village.launchExpedition = False
-                expedition = Expedition("map1")
+                expedition = Expedition("map1", village.boots, village.airskill)
             else:
 
                 village.draw()
