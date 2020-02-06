@@ -49,7 +49,7 @@ class Expedition:
             self.airballs.append(airball)
 
         for airball in self.airballs:
-            if airball.update(keys,self.map.wallList+self.map.exitList,self.map.enemies) == False:
+            if airball.update(keys,self.map.wallList+self.map.exitList,self.map.enemies, self.map.width, self.map.height) == False:
                 self.airballs.remove(airball)
                 del airball
 
