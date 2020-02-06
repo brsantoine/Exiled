@@ -6,18 +6,22 @@ class AirBall:
         self.rect = pg.Rect(x,y,TAILLE_CASE,TAILLE_CASE)  
         self.direction = direction # String avec Right,Left,Up,Down
         if self.direction == "Left":
+            self.img = pg.image.load("images/airBall/airBallLeft.png")
             self.path = [x, x - (AIRBALL_RANGE * TAILLE_CASE)]
         if self.direction == "Right":
             self.path = [x, x + (AIRBALL_RANGE * TAILLE_CASE)]
+            self.img = pg.image.load("images/airBall/airBallRight.png")
         if self.direction == "Up":
             self.path = [y, y - (AIRBALL_RANGE * TAILLE_CASE)]
+            self.img = pg.image.load("images/airBall/airBallUp.png")
         if self.direction == "Down":
             self.path = [y, y + (AIRBALL_RANGE * TAILLE_CASE)]
+            self.img = pg.image.load("images/airBall/airBallDown.png")
         self.vel = AIRBALL_VELOCITY
-        self.img = pg.image.load("images/AirBall.png")
+        
         
 
-    def update(self, keys, wallList,enemyList):
+    def update(self, keys, wallList, enemyList, mapWidth, mapHeight):
 
         """Appelee a chaque tour de boucle, cette methode permet de mettre les coordonnees a jour"""
 
@@ -63,12 +67,12 @@ class AirBall:
 
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.left > MAP_WIDTH - self.rect.width:
-            self.rect.left = MAP_WIDTH - self.rect.width
+        if self.rect.left > mapWidth - self.rect.width:
+            self.rect.left = mapWidth - self.rect.width
         if self.rect.top < 0:
             self.rect.top = 0
-        if self.rect.top > MAP_HEIGHT - self.rect.height:
-            self.rect.top = MAP_HEIGHT - self.rect.height
+        if self.rect.top > mapHeight - self.rect.height:
+            self.rect.top = mapHeight - self.rect.height
 
         if self.rect:
             for enemy in enemyList:

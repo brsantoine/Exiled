@@ -63,7 +63,7 @@ class Village(object):
     def minusAir(self):
         self.timerAir = False
         if self.air > 0.0:
-            self.air -= self.population*(self.population/1000)
+            self.air -= (self.population/20)*0.2
         else:
             self.lose = True
 
@@ -74,8 +74,7 @@ class Village(object):
     
     def plusGold(self):
         self.timerGold = False
-        self.gold += self.population*0.14
-        
+        self.gold += (self.population/20)*7.5
 
     ###### FUNCTIONS ######
     def textObjects(self, text, font, color):
@@ -137,7 +136,7 @@ class Village(object):
                         pygame.time.delay(150)
 
                 elif action == "goldToAir50":
-                    while self.air < self.airMax and self.gold >= HIGH_PRICE_AIR:
+                    while self.air < self.airMax-50 and self.gold >= HIGH_PRICE_AIR:
                         self.gold -= HIGH_PRICE_AIR
                         self.air += 50
 
@@ -202,12 +201,8 @@ class Village(object):
         ####### RESSOURCES #######
         self.gameDisplay.blit(self.image_ressources, (0, 0))
         ## Air
-        if (self.air == self.airMax):
-            self.textDisplay(str(int(self.air)), black, 30, 160, 56)
-            self.textDisplay("(full)", black, 30, 160, 86)
-        else:
-            self.textDisplay(str(int(self.air)) + " / " + str(int(self.airMax)), black, 30, 160, 70)
-
+        self.textDisplay(str(int(self.air)), black, 30, 160, 55)
+        self.textDisplay(" / " + str(int(self.airMax)), black, 30, 160, 86)
         
         ## Gold
         self.textDisplay(str(int(self.gold)), black, 30, 160, 167)
@@ -215,6 +210,13 @@ class Village(object):
         ## Population
         self.gameDisplay.blit(self.image_population, (0, 0))
         self.textDisplay(str(int(self.population)) + " / " + str(int(self.populationTank)), black, 30, 911, 64) 
+
+        self.textDisplay(str(format((self.population/20)*0.2, '.2f')) + " /s", black, 30, 910, 116)
+        self.textDisplay(str(format((self.population/20)*7.5, '.2f')) + " /s", black, 30, 910, 162)  
+        #self.air -= (self.population/20)*0.2
+        #self.gold += (self.population/20)*7.5
+        #format(math.pi, '.2f')
+
         
         ####### 
 
@@ -238,7 +240,7 @@ class Village(object):
 
         self.button(x, y, buttonWidth, buttonHeight, green, bright_green, "goldToAir1")
         self.button(x, y2, buttonWidth, buttonHeight, green, bright_green, "goldToAir10")
-        self.button(x, y3, buttonWidth, buttonHeight, green, bright_green, "goldToAir50")
+        self.button(x, y3, buttonWidth, buttonHeight, green, bright_green, "goldToAirMax")
 
         if self.gold < LOW_PRICE_AIR:
             self.button(x, y, buttonWidth, buttonHeight, (100, 100, 100), (100, 100, 100))

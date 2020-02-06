@@ -14,7 +14,7 @@ pg.init()
 def updateTimers():
     if not village.timerAir:
         village.timerAir = True
-        tAir = Timer(10.0, village.minusAir)
+        tAir = Timer(1.0, village.minusAir)
         tAir.start()
     if not village.timerPop:
         village.timerPop = True
@@ -37,8 +37,7 @@ fpsClock = pg.time.Clock()
 village = Village(screen, 1024, 786)
 musicPlayer = MusicPlayer()
 menu = Menu(screen)
-
-
+musicPlayer.playMenuMusic()
 while True:
     fpsClock.tick(60)
     for event in pg.event.get():
@@ -68,7 +67,8 @@ while True:
                 menu.drawDeath(expedition.win,expedition.time,expedition.moneyGained)
                 pg.time.delay(150)
                 musicPlayer.playMenuMusic()
-                village.gold += expedition.moneyGained
+                if expedition.win == True:
+                    village.gold += expedition.moneyGained
                 village.inTheVillage = True
 
 
