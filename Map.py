@@ -1,5 +1,6 @@
 import pygame as pg
 from Wall import *
+from Grass import *
 from Exit import *
 from Money import *
 from Enemy import *
@@ -8,18 +9,18 @@ from random import randint
 
 class Map:
     """Une classe qui correspond a un building"""
-    def __init__(self, fileName):
-        """Initialise la classe Building"""
-
-        # self.img = pg.image.load("maps/" + fileName + ".png")
+    def __init__(self, filePath):
 
         self.wallList = []
+        self.grassList = []
         self.exitList = []
         self.moneyList = []
         self.enemies = []
         self.playerSpawn = (0, 0)
+        self.width = 0
+        self.height = 0
 
-        file = open("maps/" + fileName + ".map")
+        file = open(filePath)
 
         readingMap = True
 
@@ -34,20 +35,30 @@ class Map:
                 readingMap = False
             else:
                 for lettre in line:
+                    if lettre == '.':
+                        self.grassList.append(Grass(x * TAILLE_CASE, y * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
                     if lettre == 'W':
                         self.wallList.append(Wall(x * TAILLE_CASE, y * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
                     if lettre == 'E':
                         self.exitList.append(Exit(x * TAILLE_CASE, y * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
                     if lettre == 'C':
+                        self.grassList.append(Grass(x * TAILLE_CASE, y * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
                         self.moneyList.append(Money(x * TAILLE_CASE, y * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
                     if lettre == 'S':
+                        self.grassList.append(Grass(x * TAILLE_CASE, y * TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
                         self.playerSpawn = (64 * x, 64 * y)
                     if lettre == '#':
                         readingMap = False
                     x += 1
                 
+                if (TAILLE_CASE * (x - 1)) > self.width and readingMap:
+                    self.width = (TAILLE_CASE * (x - 1))
+                
             y += 1
             x = 0
+
+        if (TAILLE_CASE * (y - 1)) > self.height:
+            self.height = (TAILLE_CASE * (y - 1))
 
         readingEnemies = True
 

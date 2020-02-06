@@ -8,14 +8,23 @@ class Player:
         """Initialise la classe Joueur"""
         self.rect = pg.Rect(playerSpawn[0], playerSpawn[1], w, h)
         self.text = ""
-        self.img = pg.image.load("images/player.png")
         self.facing = "Down"
         self.AirBallCooldown = AIRBALL_COOLDOWN
         self.AirBallCooldownCounter = 0
         self.boots = 1
         self.hasAirSkill = False
+        
+        self.downSprites = [pg.image.load("images/player/playerDownStill.png"), pg.image.load("images/player/playerDownWalking1.png"), pg.image.load("images/player/playerDownStill.png"), pg.image.load("images/player/playerDownWalking2.png")]
+        self.upSprites = [pg.image.load("images/player/playerUpStill.png"), pg.image.load("images/player/playerUpWalking1.png"), pg.image.load("images/player/playerUpStill.png"), pg.image.load("images/player/playerUpWalking2.png")]
+        self.leftSprites = [pg.image.load("images/player/playerLeftStill.png"), pg.image.load("images/player/playerLeftWalking1.png"), pg.image.load("images/player/playerLeftStill.png"), pg.image.load("images/player/playerLeftWalking2.png")]
+        self.rightSprites = [pg.image.load("images/player/playerRightStill.png"), pg.image.load("images/player/playerRightWalking1.png"), pg.image.load("images/player/playerRightStill.png"), pg.image.load("images/player/playerRightWalking2.png")]
 
-    def update(self, keys, wallList):
+        self.sprite = self.upSprites[0]
+
+        self.walkingProgress = 0
+        self.walking = False
+
+    def update(self, keys, wallList, mapWidth, mapHeight):
 
         """Appelee a chaque tour de boucle, cette methode permet de mettre les coordonnees a jour"""
 
@@ -23,22 +32,58 @@ class Player:
         dy = 0
 
         if keys[pg.K_LEFT]:
-            self.facing = "Left"
             dx -= int(VELOCITY * self.boots)
         if keys[pg.K_RIGHT]:
-            self.facing = "Right"
             dx += int(VELOCITY * self.boots)
         if keys[pg.K_UP]:
-            self.facing = "Up"
             dy -= int(VELOCITY * self.boots)
         if keys[pg.K_DOWN]:
-            self.facing = "Down"
             dy += int(VELOCITY * self.boots)
         if keys[pg.K_LSHIFT]:
             dx = int(dx * self.boots)
             dx //= 2
             dy = int(dy * self.boots)
             dy //= 2
+
+        if dy < 0:
+            self.facing = "Up"
+        elif dy > 0:
+            self.facing = "Down"
+        elif dx < 0:
+            self.facing = "Left"
+        elif dx > 0:
+            self.facing = "Right"
+
+        if dx != 0 or dy != 0:
+            self.walking = True
+        else:
+            self.walking = False
+
+        if self.walking:
+            self.walkingProgress += 1
+            if self.walkingProgress >= 40:
+                self.walkingProgress = 0
+        else:
+            self.walkingProgress = 0
+
+        if self.walking:
+            if self.facing == "Down":
+                self.sprite = self.downSprites[(self.walkingProgress // 10)]
+            elif self.facing == "Up":
+                self.sprite = self.upSprites[(self.walkingProgress // 10)]
+            elif self.facing == "Right":
+                self.sprite = self.rightSprites[(self.walkingProgress // 10)]
+            elif self.facing == "Left":
+                self.sprite = self.leftSprites[(self.walkingProgress // 10)]
+        else:
+            if self.facing == "Down":
+                self.sprite = self.downSprites[0]
+            elif self.facing == "Up":
+                self.sprite = self.upSprites[0]
+            elif self.facing == "Right":
+                self.sprite = self.rightSprites[0]
+            elif self.facing == "Left":
+                self.sprite = self.leftSprites[0]
 
         tempDx = dx
         tempDy = dy
@@ -73,12 +118,12 @@ class Player:
 
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.left > MAP_WIDTH - self.rect.width:
-            self.rect.left = MAP_WIDTH - self.rect.width
+        if self.rect.left > mapWidth - self.rect.width:
+            self.rect.left = mapWidth - self.rect.width
         if self.rect.top < 0:
             self.rect.top = 0
-        if self.rect.top > MAP_HEIGHT - self.rect.height:
-            self.rect.top = MAP_HEIGHT - self.rect.height
+        if self.rect.top > mapHeight - self.rect.height:
+            self.rect.top = mapHeight - self.rect.height
 
         if self.AirBallCooldownCounter < self.AirBallCooldown:
             self.AirBallCooldownCounter += 1
@@ -103,4 +148,4 @@ class Player:
 
         screen.blit(self.text, textRect)
 
-        screen.blit(self.img, (x, y))
+        screen.blit(self.sprite, (x, y))
