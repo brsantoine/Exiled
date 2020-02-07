@@ -1,0 +1,35 @@
+WEEEWWWWWWWWWWWWWWWWWWWWW
+W.S.....................W
+W.....WWW.......WWW.....W
+W....W.............W....W
+W...W.....W...W.....W...W
+W..W....WWW...WWW....W..W
+W..W...WWWW...WWWW...W..W
+W..W..WWWC......WWW..W..W
+W.....WW........CWW.....W
+W....WWW..WC.CW..WWW....W
+W.........CC.CC.........W
+W.......................W
+W.........CC.CC.........W
+W....WWW..WC.CW..WWW....W
+W.....WWC........WW.....W
+W..W..WWW......CWWW..W..W
+W..W...WWWW...WWWW...W..W
+W..W....WWW...WWW....W..W
+W...W.....W...W.....W...W
+W....W.............W....W
+W.....WW........WWW.....W
+W.......................W
+W.......................W
+WWWWWWWWWWWWWWWWWWWWWEEEW
+# Enemies : (x ; y ; end ; direction ; delay ; stand_still)
+2 ; 11 ; 20 ; 0 ; LOW ; 0
+12 ; 1 ; 20 ; 1 ; LOW ; 0
+6 ; 6 ; 0 ; 0 ; LOW ; 1
+7 ; 5 ; 0 ; 0 ; LOW ; 2
+17 ; 5 ; 0 ; 0 ; LOW ; 2
+18 ; 6 ; 0 ; 0 ; LOW ; 3
+6 ; 16 ; 0 ; 0 ; LOW ; 1
+7 ; 17 ; 0 ; 0 ; LOW ; 4
+17 ; 17 ; 0 ; 0 ; LOW ; 4
+18 ; 16 ; 0 ; 0 ; LOW ; 3
