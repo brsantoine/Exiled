@@ -44,6 +44,6 @@ class Camera:
 
         for element in displayList:
             element.draw(win,element.rect.left - self.x,element.rect.top - self.y)
-        # for elem in enemyHitboxList:
-        #     pg.draw.rect(win, (200, 200, 200), pg.Rect(elem.left - self.x,elem.top - self.y, elem.width, elem.height))
+        #for elem in enemyHitboxList:
+            #pg.draw.rect(win, (200, 200, 200), pg.Rect(elem.left - self.x,elem.top - self.y, elem.width, elem.height))
         player.draw(win, playerX, playerY)
