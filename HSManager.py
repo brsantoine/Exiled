@@ -43,7 +43,8 @@ class HSManager:
             winnersCount += 1
 
         winnersList = sorted(winnersList, key=lambda scoreTuple: scoreTuple[0])
-        loosersList = sorted(loosersList, key=lambda scoreTuple: scoreTuple[0])
+        loosersList = sorted(
+            loosersList, key=lambda scoreTuple: scoreTuple[0]).reverse()
 
         i = 1
 
