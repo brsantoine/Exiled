@@ -28,6 +28,8 @@ class Expedition:
         self.collisionList += self.map.wallList
         self.collisionList += self.map.enemies
 
+        self.caughtSound = pg.mixer.Sound("sounds/caught.ogg")
+
         self.difficulty = difficulty
 
         self.enemyHitboxList = []
@@ -62,6 +64,7 @@ class Expedition:
         if self.player.rect.collidelist(self.enemyHitboxList) != -1:
             self.inProgress = False
             self.win = False
+            self.caughtSound.play()
 
         if not self.timerExped:
             self.timerExped = True

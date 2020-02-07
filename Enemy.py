@@ -31,10 +31,14 @@ class Enemy:
         self.stunned = False
         self.stunnedCounter = 0
 
-        self.downSprites = [pg.image.load("images/guard/guardDownStill.png"), pg.image.load("images/guard/guardDownWalking1.png"), pg.image.load("images/guard/guardDownStill.png"), pg.image.load("images/guard/guardDownWalking2.png")]
-        self.upSprites = [pg.image.load("images/guard/guardUpStill.png"), pg.image.load("images/guard/guardUpWalking1.png"), pg.image.load("images/guard/guardUpStill.png"), pg.image.load("images/guard/guardUpWalking2.png")]
-        self.leftSprites = [pg.image.load("images/guard/guardLeftStill.png"), pg.image.load("images/guard/guardLeftWalking1.png"), pg.image.load("images/guard/guardLeftStill.png"), pg.image.load("images/guard/guardLeftWalking2.png")]
-        self.rightSprites = [pg.image.load("images/guard/guardRightStill.png"), pg.image.load("images/guard/guardRightWalking1.png"), pg.image.load("images/guard/guardRightStill.png"), pg.image.load("images/guard/guardRightWalking2.png")]
+        self.downSprites = [pg.image.load("images/guard/guardDownStill.png"), pg.image.load("images/guard/guardDownWalking1.png"), pg.image.load(
+            "images/guard/guardDownStill.png"), pg.image.load("images/guard/guardDownWalking2.png"), pg.image.load("images/guard/guardDownStunned.png")]
+        self.upSprites = [pg.image.load("images/guard/guardUpStill.png"), pg.image.load("images/guard/guardUpWalking1.png"), pg.image.load(
+            "images/guard/guardUpStill.png"), pg.image.load("images/guard/guardUpWalking2.png"), pg.image.load("images/guard/guardUpStunned.png")]
+        self.leftSprites = [pg.image.load("images/guard/guardLeftStill.png"), pg.image.load("images/guard/guardLeftWalking1.png"), pg.image.load(
+            "images/guard/guardLeftStill.png"), pg.image.load("images/guard/guardLeftWalking2.png"), pg.image.load("images/guard/guardLeftStunned.png")]
+        self.rightSprites = [pg.image.load("images/guard/guardRightStill.png"), pg.image.load("images/guard/guardRightWalking1.png"), pg.image.load(
+            "images/guard/guardRightStill.png"), pg.image.load("images/guard/guardRightWalking2.png"), pg.image.load("images/guard/guardRightStunned.png")]
 
         self.sprite = self.upSprites[0]
 
@@ -84,7 +88,7 @@ class Enemy:
                 self.rect.left = temp
             else:
                 self.rect.top = temp
-        elif self.stunned == True:
+        elif self.stunned:
             self.stunnedCounter += 1
             if self.stunnedCounter >= ENEMY_STUNNEDTIME:
                 self.stunnedCounter = 0
@@ -97,7 +101,7 @@ class Enemy:
         else:
             self.walkingProgress = 0
 
-        if self.walking:
+        if self.walking and not self.stunned:
             if self.facing == "Down":
                 self.sprite = self.downSprites[(self.walkingProgress // 10)]
             elif self.facing == "Up":
@@ -115,6 +119,16 @@ class Enemy:
                 self.sprite = self.rightSprites[0]
             elif self.facing == "Left":
                 self.sprite = self.leftSprites[0]
+
+        if self.stunned:
+            if self.facing == "Down":
+                self.sprite = self.downSprites[4]
+            elif self.facing == "Up":
+                self.sprite = self.upSprites[4]
+            elif self.facing == "Right":
+                self.sprite = self.rightSprites[4]
+            elif self.facing == "Left":
+                self.sprite = self.leftSprites[4]
 
     def getHitbox(self) :
         hitbox = []
@@ -147,10 +161,7 @@ class Enemy:
         self.stunnedCounter = 0
 
     def draw(self,screen,x,y):
-        if self.stunned == True:
-            screen.blit(self.imgStunned, (x, y))
-        else:
-            screen.blit(self.sprite, (x, y))
+        screen.blit(self.sprite, (x, y))
     
 
 

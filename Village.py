@@ -11,7 +11,7 @@ class Village(object):
     def __init__(self, gameDisplay, screenWidth, screenHeight):
         """Affectation des ressources en debut de partie"""
         # Ressources
-        self.gold = 500.0
+        self.gold = STARTING_GOLD
         self.population = 20
         self.populationTank = 20
         self.house = 0
