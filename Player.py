@@ -21,6 +21,9 @@ class Player:
 
         self.sprite = self.upSprites[0]
 
+        self.grassSound = pg.mixer.Sound("sounds/walkingOnGrass.ogg")
+        self.gustSound = pg.mixer.Sound("sounds/gust.ogg")
+
         self.walkingProgress = 0
         self.walking = False
 
@@ -75,6 +78,8 @@ class Player:
                 self.sprite = self.rightSprites[(self.walkingProgress // 10)]
             elif self.facing == "Left":
                 self.sprite = self.leftSprites[(self.walkingProgress // 10)]
+            if self.walkingProgress == 5:
+                self.grassSound.play()
         else:
             if self.facing == "Down":
                 self.sprite = self.downSprites[0]
@@ -130,6 +135,7 @@ class Player:
         
     def AirBall(self,keys):
         if keys[pg.K_SPACE] and self.AirBallCooldownCounter >= self.AirBallCooldown and self.hasAirSkill == True:
+            self.gustSound.play()
             self.AirBallCooldownCounter = 0
             return AirBall(self.rect.left ,self.rect.top ,self.facing)
         else:
