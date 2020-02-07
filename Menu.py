@@ -43,7 +43,8 @@ class Menu:
         self.image_highScoresOn = pg.image.load("images/mainMenu/high_scores_on.png").convert_alpha()
         self.image_credits_opened = pg.image.load("images/mainMenu/credits_opened.png").convert_alpha()
         self.image_return_town = pg.image.load("images/Signs/return_town.png").convert_alpha()
-
+        self.image_how_to_play_first = pg.image.load("images/mainMenu/how_to_play_first.png").convert_alpha()
+        self.image_how_to_play_second = pg.image.load("images/mainMenu/how_to_play_second.png").convert_alpha()
         # Sounds
         self.WOOD_CLICK = pg.mixer.Sound('sounds/wood_click.ogg')
         self.GARAGE_CLICK = pg.mixer.Sound('sounds/garage.ogg')
@@ -134,6 +135,11 @@ class Menu:
                     self.currentWindow = "Highscores"
                     self.ROCKET_CLICK.play()
                     pg.time.delay(150)
+                elif action == "help2":
+                    self.currentWindow = "help2"
+                    self.WOOD_CLICK.play()
+                    pg.time.delay(150)
+                
         else:
             #pg.draw.rect(self.screen, ic, (x, y, w, h))
             return False
@@ -196,11 +202,14 @@ class Menu:
             
 
         elif self.currentWindow == "helpMenu":
-            self.screen.blit(self.image_normalBackGround, (0, 0))
-            self.textDisplay("How to play", black, 30, (SCREEN_WIDTH/2), (SCREEN_HEIGHT/15))
+            self.screen.blit(self.image_how_to_play_first, (0, 0))
             # Button retour
-            self.button(50, SCREEN_HEIGHT/15, self.buttonWidth/2, self.buttonHeight/2, green, bright_green, "mainMenu")
-            self.textDisplay("Main Menu", black, 10, (50+(self.buttonWidth/4)), ((SCREEN_HEIGHT/15)+(self.buttonHeight/4)) )
+            self.button(25, 466, 259, 70, green, bright_green, "mainMenu")
+            self.button(731, 469, 259, 78, green, bright_green, "help2")
+        elif self.currentWindow == "help2":
+            self.screen.blit(self.image_how_to_play_second, (0, 0))
+            # Button retour
+            self.button(25, 466, 259, 70, green, bright_green, "Help")
         elif self.currentWindow == "creditsScreen":
             x = 731
             y = 469
