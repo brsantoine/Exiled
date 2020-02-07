@@ -29,7 +29,7 @@ bright_red = (255, 0, 0)
 bright_green = (0, 255, 0)
 
 #Village
-STARTING_GOLD = 50000.0
+STARTING_GOLD = 500.0
 
 LOW_PRICE_AIR = 50
 MID_PRICE_AIR = 400
